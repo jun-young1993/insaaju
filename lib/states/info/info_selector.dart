@@ -11,7 +11,14 @@ class InfoSelector<T> extends BlocSelector<InfoBloc, InfoState, T>{
     selector: selector,
     builder: (_, value) => builder(value)
   );
+}
 
+class InfoNameStateSelector extends InfoSelector<String?> {
+  InfoNameStateSelector(Widget Function(String?) builder)
+  : super(
+    selector: (state) => state.name,
+    builder: builder
+  );
 }
 
 class InfoStateSelector extends InfoSelector<InfoState> {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/app.dart';
 import 'package:insaaju/repository/info_repository.dart';
@@ -24,6 +25,8 @@ void main() {
       )
     )
   );
+
+ debugPaintSizeEnabled = false; // 위젯 경계 시각화
 }
 
 

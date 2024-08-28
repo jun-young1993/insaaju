@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/ui/screen/widget/button.dart';
 
 class NameScreen extends StatelessWidget {
-  final TextEditingController _nameController = TextEditingController();
+  final Function(String)? onTap;
+  final String? name;
+  late final TextEditingController _nameController;
+
+  NameScreen({
+    super.key, 
+    this.name,
+    this.onTap, 
+  }) {
+    _nameController = TextEditingController(text: name ?? '');
+  }
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: Center(
-        child: Padding(
+    return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Enter your name',
+              Flexible(
+                flex: 1,
+                child: TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Enter your name',
+                  ),
                 ),
               ),
               SizedBox(height: 20),
-              ElevatedButton(
+              AppButton(
                 onPressed: () {
                   String name = _nameController.text;
                   if (name.isNotEmpty) {
-                    // 이름이 입력되었을 경우 다음 화면으로 이동
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => NextScreen(name: name)),
-                    // );
+                    onTap!(name);
                   } else {
                     // 이름이 입력되지 않은 경우 경고 메시지
                     showDialog(
@@ -53,9 +61,8 @@ class NameScreen extends StatelessWidget {
                 child: Text('OK'),
               ),
             ],
-          ),
         ),
-      ),
-    );
+      );
+ 
   }
 }

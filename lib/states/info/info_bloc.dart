@@ -10,6 +10,8 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     : super(InfoState.initialize())
   {
     on(_onInputName);
+    on(_onInputDate);
+    on(_onInputTime);
   }
 
   void _onInputName(
@@ -18,6 +20,29 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ){
     try{
       emit(state.asSetName(event.name));
+    } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
+  void _onInputDate(
+    InputDateEvent event,
+    Emitter<InfoState> emit
+  ){
+    try{
+      emit(state.asSetDate(event.date));
+    } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
+  void _onInputTime(
+    InputTimeEvent event,
+    Emitter<InfoState> emit
+  ){
+    try{
+      
+      emit(state.asSetTime(event.time));
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
