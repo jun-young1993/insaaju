@@ -14,12 +14,14 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onInputTime);
   }
 
-  void _onInputName(
+  Future<void> _onInputName(
     InputNameEvent event,
     Emitter<InfoState> emit
-  ){
+  ) async {
     try{
-      emit(state.asSetName(event.name));
+      List<String> characters = event.name.split('');
+      List<List<Map<String, dynamic>>> hanjaListByCharacters = await _infoRepository.getHanjaByCharacters(characters);
+      emit(state.asSetName(event.name, hanjaListByCharacters));
     } on Exception catch(error){
       emit(state.asFailer(error));
     }

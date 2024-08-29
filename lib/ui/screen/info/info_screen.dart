@@ -8,6 +8,7 @@ import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/birth_date_screen.dart';
 import 'package:insaaju/ui/screen/info/birth_time_screen.dart';
 import 'package:insaaju/ui/screen/info/check_screen.dart';
+import 'package:insaaju/ui/screen/info/hanja_screen.dart';
 import 'package:insaaju/ui/screen/info/name_screen.dart';
 
 
@@ -31,6 +32,11 @@ class _InfoScreenState extends State<InfoScreen> {
                   onTap: (text){
                     infoBloc.add(InputNameEvent(name: text));
                   },
+              );
+            case InfoMenu.hanja:
+              return HanjaScreen(
+                hanja: info.hanjaList,
+                name: info.name
               );
             case InfoMenu.birthDate:
               return BirthdateScreen(               
