@@ -1,17 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/lib/main.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b19cb426-f618-4a88-b4f5-2cd2fef40034" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/configs/info_constants.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/list/list_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/list/list_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/list/list_selector.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/list/list_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/list/list_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_card.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_card_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/insaaju_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/insaaju_android.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insaaju.iml" beforeDir="false" afterPath="$PROJECT_DIR$/insaaju.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/repository/info_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/info_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/hanja_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/hanja_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/info_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/info_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2lP9N65ainbfYS6M9Z0aonUxQT0" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" />
+    <panes>
+      <pane id="ProjectPane">
+        <option name="show-excluded-files" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/insaaju",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info_list" />
+      <recent name="$PROJECT_DIR$/lib/states/list/selections" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="b19cb426-f618-4a88-b4f5-2cd2fef40034" name="변경" comment="" />
+      <created>1725070802361</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1725070802361</updated>
+      <workItem from="1725070804287" duration="21329000" />
+    </task>
+    <servers />
   </component>
   <component name="ToolWindowManager">
     <editor active="true" />
@@ -19,18 +103,22 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
   </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <option name="show-excluded-files" value="false" />
-      </pane>
-    </panes>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="dart.analysis.tool.window.force.activate" value="true" />
-    <property name="show.migrate.to.gradle.popup" value="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny.dart';
 import 'package:insaaju/ui/screen/home/home_screen.dart';
+import 'package:insaaju/ui/screen/info/info_screen.dart';
+import 'package:insaaju/ui/screen/list/list_screen.dart';
 
 class FadeRoute extends PageRouteBuilder {
   FadeRoute({required this.page})
@@ -15,14 +18,22 @@ class FadeRoute extends PageRouteBuilder {
 }
 enum Routes {
   home,
+  info,
+  list,
+  four_pillars_of_destiny
 }
 
 class _Paths {
   static const String home = 'home';
-  
+  static const String info = 'info';
+  static const String list = 'list';
+  static const String four_pillars_of_destiny = 'four_pillars_of_destiny';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
+    Routes.info: _Paths.info,
+    Routes.list: _Paths.list,
+    Routes.four_pillars_of_destiny: _Paths.four_pillars_of_destiny
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -35,6 +46,14 @@ class AppNavigator {
           print("generate Route settings name ${settings.name}");
 
           switch(settings.name){
+            case _Paths.home:
+              return FadeRoute(page: HomeScreen());
+            case _Paths.info:
+              return FadeRoute(page: InfoScreen());
+            case _Paths.list:
+              return FadeRoute(page: ListScreen());
+            case _Paths.four_pillars_of_destiny:
+              return FadeRoute(page: FourPillarsOfDestiny());
             default:
               return FadeRoute(page: HomeScreen());
           }

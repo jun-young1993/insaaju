@@ -21,6 +21,14 @@ class InfoNameStateSelector extends InfoSelector<String?> {
   );
 }
 
+class InfoHanjaStateSelector extends InfoSelector<List<String>?> {
+  InfoHanjaStateSelector(Widget Function(List<String>?) builder)
+      : super(
+      selector: (state) => state.hanja,
+      builder: builder
+  );
+}
+
 class InfoStateSelector extends InfoSelector<InfoState> {
   InfoStateSelector(Widget Function(InfoState) builder)
   : super(

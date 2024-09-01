@@ -5,14 +5,19 @@ enum InfoMenu {
   birthDateAndTime,
   check
 }
-
+enum InfoStatus {
+  inProgress,
+  saving,
+  saved
+}
 class InfoState {
   final String? name;
-  final String? hanja;
+  final List<String>? hanja;
   final Exception? error;
   final InfoMenu? menu;
   final String? date;
   final String? time;
+  final InfoStatus? status;
   final List<List<Map<String, dynamic>>>? hanjaList;
   
   InfoState._({
@@ -22,23 +27,40 @@ class InfoState {
     this.time,
     this.name,
     this.error,
+    this.status = InfoStatus.inProgress,
     this.menu = InfoMenu.name
   });
 
   InfoState.initialize() : this._();
 
-  InfoState asSetName(String name, List<List<Map<String, dynamic>>> hanjaList){
+  InfoState asSetName(String name){
+
     return copyWith(
-      hanjaList: hanjaList,
       name: name,
       menu: InfoMenu.hanja
     );
   }
 
-  InfoState asSetHanja(String hanja){
+  InfoState asSetHanjaList(List<List<Map<String, dynamic>>> hanjaList){
+    List<String> defaultHanjaArray = List.generate(name!.length, (index){
+      return hanjaList[index].isNotEmpty ? hanjaList[index][0]['hanja'] as String : '';
+    });
+    return copyWith(
+        hanjaList: hanjaList,
+        hanja: defaultHanjaArray
+    );
+  }
+
+  InfoState asSetHanja(List<String>? hanja){
     return copyWith(
       hanja: hanja,
-      menu: InfoMenu.birthDate
+      menu: InfoMenu.hanja
+    );
+  }
+
+  InfoState asSetMenu(InfoMenu menu){
+    return copyWith(
+      menu: menu
     );
   }
   
@@ -56,6 +78,9 @@ class InfoState {
     );
   }
 
+  InfoState asChangeStatus(InfoStatus status){
+    return copyWith(status: status);
+  }
 
   InfoState asFailer(Exception error){
     return copyWith(error: error);
@@ -64,14 +89,16 @@ class InfoState {
   InfoState copyWith({
     List<List<Map<String, dynamic>>>? hanjaList,
     String? name,
-    String? hanja,
+    List<String>? hanja,
     String? date,
     String? time,
     Exception? error,
-    InfoMenu? menu
+    InfoMenu? menu,
+    InfoStatus? status
   }){
     return InfoState._(
       hanjaList: hanjaList ?? this.hanjaList,
+      status: status ?? this.status,
       hanja: hanja ?? this.hanja,
       date: date ?? this.date,
       time: time ?? this.time,

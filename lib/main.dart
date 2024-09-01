@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/app.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
+import 'package:insaaju/states/list/list_bloc.dart';
 import 'package:insaaju/ui/screen/home/home_screen.dart';
 void main() {
   runApp(
@@ -19,6 +20,11 @@ void main() {
             create: (context) => InfoBloc(
               context.read<InfoRepository>()
             )
+          ),
+          BlocProvider(
+              create: (context) => ListBloc(
+                  context.read<InfoRepository>()
+              )
           )
         ],
         child: MyApp()

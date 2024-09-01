@@ -1,11 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:insaaju/configs/info_constants.dart';
+import 'package:insaaju/domain/entities/info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class InfoRepository {
   Future<Map<String, dynamic>> loadHanjaJson();
-
   Future<List<List<Map<String, dynamic>>>> getHanjaByCharacters(List<String> characters);
+  Future<bool> save(Info info);
+  Future<List<Info>> getAll();
 }
 class InfoDefaultRepository extends InfoRepository{
   InfoDefaultRepository();
@@ -41,7 +45,41 @@ class InfoDefaultRepository extends InfoRepository{
         hanjaList.add([]);
       }
     }
-    print(hanjaList);
+
     return hanjaList;
+  }
+
+  Future<bool> save(Info info) async {
+    final prefs = await SharedPreferences.getInstance();
+    // 기존에 저장된 정보 리스트 가져오기
+    List<String> savedInfoList = prefs.getStringList(InfoConstants.info) ?? [];
+
+    // 새로운 Info 객체를 JSON으로 변환하여 리스트에 추가
+    savedInfoList.add(jsonEncode(info.toJson()));
+    final bool result = await prefs.setStringList(InfoConstants.info, savedInfoList);
+    print('saved ${bool}');
+    // 업데이트된 리스트를 다시 SharedPreferences에 저장
+    return result;
+  }
+
+  Future<List<Info>> getAll() async {
+    final prefs = await SharedPreferences.getInstance();
+    print('check');
+    print(prefs.getStringList(InfoConstants.info));
+    // 저장된 JSON 문자열 리스트 가져오기
+    List<String> savedInfoList = prefs.getStringList(InfoConstants.info) ?? [];
+
+    // JSON 문자열 리스트를 Info 객체 리스트로 변환
+    List<Info> infoList = savedInfoList.map((jsonString) {
+      Map<String, dynamic> infoMap = jsonDecode(jsonString);
+      return Info(
+        infoMap['name'],
+        infoMap['hanja'],
+        infoMap['date'],
+        infoMap['time'],
+      );
+    }).toList();
+
+    return infoList;
   }
 }

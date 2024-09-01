@@ -25,6 +25,12 @@ class _InfoScreenState extends State<InfoScreen> {
     return Scaffold(
       body: SafeArea(
         child: InfoStateSelector((info){
+          if(info.status == InfoStatus.saving){
+            return Text('저장중입니다.');
+          }
+          if(info.status == InfoStatus.saved){
+            return HomeScreen();
+          }
           switch(info.menu){
             case InfoMenu.name:
               return NameScreen(
@@ -36,7 +42,13 @@ class _InfoScreenState extends State<InfoScreen> {
             case InfoMenu.hanja:
               return HanjaScreen(
                 hanja: info.hanjaList,
-                name: info.name
+                name: info.name,
+                onTap: (hanja){
+                  infoBloc.add(InputHanjaEvent(hanja: hanja));
+                },
+                onOk: (){
+                  infoBloc.add(const InputMenuEvent(menu: InfoMenu.birthDate));
+                },
               );
             case InfoMenu.birthDate:
               return BirthdateScreen(               
@@ -53,9 +65,9 @@ class _InfoScreenState extends State<InfoScreen> {
             case InfoMenu.check:
               
                 return CheckScreen(
-                  name: info.name, 
-                  date: info.date, 
-                  time: info.time,
+                  onSave: (info){
+                    infoBloc.add(SaveEvent(info: info));
+                  },
                 );
          
             default:
