@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny.dart';
+import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny_screen.dart';
 import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
@@ -53,7 +53,7 @@ class AppNavigator {
             case _Paths.list:
               return FadeRoute(page: ListScreen());
             case _Paths.four_pillars_of_destiny:
-              return FadeRoute(page: FourPillarsOfDestiny());
+              return FadeRoute(page: FourPillarsOfDestinyScreen());
             default:
               return FadeRoute(page: HomeScreen());
           }

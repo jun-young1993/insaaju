@@ -1,7 +1,7 @@
 import 'package:insaaju/domain/entities/info.dart';
 
 class ListState {
-  final List<Info>? list;
+  final List<Info> list;
   final Exception? error;
 
   ListState._({

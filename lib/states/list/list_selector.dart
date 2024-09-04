@@ -14,8 +14,8 @@ class ListSelector<T> extends BlocSelector<ListBloc, ListState, T> {
   );
 }
 
-class AllListSelector extends ListSelector<List<Info>?> {
-  AllListSelector(Widget Function(List<Info>?) builder)
+class AllListSelector extends ListSelector<List<Info>> {
+  AllListSelector(Widget Function(List<Info>) builder)
       : super(
     selector: (state) => state.list,
     builder: builder,
