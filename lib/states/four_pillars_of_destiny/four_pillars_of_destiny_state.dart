@@ -11,6 +11,12 @@ enum FourPillarsOfDestinyType {
   healthFortune,   // 건강운
 }
 
+extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
+  String getValue() {
+    return this.toString().split('.').last;
+  }
+}
+
 class FourPillarsOfDestinyState {
   final Info? info;
   final Exception? error;

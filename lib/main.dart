@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:insaaju/app.dart';
-import 'package:insaaju/repository/four_pillars_of_destiny_repository.dart';
+import 'package:insaaju/repository/code_item_repository.dart';
+import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
-import 'package:insaaju/ui/screen/home/home_screen.dart';
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: "assets/.env");
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider<InfoRepository>(
           create: (context) => InfoDefaultRepository()
         ),
-        RepositoryProvider<FourPillarsOfDestinyRepository>(
-          create: (context) => FourPillarsOfDestinyDefaultRepository()
-        )
+        RepositoryProvider<OpenaiRepository>(
+          create: (context) => OpenaiDefaultRepository()
+        ),
+        RepositoryProvider<CodeItemRepository>(create: (context) => CodeItemDefaultRepository())
       ], 
       child: MultiBlocProvider(
         providers: [
@@ -32,7 +35,8 @@ void main() {
               )
           ),
           BlocProvider(create: (context) => FourPillarsOfDestinyBloc(
-              context.read<FourPillarsOfDestinyRepository>()
+              context.read<OpenaiRepository>(),
+              context.read<CodeItemRepository>()
           ))
         ],
         child: MyApp()
@@ -40,7 +44,9 @@ void main() {
     )
   );
 
- debugPaintSizeEnabled = false; // 위젯 경계 시각화
+
+  
+  debugPaintSizeEnabled = false; // 위젯 경계 시각화
 }
 
 

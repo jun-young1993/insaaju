@@ -4,7 +4,6 @@ import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/big_menu_button.dart';
-part 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
