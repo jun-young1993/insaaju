@@ -1,63 +1,46 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math';
-import 'package:pointycastle/block/aes.dart';
 import 'package:pointycastle/export.dart';
-import 'package:pointycastle/pointycastle.dart';
-import 'package:pointycastle/api.dart' as crypto;
+import 'package:crypto/crypto.dart';
 
-class AESCrypto {
-  final String secretKey;
-  static const int ivLength = 16;
+// IV의 길이 설정 (16바이트)
+const int IV_LENGTH = 16;
 
-  AESCrypto(this.secretKey);
+// 키 길이를 보장하는 함수 (SHA-256 사용)
+Uint8List ensureKeyLength(String key) {
+  return Uint8List.fromList(sha256.convert(utf8.encode(key)).bytes);
+}
 
-  // 키를 SHA-256으로 32바이트로 고정
-  Uint8List _generateKey() {
-    final key = utf8.encode(secretKey);
-    final sha256 = Digest('SHA-256');
-    return sha256.process(Uint8List.fromList(key));
-  }
+// 암호화 함수
+String encrypt(String text, String secretKey) {
+  final key = ensureKeyLength(secretKey);
+  final iv = _generateRandomBytes(IV_LENGTH);
 
-  // AES-256-CBC로 암호화
-  String encrypt(String plaintext) {
-    final key = _generateKey();
-    final iv = _generateIV();
+  final encrypter = PaddedBlockCipher('AES/CBC/PKCS7');
+  encrypter.init(
+    true, // true면 암호화, false면 복호화
+    PaddedBlockCipherParameters<CipherParameters, CipherParameters>(
+      ParametersWithIV<KeyParameter>(KeyParameter(key), iv),
+      null,
+    ),
+  );
 
-    final cipher = _initCipher(true, key, iv);
+  final encryptedBytes = encrypter.process(Uint8List.fromList(utf8.encode(text)));
+  final encryptedHex = _bytesToHex(encryptedBytes);
+  final ivHex = _bytesToHex(iv);
 
-    final input = Uint8List.fromList(utf8.encode(plaintext));
-    final encrypted = cipher.process(input);
+  return '$ivHex:$encryptedHex';
+}
 
-    return base64Encode(iv + encrypted); // IV와 암호화된 데이터를 결합하여 Base64로 인코딩
-  }
+// 난수 생성 함수 (IV 생성에 사용)
+Uint8List _generateRandomBytes(int length) {
+  final random = Random.secure();
+  final bytes = List<int>.generate(length, (_) => random.nextInt(256));
+  return Uint8List.fromList(bytes);
+}
 
-  // AES-256-CBC로 복호화
-  String decrypt(String encryptedText) {
-    final key = _generateKey();
-    final data = base64Decode(encryptedText);
-
-    final iv = data.sublist(0, ivLength); // IV 추출
-    final encrypted = data.sublist(ivLength); // 암호화된 데이터 추출
-
-    final cipher = _initCipher(false, key, iv);
-
-    final decrypted = cipher.process(encrypted);
-    return utf8.decode(decrypted);
-  }
-
-  // AES-256-CBC 암호화 및 복호화에 사용할 Cipher 객체 초기화
-  BlockCipher _initCipher(bool forEncryption, Uint8List key, Uint8List iv) {
-    final params = crypto.ParametersWithIV(crypto.KeyParameter(key), iv);
-    final cipher = CBCBlockCipher(AESEngine())
-      ..init(forEncryption, params);
-    return cipher;
-  }
-
-  // 16바이트의 랜덤 IV 생성
-  Uint8List _generateIV() {
-    final random = Random.secure();
-    final iv = List<int>.generate(ivLength, (_) => random.nextInt(256));
-    return Uint8List.fromList(iv);
-  }
+// 바이트 배열을 16진수 문자열로 변환하는 함수
+String _bytesToHex(Uint8List bytes) {
+  return bytes.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
 }

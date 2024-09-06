@@ -57,15 +57,13 @@ class InfoDefaultRepository extends InfoRepository{
     // 새로운 Info 객체를 JSON으로 변환하여 리스트에 추가
     savedInfoList.add(jsonEncode(info.toJson()));
     final bool result = await prefs.setStringList(InfoConstants.info, savedInfoList);
-    print('saved ${bool}');
+    
     // 업데이트된 리스트를 다시 SharedPreferences에 저장
     return result;
   }
 
   Future<List<Info>> getAll() async {
     final prefs = await SharedPreferences.getInstance();
-    print('check');
-    print(prefs.getStringList(InfoConstants.info));
     // 저장된 JSON 문자열 리스트 가져오기
     List<String> savedInfoList = prefs.getStringList(InfoConstants.info) ?? [];
 

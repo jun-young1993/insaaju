@@ -43,8 +43,7 @@ class AppNavigator {
     static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
     static Route onGenerateRoute(RouteSettings settings){
-          print("generate Route settings name ${settings.name}");
-
+        
           switch(settings.name){
             case _Paths.home:
               return FadeRoute(page: HomeScreen());

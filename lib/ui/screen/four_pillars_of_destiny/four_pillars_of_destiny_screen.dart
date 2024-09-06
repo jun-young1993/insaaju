@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/domain/entities/chat_complation.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
+import 'package:insaaju/states/info/info_selector.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/big_menu_button.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
@@ -32,7 +34,6 @@ class _FourPillarsOfDestinyScreenState extends State<FourPillarsOfDestinyScreen>
             children: [
               Expanded(
                   child: InfoFourPillarsOfDestinySelector((Info? fourPillarsOfDestinyUserInfo){
-                    print(fourPillarsOfDestinyUserInfo);
                     if(fourPillarsOfDestinyUserInfo == null){
                       return InfoCardListSection(
                         selectedIndex: -1,
@@ -43,7 +44,7 @@ class _FourPillarsOfDestinyScreenState extends State<FourPillarsOfDestinyScreen>
                         },
                       );  
                     }else{
-                      return FourPillarsOfDestinyMenus();
+                      return FourPillarsOfDestinyMenus(info: fourPillarsOfDestinyUserInfo);
                     }
                     
                   })

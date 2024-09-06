@@ -36,7 +36,7 @@ class CheckScreen extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           if(state.name != null && state.hanja!.isNotEmpty && state.date != null && state.time != null){
-                            final info = new Info(
+                            final info = Info(
                                 state.name!,
                                 state.hanja!.join(''),
                                 state.date!,

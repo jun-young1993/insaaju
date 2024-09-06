@@ -11,9 +11,22 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
   final CodeItemRepository _codeItemRepository;
   FourPillarsOfDestinyBloc(this._openaiRepository, this._codeItemRepository)
     : super(FourPillarsOfDestinyState.initialize())
-    {
+     {
       on(_onSetInfo);
       on(_onSendMessage);
+      on(_initialize);
+    }
+
+    Future<void> _initialize(
+      InitializeFourPillarsOfDestinyEvent event,
+      Emitter<FourPillarsOfDestinyState> emit
+    ) async {
+      try{
+        final fourPillarsOfDestinyData = await _openaiRepository.getAll(event.info);
+        emit(state.copyWith(fourPillarsOfDestinyData: fourPillarsOfDestinyData));
+      } on Exception catch (error) {
+        emit(state.asFailer(error));
+      }
     }
 
     Future<void> _onSetInfo(
@@ -21,6 +34,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       Emitter<FourPillarsOfDestinyState> emit
     )async {
       try{
+        add(InitializeFourPillarsOfDestinyEvent(info: event.info));
         emit(state.asSetInfo(event.info));
       } on Exception catch(error){
         emit(state.asFailer(error));
@@ -40,14 +54,21 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
         final String message = codeItem.value;
         
         final chatComplation = await _openaiRepository.sendMessage(
-          CodeConstants.prompt_template, 
+          CodeConstants.four_pillars_of_destiny, 
           message
         );
-        print(chatComplation);
-        // await _fourPillarsOfDestinyRepository.sendMessage(event.fourPillarsOfDestinyType);
-        // print(emit.type);
+        final bool saved = await _openaiRepository.save(
+          event.fourPillarsOfDestinyType, 
+          chatComplation,
+          event.info
+        );
+        add(InitializeFourPillarsOfDestinyEvent(info: event.info));
+        if(!saved){
+          throw Exception('fail saved');
+        }
+        
       } on Exception catch(error){
-        print(error);
+        
         emit(state.asFailer(error));
       }
     }
