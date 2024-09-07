@@ -31,3 +31,11 @@ class FourPillarsOfDestinyDataSelector extends FourPillarsOfDestinySelector<Map<
     );
 }
 
+class LoadingFourPillarsOfDestinySelector extends FourPillarsOfDestinySelector<bool> {
+    LoadingFourPillarsOfDestinySelector(Widget Function(bool) builder)
+        :super(
+          selector: (state) => state.loading,
+          builder: builder
+    );
+}
+

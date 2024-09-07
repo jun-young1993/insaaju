@@ -58,7 +58,7 @@ class NameScreen extends StatelessWidget {
                     );
                   }
                 },
-                child: Text('OK'),
+                child: Text('다음'),
               ),
             ],
         ),

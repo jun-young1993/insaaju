@@ -10,6 +10,7 @@ import 'package:insaaju/ui/screen/info/birth_time_screen.dart';
 import 'package:insaaju/ui/screen/info/check_screen.dart';
 import 'package:insaaju/ui/screen/info/hanja_screen.dart';
 import 'package:insaaju/ui/screen/info/name_screen.dart';
+import 'package:insaaju/ui/screen/widget/app_background.dart';
 
 
 class InfoScreen extends StatefulWidget {
@@ -22,8 +23,8 @@ class _InfoScreenState extends State<InfoScreen> {
   InfoBloc get infoBloc => context.read<InfoBloc>();
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      body: SafeArea(
+    return AppBackground(
+      child: SafeArea(
         child: InfoStateSelector((info){
           if(info.status == InfoStatus.saving){
             return Text('저장중입니다.');

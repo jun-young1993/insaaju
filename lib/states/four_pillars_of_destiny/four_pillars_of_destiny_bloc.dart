@@ -15,6 +15,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       on(_onSetInfo);
       on(_onSendMessage);
       on(_initialize);
+      on(_onUnSelected);
     }
 
     Future<void> _initialize(
@@ -41,34 +42,45 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       }
     }
 
+    Future<void> _onUnSelected(
+        UnSelectedInfoFourPillarsOfDestinyEvent event,
+        Emitter<FourPillarsOfDestinyState> emit
+    )async {
+      try{
+        emit(state.asInitialize());
+      } on Exception catch( error ){
+        emit(state.asFailer(error));
+      }
+    }
+
     Future<void> _onSendMessage(
       SendMessageFourPillarsOfDestinyEvent event,
       Emitter<FourPillarsOfDestinyState> emit
     ) async {
       try{
-        
-        final CodeItem codeItem = await _codeItemRepository.fetchCodeItem(
-          CodeConstants.message,
-          event.fourPillarsOfDestinyType.getValue()
+        emit(state.asLoading(true));
+        final String message = event.info.toMessage(
+          event.fourPillarsOfDestinyType,
         );
-        final String message = codeItem.value;
         
-        final chatComplation = await _openaiRepository.sendMessage(
-          CodeConstants.four_pillars_of_destiny, 
+        final chatCompilation = await _openaiRepository.sendMessage(
+          event.fourPillarsOfDestinyType.getValue(),
+          event.modelCode,
           message
         );
+
         final bool saved = await _openaiRepository.save(
-          event.fourPillarsOfDestinyType, 
-          chatComplation,
+          event.fourPillarsOfDestinyType,
+          chatCompilation,
           event.info
         );
         add(InitializeFourPillarsOfDestinyEvent(info: event.info));
         if(!saved){
           throw Exception('fail saved');
         }
-        
+        emit(state.asLoading(false));
       } on Exception catch(error){
-        
+
         emit(state.asFailer(error));
       }
     }

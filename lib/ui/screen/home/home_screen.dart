@@ -8,6 +8,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBackground(
+      showBackIcon: false,
+      isBackground: true,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

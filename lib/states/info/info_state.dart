@@ -37,7 +37,7 @@ class InfoState {
 
     return copyWith(
       name: name,
-      menu: InfoMenu.hanja
+      menu: InfoMenu.birthDate
     );
   }
 

@@ -1,44 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b19cb426-f618-4a88-b4f5-2cd2fef40034" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/configs/info_constants.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/list/list_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/list/list_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/list/list_selector.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/list/list_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/list/list_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_card.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_card_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+    <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/images/background.HEIC" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/background.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/loading_dialog.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/insaaju_android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android/insaaju_android.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insaaju.iml" beforeDir="false" afterPath="$PROJECT_DIR$/insaaju.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/info_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/info_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/configs/code_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configs/code_constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/domain/entities/info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/repository/openai_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/openai_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/states/info/info_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/sections/four_pilars_of_destiny_menus.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/sections/four_pillars_of_destiny_menus.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/hanja_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/hanja_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/info_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/info_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/name_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/name_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/big_menu_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/big_menu_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/DebugProfile.entitlements" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Runner/DebugProfile.entitlements" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,19 +60,25 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/insaaju",
+    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/insaaju/assets/images",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info_list" />
       <recent name="$PROJECT_DIR$/lib/states/list/selections" />
@@ -88,12 +87,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="디폴트 작업">
-      <changelist id="b19cb426-f618-4a88-b4f5-2cd2fef40034" name="변경" comment="" />
+      <changelist id="" name="변경" comment="" />
       <created>1725070802361</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1725070802361</updated>
-      <workItem from="1725070804287" duration="21329000" />
+      <workItem from="1725070804287" duration="22592000" />
+      <workItem from="1725181629130" duration="12000" />
+      <workItem from="1725181754122" duration="638000" />
+      <workItem from="1725627662555" duration="98000" />
+      <workItem from="1725627823750" duration="22837000" />
     </task>
     <servers />
   </component>

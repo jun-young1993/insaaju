@@ -5,13 +5,15 @@ class BigMenuButton extends StatelessWidget{
   final VoidCallback? onPress;
   final Widget? child;
   final double height;
+  final double fontSize;
 
   const BigMenuButton({
     super.key, 
     this.context, 
     this.onPress, 
     this.child,
-    this.height = 60
+    this.height = 60,
+    this.fontSize = 16
   });
 
   @override
@@ -25,7 +27,7 @@ class BigMenuButton extends StatelessWidget{
             borderRadius: BorderRadius.circular(12.0),
           ),
           padding: EdgeInsets.symmetric(vertical: 16.0),
-          textStyle: TextStyle(fontSize: 18.0), // 버튼 텍스트의 크기를 설정
+          textStyle: TextStyle(fontSize: fontSize), // 버튼 텍스트의 크기를 설정
         ),
         onPressed: () {
           if(onPress != null){

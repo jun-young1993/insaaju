@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class OpenaiRepository {
-  Future<ChatComplation> sendMessage(String templateCode, String message);
+  Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message);
   Future<bool> save(FourPillarsOfDestinyType type, ChatComplation chatComplation, Info info);
   Future<Map<FourPillarsOfDestinyType,ChatComplation?>> getAll(Info info);
 }
@@ -25,9 +25,9 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   
   
   @override
-  Future<ChatComplation> sendMessage(String templateCode, String message) async {
+  Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message) async {
     
-    final url = Uri.parse('$baseUrl/openai/send-message/$templateCode');
+    final url = Uri.parse('$baseUrl/openai/send-message/$templateCode/$modelCode');
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
       // 현재 시간을 가져오기
@@ -36,7 +36,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
       '$secretKey-$currentTime',
       secretKey
     );
-    
+    print(xAccessToken);
     final headers = {
           'Content-Type': 'application/json',
           'x-access-token': xAccessToken

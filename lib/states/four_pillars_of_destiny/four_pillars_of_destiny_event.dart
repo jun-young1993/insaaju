@@ -21,11 +21,16 @@ class SelectedInfoFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent{
 class SendMessageFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
   final FourPillarsOfDestinyType fourPillarsOfDestinyType;
   final Info info;
+  final String modelCode;
 
   SendMessageFourPillarsOfDestinyEvent({
     required this.fourPillarsOfDestinyType,
-    required this.info
+    required this.info,
+    required this.modelCode
   });
   
 }
 
+class UnSelectedInfoFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
+  UnSelectedInfoFourPillarsOfDestinyEvent();
+}
