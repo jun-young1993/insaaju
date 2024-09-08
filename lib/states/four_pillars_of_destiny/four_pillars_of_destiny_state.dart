@@ -30,20 +30,65 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
         return '십신(十神) 분석';
       case FourPillarsOfDestinyType.daewoon:
         return '대운(大運)';
-      // case FourPillarsOfDestinyType.marriageFortune:
-      //   return '결혼운';
-      // case FourPillarsOfDestinyType.wealthFortune:
-      //   return '재물운';
-      // case FourPillarsOfDestinyType.careerFortune:
-      //   return '직업운';
-      // case FourPillarsOfDestinyType.healthFortune:
-      //   return '건강운';
-      default: 
+    // case FourPillarsOfDestinyType.marriageFortune:
+    //   return '결혼운';
+    // case FourPillarsOfDestinyType.wealthFortune:
+    //   return '재물운';
+    // case FourPillarsOfDestinyType.careerFortune:
+    //   return '직업운';
+    // case FourPillarsOfDestinyType.healthFortune:
+    //   return '건강운';
+      default:
         throw UnknownException<FourPillarsOfDestinyType>(this);
     }
-    
+
   }
 }
+
+enum FourPillarsOfDestinyCompatibilityType {
+  personalityCompatibility,     // 성격 궁합
+  destinyCompatibility,         // 운명 궁합
+  marriageCompatibility,        // 결혼 생활 궁합
+  // wealthCompatibility,          // 재물 궁합
+  childrenCompatibility,        // 자녀 궁합
+  // healthCompatibility,          // 건강 궁합
+  // socialStatusCompatibility,    // 사회적 지위와 명예 궁합
+  sexualCompatibility,          // 성적 궁합
+  // psychologicalCompatibility,   // 심리적 궁합
+  // luckFlowCompatibility,        // 대운 흐름 궁합
+  // unionCompatibility,           // 합(合)의 궁합
+  // conflictCompatibility,        // 충(沖), 형(刑), 파(破), 해(害)의 궁합
+  // spousePalaceCompatibility,    // 배우자궁(일지) 궁합
+}
+
+extension FourPillarsOfDestinyCompatibilityTypeExtension on FourPillarsOfDestinyCompatibilityType {
+  String getValue() {
+    return this
+        .toString()
+        .split('.')
+        .last;
+  }
+
+  String getTitle(){
+    switch(this){
+      case FourPillarsOfDestinyCompatibilityType.personalityCompatibility:
+        return '성격 궁합';
+      case FourPillarsOfDestinyCompatibilityType.destinyCompatibility:
+        return '운명 궁합';
+      case FourPillarsOfDestinyCompatibilityType.marriageCompatibility:
+        return '경혼 생활 궁합';
+      case FourPillarsOfDestinyCompatibilityType.childrenCompatibility:
+        return '자녀 궁합';
+      case FourPillarsOfDestinyCompatibilityType.sexualCompatibility:
+        return '성적 궁합';
+      default:
+        throw UnknownException<FourPillarsOfDestinyCompatibilityType>(this);
+    }
+
+  }
+}
+
+
 
 class FourPillarsOfDestinyState {
   final Info? info;

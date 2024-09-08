@@ -32,9 +32,17 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 16),
               _buildMenuButton(
                   context,
-                  '사주보기',
+                  '사주',
                   onPress: (){
                     AppNavigator.push(Routes.four_pillars_of_destiny);
+                  }
+              ),
+              SizedBox(height: 16),
+              _buildMenuButton(
+                  context,
+                  '궁합',
+                  onPress: (){
+                    AppNavigator.push(Routes.compatibility);
                   }
               ),
             ],

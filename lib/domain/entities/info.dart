@@ -10,7 +10,7 @@ class Info {
 
   @override
   String toString(){
-    return '$name.$hanja.$date.$time';
+    return '$name.$date.$time';
   }
 
   String toMessage(FourPillarsOfDestinyType type){

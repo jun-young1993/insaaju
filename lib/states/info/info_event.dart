@@ -46,3 +46,15 @@ class SaveEvent extends InfoEvent {
     required this.info
   });
 }
+
+class CheckEvent extends InfoEvent {
+  final Info info;
+  const CheckEvent({
+    required this.info
+  });
+}
+
+class InfoInitializeEvent extends InfoEvent {
+
+  const InfoInitializeEvent();
+}

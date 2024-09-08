@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/ui/screen/compatibility/compatibility_screen.dart';
 import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destiny_screen.dart';
 import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
@@ -20,7 +21,8 @@ enum Routes {
   home,
   info,
   list,
-  four_pillars_of_destiny
+  four_pillars_of_destiny,
+  compatibility
 }
 
 class _Paths {
@@ -28,12 +30,14 @@ class _Paths {
   static const String info = 'info';
   static const String list = 'list';
   static const String four_pillars_of_destiny = 'four_pillars_of_destiny';
+  static const String compatibility = 'compatibility';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
     Routes.info: _Paths.info,
     Routes.list: _Paths.list,
-    Routes.four_pillars_of_destiny: _Paths.four_pillars_of_destiny
+    Routes.four_pillars_of_destiny: _Paths.four_pillars_of_destiny,
+    Routes.compatibility: _Paths.compatibility
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -53,6 +57,8 @@ class AppNavigator {
               return FadeRoute(page: ListScreen());
             case _Paths.four_pillars_of_destiny:
               return FadeRoute(page: FourPillarsOfDestinyScreen());
+            case _Paths.compatibility:
+              return FadeRoute(page: CompatibilityScreen());
             default:
               return FadeRoute(page: HomeScreen());
           }

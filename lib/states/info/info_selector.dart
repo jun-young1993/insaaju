@@ -36,3 +36,19 @@ class InfoStateSelector extends InfoSelector<InfoState> {
     builder: builder
   );
 }
+
+class InfoMenuSelector extends InfoSelector<InfoMenu> {
+  InfoMenuSelector(Widget Function(InfoMenu) builder)
+  : super(
+    selector: (state) => state.menu,
+    builder:builder
+  );
+}
+
+class InfoFailSelector extends InfoSelector<Exception?> {
+  InfoFailSelector(Widget Function(Exception?) builder)
+      : super(
+      selector: (state) => state.error,
+      builder:builder
+  );
+}

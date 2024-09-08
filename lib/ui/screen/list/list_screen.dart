@@ -3,10 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
 import 'package:insaaju/states/list/list_event.dart';
-import 'package:insaaju/states/list/list_selector.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
-import 'package:insaaju/ui/screen/widget/button.dart';
-import 'package:insaaju/ui/screen/widget/info_card.dart';
 import 'package:insaaju/ui/screen/widget/info_list/info_card_list.dart';
 
 class ListScreen extends StatefulWidget {
@@ -33,9 +30,6 @@ class _ListScreenState extends State<ListScreen> {
             children: [
               Expanded(
                 child: InfoCardListSection(
-                  onSelected: (info){
-
-                  },
                 )
               ),
             ],

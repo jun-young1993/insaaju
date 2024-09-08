@@ -10,9 +10,15 @@ import 'package:insaaju/ui/screen/widget/info_card.dart';
 import 'package:insaaju/ui/screen/widget/show_alert_dialog.dart';
 
 class InfoCardListSection extends StatefulWidget {
-  final Function(Info)? onSelected;
+  final Function(Info, int)? onSelected;
   final int selectedIndex;
-  const InfoCardListSection({super.key, this.onSelected, this.selectedIndex = 1});
+  final bool autoSelect;
+  const InfoCardListSection({
+    super.key,
+    this.onSelected,
+    this.selectedIndex = 1,
+    this.autoSelect = true
+  });
 
   @override
   _InfoCardListSectionState createState() => _InfoCardListSectionState();
@@ -29,6 +35,17 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
   }
 
   @override
+  void didUpdateWidget(covariant InfoCardListSection oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // 선택된 인덱스가 바뀌었을 때 상태 업데이트
+    if (widget.selectedIndex != oldWidget.selectedIndex) {
+      setState(() {
+        selectedIndex = widget.selectedIndex;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context){
     return AllListSelector((list) {
       if(list!.length == 0){
@@ -41,11 +58,14 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
           itemBuilder: (context, index){
             return GestureDetector(
                 onTap: (){
-                  setState(() {
-                    selectedIndex = index;
-                  });
+                  if(widget.autoSelect){
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  }
+
                   if(widget.onSelected != null){
-                    widget.onSelected!(list[index]);
+                    widget.onSelected!(list[index], index);
                   }
                 },
                 child: InfoCard(

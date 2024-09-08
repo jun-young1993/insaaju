@@ -3,12 +3,14 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:insaaju/configs/info_constants.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/exceptions/duplicate_exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class InfoRepository {
   Future<Map<String, dynamic>> loadHanjaJson();
   Future<List<List<Map<String, dynamic>>>> getHanjaByCharacters(List<String> characters);
   Future<bool> save(Info info);
+  Future<bool> check(Info info);
   Future<List<Info>> getAll();
 }
 class InfoDefaultRepository extends InfoRepository{
@@ -47,6 +49,36 @@ class InfoDefaultRepository extends InfoRepository{
     }
 
     return hanjaList;
+  }
+
+  Future<bool> check(Info info) async {
+    final prefs = await SharedPreferences.getInstance();
+    // 기존에 저장된 정보 리스트 가져오기
+    List<String> savedInfoList = prefs.getStringList(InfoConstants.info) ?? [];
+
+    // JSON 문자열을 다시 Info 객체로 변환하여 중복 여부 확인
+    List<Info> savedInfos = savedInfoList.map((jsonString) {
+      Map<String, dynamic> infoMap = jsonDecode(jsonString);
+      return Info(
+        infoMap['name'],
+        infoMap['hanja'],
+        infoMap['date'],
+        infoMap['time'],
+      );
+    }).toList();
+
+    // 중복 여부를 확인: 동일한 name, hanja, date, time 값이 있는지 체크
+    bool isDuplicate = savedInfos.any((savedInfo) =>
+    savedInfo.name == info.name &&
+        savedInfo.hanja == info.hanja &&
+        savedInfo.date == info.date &&
+        savedInfo.time == info.time);
+
+    // 중복이 있다면 저장하지 않고 false 반환
+    if (isDuplicate) {
+      throw DuplicateException<String>(info.toString());
+    }
+    return isDuplicate;
   }
 
   Future<bool> save(Info info) async {

@@ -11,6 +11,8 @@ import 'package:insaaju/utills/aes_crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../exceptions/duplicate_exception.dart';
+
 abstract class OpenaiRepository {
   Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message);
   Future<bool> save(FourPillarsOfDestinyType type, ChatComplation chatComplation, Info info);
@@ -58,6 +60,38 @@ class OpenaiDefaultRepository extends OpenaiRepository {
       throw CommonException.fromResponse(response);
     }
 
+  }
+
+  Future<bool> compatibilityCheck(
+      FourPillarsOfDestinyCompatibilityType type,
+      List<Info> info
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> savedInfoKeyList = prefs.getStringList(type.toString()) ?? [];
+
+    bool isDuplicate = savedInfoKeyList.any((saveKey) => info[0].toString()+info[1].toString() == saveKey);
+    if (isDuplicate) {
+      throw DuplicateException<String>(info[0].toString()+info[1].toString());
+    }
+    return isDuplicate;
+  }
+
+  Future<bool> saveCompatibility(
+      FourPillarsOfDestinyCompatibilityType type,
+      List<Info> info,
+      ChatComplation chatComplation
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> savedInfoKeyList = prefs.getStringList(type.toString()) ?? [];
+    compatibilityCheck(
+      type,
+      info
+    );
+
+    savedInfoKeyList.add(info[0].toString()+info[1].toString());
+    await prefs.setStringList(type.toString(), savedInfoKeyList);
+    final bool result = await prefs.setString(info[0].toString()+info[1].toString(), chatComplation.toString());
+    return result;
   }
 
   Future<bool> save(FourPillarsOfDestinyType type, ChatComplation chatComplation, Info info) async {

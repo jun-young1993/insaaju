@@ -45,7 +45,7 @@ class _FourPillarsOfDestinyScreenState extends State<FourPillarsOfDestinyScreen>
                     child:  (fourPillarsOfDestinyUserInfo == null)
                         ? InfoCardListSection(
                       selectedIndex: -1,
-                      onSelected: (info) {
+                      onSelected: (info, index) {
                         setState(() {
                           fourPillarsOfDestinyBloc.add(
                               SelectedInfoFourPillarsOfDestinyEvent(

@@ -30,6 +30,18 @@ class SendMessageFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
   });
   
 }
+class SendMessageFourPillarsOfDestinyCompatibilityEvent extends FourPillarsOfDestinyEvent {
+  final FourPillarsOfDestinyCompatibilityType fourPillarsOfDestinyCompatibilityType;
+  final List<Info> info;
+  final String modelCode;
+
+  SendMessageFourPillarsOfDestinyCompatibilityEvent({
+    required this.fourPillarsOfDestinyCompatibilityType,
+    required this.info,
+    required this.modelCode
+  });
+
+}
 
 class UnSelectedInfoFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
   UnSelectedInfoFourPillarsOfDestinyEvent();

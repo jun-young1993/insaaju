@@ -5,6 +5,7 @@ import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
+import 'package:insaaju/utills/format_string.dart';
 
 class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPillarsOfDestinyState>{
   final OpenaiRepository _openaiRepository;
@@ -16,6 +17,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       on(_onSendMessage);
       on(_initialize);
       on(_onUnSelected);
+      on(_onSendCompatibilityMessage);
     }
 
     Future<void> _initialize(
@@ -48,6 +50,28 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
     )async {
       try{
         emit(state.asInitialize());
+      } on Exception catch( error ){
+        emit(state.asFailer(error));
+      }
+    }
+
+    Future<void> _onSendCompatibilityMessage(
+        SendMessageFourPillarsOfDestinyCompatibilityEvent event,
+        Emitter<FourPillarsOfDestinyState> emit
+    ) async {
+      try {
+        final CodeItem messageCodeItem = await _codeItemRepository.fetchCodeItem(
+            CodeConstants.four_pillars_of_destiny_compatibility_message_template,
+            event.fourPillarsOfDestinyCompatibilityType.getValue()
+        );
+        final message = formatString(
+            messageCodeItem.value,
+            [
+              event.info[0].name,event.info[0].date, event.info[0].time,
+              event.info[1].name,event.info[1].date, event.info[1].time
+            ]
+        );
+        print(message);
       } on Exception catch( error ){
         emit(state.asFailer(error));
       }

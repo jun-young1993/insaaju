@@ -15,6 +15,8 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onInputHanja);
     on(_onChangeMenu);
     on(_onSave);
+    on(_onCheck);
+    on(_onInitialize);
   }
 
   Future<void> _onInputName(
@@ -80,6 +82,18 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     }
   }
 
+  Future<void> _onCheck(
+    CheckEvent event,
+    Emitter<InfoState> emit
+  ) async {
+    try{
+      await _infoRepository.check(event.info);
+      add(SaveEvent(info: event.info));
+    } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
   Future<void> _onSave(
     SaveEvent event,
     Emitter<InfoState> emit
@@ -88,6 +102,18 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       emit(state.asChangeStatus(InfoStatus.saving));
       _infoRepository.save(event.info);
       emit(state.asChangeStatus(InfoStatus.saved));
+    } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
+  Future<void> _onInitialize(
+      InfoInitializeEvent event,
+      Emitter<InfoState> emit
+  )async {
+    try {
+      print('hi');
+      emit(state.asInitialize());
     } on Exception catch(error){
       emit(state.asFailer(error));
     }

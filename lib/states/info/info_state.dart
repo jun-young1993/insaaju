@@ -14,7 +14,7 @@ class InfoState {
   final String? name;
   final List<String>? hanja;
   final Exception? error;
-  final InfoMenu? menu;
+  final InfoMenu menu;
   final String? date;
   final String? time;
   final InfoStatus? status;
@@ -39,6 +39,10 @@ class InfoState {
       name: name,
       menu: InfoMenu.birthDate
     );
+  }
+
+  InfoState asInitialize(){
+    return InfoState._();
   }
 
   InfoState asSetHanjaList(List<List<Map<String, dynamic>>> hanjaList){
