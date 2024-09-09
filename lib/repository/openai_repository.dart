@@ -15,8 +15,8 @@ import '../exceptions/duplicate_exception.dart';
 
 abstract class OpenaiRepository {
   Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message);
-  Future<bool> save(FourPillarsOfDestinyType type, ChatComplation chatComplation, Info info);
-  Future<Map<FourPillarsOfDestinyType,ChatComplation?>> getAll(Info info);
+
+
 }
 
 class OpenaiDefaultRepository extends OpenaiRepository {
@@ -94,28 +94,6 @@ class OpenaiDefaultRepository extends OpenaiRepository {
     return result;
   }
 
-  Future<bool> save(FourPillarsOfDestinyType type, ChatComplation chatComplation, Info info) async {
-    final prefs = await SharedPreferences.getInstance();
-    
 
-    final bool result = await prefs.setString(info.toString()+type.getValue(), chatComplation.toString());
-    
-    return result;
-  }
-
-  Future<Map<FourPillarsOfDestinyType,ChatComplation?>> getAll(Info info) async {
-    final prefs = await SharedPreferences.getInstance();
-    final Map<FourPillarsOfDestinyType,ChatComplation?> results = {};
-    for(var type in FourPillarsOfDestinyType.values){
-      final chatComplationJsonOrNull = prefs.getString(info.toString()+type.getValue());
-      if(chatComplationJsonOrNull == null){
-        results[type] = null;
-      }else{
-        results[type] = ChatComplation.fromJson(jsonDecode(chatComplationJsonOrNull));
-      }
-    }
-    return results;
-    // List<String> savedChatComplationList = prefs.getStringList(InfoConstants.info) ?? [];
-  }
 }
 

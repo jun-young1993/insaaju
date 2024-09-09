@@ -8,6 +8,10 @@ class Info {
   final String time;
   const Info(this.name, this.hanja, this.date, this.time);
 
+  String getTypeKey(FourPillarsOfDestinyType type){
+    return toString()+type.getValue();
+  }
+
   @override
   String toString(){
     return '$name.$date.$time';

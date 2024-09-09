@@ -9,6 +9,8 @@ import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
+
+import 'repository/four_pillars_of_destiny_repository.dart';
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
   runApp(
@@ -20,7 +22,12 @@ Future<void> main() async {
         RepositoryProvider<OpenaiRepository>(
           create: (context) => OpenaiDefaultRepository()
         ),
-        RepositoryProvider<CodeItemRepository>(create: (context) => CodeItemDefaultRepository())
+        RepositoryProvider<CodeItemRepository>(
+            create: (context) => CodeItemDefaultRepository()
+        ),
+        RepositoryProvider<FourPillarsOfDestinyRepository>(
+          create: (context) => FourPillarsOfDestinyDefaultRepository()
+        )
       ], 
       child: MultiBlocProvider(
         providers: [
@@ -36,7 +43,8 @@ Future<void> main() async {
           ),
           BlocProvider(create: (context) => FourPillarsOfDestinyBloc(
               context.read<OpenaiRepository>(),
-              context.read<CodeItemRepository>()
+              context.read<CodeItemRepository>(),
+              context.read<FourPillarsOfDestinyRepository>()
           ))
         ],
         child: MyApp()

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/configs/code_constants.dart';
 import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
+import 'package:insaaju/repository/four_pillars_of_destiny_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
@@ -10,7 +11,12 @@ import 'package:insaaju/utills/format_string.dart';
 class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPillarsOfDestinyState>{
   final OpenaiRepository _openaiRepository;
   final CodeItemRepository _codeItemRepository;
-  FourPillarsOfDestinyBloc(this._openaiRepository, this._codeItemRepository)
+  final FourPillarsOfDestinyRepository _fourPillarsOfDestinyRepository;
+  FourPillarsOfDestinyBloc(
+      this._openaiRepository,
+      this._codeItemRepository,
+      this._fourPillarsOfDestinyRepository
+  )
     : super(FourPillarsOfDestinyState.initialize())
      {
       on(_onSetInfo);
@@ -25,7 +31,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       Emitter<FourPillarsOfDestinyState> emit
     ) async {
       try{
-        final fourPillarsOfDestinyData = await _openaiRepository.getAll(event.info);
+        final fourPillarsOfDestinyData = await _fourPillarsOfDestinyRepository.getFourPillarsOfDestinyList(event.info);
         emit(state.copyWith(fourPillarsOfDestinyData: fourPillarsOfDestinyData));
       } on Exception catch (error) {
         emit(state.asFailer(error));
@@ -93,7 +99,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
           message
         );
 
-        final bool saved = await _openaiRepository.save(
+        final bool saved = await _fourPillarsOfDestinyRepository.saveFourPillarsOfDestiny(
           event.fourPillarsOfDestinyType,
           chatCompilation,
           event.info
