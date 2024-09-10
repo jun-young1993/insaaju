@@ -17,11 +17,15 @@ class Info {
     return '$name.$date.$time';
   }
 
+  bool compare(Info info){
+    return name == info.name && hanja == info.hanja && date == info.date && time == info.time;
+  }
+
   String toMessage(FourPillarsOfDestinyType type){
     switch(type){
       case FourPillarsOfDestinyType.fourPillarsOfDestiny:
         return '''
-          Please analyze the Four Pillars (Saju).
+          Please analyze the Four Pillars (Saju) for $name.
           The person's birth date is $date $time.
           Based on this birth information, please calculate the Four Pillars:
           - Year Pillar
@@ -49,7 +53,7 @@ class Info {
           ''';
       case FourPillarsOfDestinyType.daewoon:
         return  '''
-          Please analyze the Four Pillars (Saju).
+          Please analyze the Four Pillars (Saju) for $name.
           The person's birth date is $date $time.
           Based on this birth information, please calculate the Four Pillars:
         
@@ -59,7 +63,7 @@ class Info {
           ''';
       case FourPillarsOfDestinyType.sipsinAnalysis:
         return '''
-          Please analyze the Four Pillars (Saju).
+          Please analyze the Four Pillars (Saju) for $name.
           The person's birth date is $date $time.
           Based on this birth information, please calculate the Four Pillars:
         

@@ -13,11 +13,14 @@ class InfoCardListSection extends StatefulWidget {
   final Function(Info, int)? onSelected;
   final int selectedIndex;
   final bool autoSelect;
+  final Info? disableInfo;
+
   const InfoCardListSection({
     super.key,
     this.onSelected,
     this.selectedIndex = 1,
-    this.autoSelect = true
+    this.autoSelect = true,
+    this.disableInfo
   });
 
   @override
@@ -26,11 +29,13 @@ class InfoCardListSection extends StatefulWidget {
 class _InfoCardListSectionState extends State<InfoCardListSection> {
   ListBloc get listBloc => context.read<ListBloc>();
   late int selectedIndex;
+  late Info? disableInfo;
 
   @override
   void initState(){
     super.initState();
     selectedIndex = widget.selectedIndex;
+    disableInfo = widget.disableInfo;
     listBloc.add(const AllListEvent());
   }
 
@@ -43,6 +48,7 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
         selectedIndex = widget.selectedIndex;
       });
     }
+    disableInfo = widget.disableInfo;
   }
 
   @override
@@ -56,20 +62,28 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
       return ListView.builder(
           itemCount: list!.length,
           itemBuilder: (context, index){
+            
             return GestureDetector(
                 onTap: (){
-                  if(widget.autoSelect){
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  }
+                  if(!_isDisable(disableInfo,list[index])){
+                    if(widget.autoSelect){
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    }
 
-                  if(widget.onSelected != null){
-                    widget.onSelected!(list[index], index);
+                    if(widget.onSelected != null){
+                      widget.onSelected!(list[index], index);
+                    }  
                   }
+                  
                 },
                 child: InfoCard(
-                  color: selectedIndex == index ? Colors.green.shade100 : Colors.white,
+                  color: _isDisable(disableInfo,list[index])
+                  ? Colors.grey 
+                  : (selectedIndex == index) 
+                    ? Colors.green.shade100 
+                    : Colors.white,
                   name: list[index].name,
                   hanja: list[index].hanja,
                   date: list[index].date,
@@ -79,5 +93,12 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
           }
       );
     });
+  }
+
+  bool _isDisable(Info? disableInfo, Info currentInfo){
+    if(disableInfo == null){
+      return false;
+    }
+    return disableInfo.compare(currentInfo);
   }
 }

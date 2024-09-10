@@ -54,11 +54,13 @@ class _CompatibilityMultiLstState extends State<CompatibilityMultiList> {
                 selectedInfo: selectedInfoA,
                 selectedIndex: selectedIndexA,
                 onSelected: onSelectedA,
+                disableInfo: selectedInfoB,
               ),
               CompatibilityList(
                 selectedInfo: selectedInfoB,
                 selectedIndex: selectedIndexB,
                 onSelected: onSelectedB,
+                disableInfo: selectedInfoA,
               ),
             ],
           ),
@@ -101,12 +103,14 @@ class CompatibilityList extends StatefulWidget {
   final Info? selectedInfo;
   final int selectedIndex;
   final Function(Info? info, int index) onSelected;
+  final Info? disableInfo;
 
   const CompatibilityList({
     super.key,
     this.selectedInfo,
     required this.selectedIndex,
-    required this.onSelected
+    required this.onSelected, 
+    this.disableInfo
   });
 
   @override
@@ -119,20 +123,20 @@ class _CompatibilityListState extends State<CompatibilityList> {
     return _buildList(
         widget.selectedInfo,
         widget.selectedIndex,
+        widget.disableInfo,
         (info, index){
-
           if(index == widget.selectedIndex){
             widget.onSelected(null, -1);
           }else{
             widget.onSelected(info, index);
           }
-
         }
     );
   }
   Widget _buildList(
       Info? info,
       int selectedIndex,
+      Info? disableInfo,
       Function(Info, int) onSelected
       ){
     return Expanded(
@@ -142,6 +146,7 @@ class _CompatibilityListState extends State<CompatibilityList> {
           Expanded(
               child: InfoCardListSection(
                 // key: ValueKey(selectedIndex),
+                  disableInfo: disableInfo,
                   selectedIndex: selectedIndex,
                   autoSelect: false,
                   onSelected: onSelected

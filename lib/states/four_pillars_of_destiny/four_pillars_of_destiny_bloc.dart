@@ -88,9 +88,18 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       Emitter<FourPillarsOfDestinyState> emit
     ) async {
       try{
-        emit(state.asLoading(true));
-        final String message = event.info.toMessage(
-          event.fourPillarsOfDestinyType,
+          emit(state.asLoading(true));
+          final CodeItem messageCodeItem = await _codeItemRepository.fetchCodeItem(
+            CodeConstants.four_pillars_of_destiny_message_template,
+            event.fourPillarsOfDestinyType.getValue()
+        );
+        final message = formatString(
+            messageCodeItem.value,
+            [
+              event.info.name,
+              event.info.date, 
+              event.info.time,
+            ]
         );
         
         final chatCompilation = await _openaiRepository.sendMessage(
