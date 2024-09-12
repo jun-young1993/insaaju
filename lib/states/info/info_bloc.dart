@@ -112,7 +112,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       Emitter<InfoState> emit
   )async {
     try {
-      print('hi');
       emit(state.asInitialize());
     } on Exception catch(error){
       emit(state.asFailer(error));

@@ -49,11 +49,11 @@ class _AppBackgroundState extends State<AppBackground> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          if(widget.isBackground)
-            Image.asset(
-              'assets/images/background.jpeg',
-              fit: BoxFit.cover,
-            ),
+          // if(widget.isBackground)
+          //   Image.asset(
+          //     'assets/images/background.jpeg',
+          //     fit: BoxFit.cover,
+          //   ),
           widget.child,
           if (widget.isLoading) // 로딩 상태가 true일 때 로딩 위젯을 표시
             _LoadingOverlay(
