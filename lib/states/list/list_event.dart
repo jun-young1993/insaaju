@@ -5,7 +5,3 @@ abstract class ListEvent {
 class AllListEvent extends ListEvent {
   const AllListEvent();
 }
-
-class MeEvent extends ListEvent {
-  const MeEvent();
-}

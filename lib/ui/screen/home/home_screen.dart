@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insaaju/routes.dart';
+import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
-import 'package:insaaju/ui/screen/info/info_screen.dart';
-import 'package:insaaju/ui/screen/list/list_screen.dart';
+import 'package:insaaju/states/list/list_event.dart';
+import 'package:insaaju/states/list/list_selector.dart';
+import 'package:insaaju/states/list/list_state.dart';
+import 'package:insaaju/states/me/me_bloc.dart';
+import 'package:insaaju/states/me/me_event.dart';
+import 'package:insaaju/states/me/me_selector.dart';
+import 'package:insaaju/states/me/me_state.dart';
+import 'package:insaaju/states/section/section_selector.dart';
+import 'package:insaaju/states/section/section_state.dart';
+import 'package:insaaju/ui/screen/section/plus_people.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
-import 'package:insaaju/ui/screen/widget/big_menu_button.dart';
+import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
+import 'package:insaaju/ui/screen/widget/info_list/info_row.dart';
+import 'package:insaaju/ui/screen/widget/loading_box.dart';
+import 'package:insaaju/ui/screen/widget/text.dart';
+part 'sections/people_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,83 +27,69 @@ class HomeScreen extends StatefulWidget {
 
 }
 class _HomeScreenState extends State<HomeScreen> {
-ListBloc get listBloc => context.read<ListBloc>();
-
-@override
-void initState(){
-  super.initState();
-
-}
-
-@override
-Widget build(BuildContext context) {
-  return AppBackground(
-    showBackIcon: false,
-    isBackground: true,
-    child: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              _buildTop(),
-              
-            ],
-        ),
-      )
-    )
-  );
-}
-
-Widget _buildTop(){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      _buildTitle(),
-      _buildTopMenuIconButtons()
-    ],
-  );
-}
-
-Widget _buildTitle(){
-  return const Text(
-    '친구',
-    style: TextStyle(
-      fontSize: 24.0,
-      fontWeight: FontWeight.bold
-    )
-  );
-}
+  ListBloc get listBloc => context.read<ListBloc>();
+  MeBloc get meBloc => context.read<MeBloc>();
 
 
-Widget _buildTopMenuIconButtons(){
-  return Row(
-    children: [
-      IconButton(
-        onPressed: (){
-          
-        }, 
-        icon: const Icon(Icons.search)
-      ),
-      SizedBox(width: 10,),
-      IconButton(
-        onPressed: (){
-          
-        }, 
-        icon: const Icon(Icons.person_add),
-      )
-    ],
-  );
-}
+  @override
+  void initState(){
+    super.initState();
+    meBloc.add(const FindMeEvent());
+    listBloc.add(const AllListEvent());
+  }
 
-Widget _buildMenuButton(
-      BuildContext context,
-      String name,
-      {VoidCallback? onPress}
-) {
-    return BigMenuButton(
-      onPress: onPress,
-      child: Text(name),
+  @override
+  Widget build(BuildContext context) {
+    return ShowSectionSelector((section) {
+      return FullScreenOverlay(
+        defaultWidget: _buildDefault(),
+        child: _buildOverlay(section)
+      );
+    });
+  }
+
+  Widget? _buildOverlay(SectionType section){
+    switch(section){
+      default: 
+        return PlusPeople();
+    }
+    
+  }
+
+  Widget _buildDefault(){
+    return AppBackground(
+      appBar: _buildAppBar(),
+      showBackIcon: false,
+      isBackground: true,
+      child: PeopleList()
+    );
+  }
+  AppBar _buildAppBar(){
+    return AppBar(
+      leading: const TitleText(text: 'HOME'),
+      leadingWidth: 80.0,
+      actions: [
+        _buildSearchIcon(),
+        _buildAddPeople()
+      ],
+    );
+  }
+
+  Widget _buildSearchIcon(){
+    return IconButton(
+      onPressed: (){
+        
+      }, 
+      icon: const Icon(Icons.search)
+    );
+  }
+
+  Widget _buildAddPeople(){
+    return   IconButton(
+      onPressed: (){
+        
+      }, 
+      icon: const Icon(Icons.person_add),
     );
   }
 }

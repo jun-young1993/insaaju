@@ -9,6 +9,8 @@ import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
+import 'package:insaaju/states/me/me_bloc.dart';
+import 'package:insaaju/states/section/section_bloc.dart';
 
 import 'repository/four_pillars_of_destiny_repository.dart';
 Future<void> main() async {
@@ -45,7 +47,13 @@ Future<void> main() async {
               context.read<OpenaiRepository>(),
               context.read<CodeItemRepository>(),
               context.read<FourPillarsOfDestinyRepository>()
-          ))
+          )),
+          BlocProvider(
+            create: (context) => MeBloc(
+              context.read<InfoRepository>()
+            )
+          ),
+          BlocProvider(create: (context) => SectionBloc())
         ],
         child: MyApp()
       )

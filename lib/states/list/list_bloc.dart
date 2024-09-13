@@ -11,7 +11,6 @@ class ListBloc extends Bloc<ListEvent, ListState> {
     : super(ListState.initialize())
   {
     on(_onAllList);
-    on(_onMe);
   }
 
   Future<void> _onAllList(
@@ -19,25 +18,22 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       Emitter<ListState> emit
   ) async {
     try{
+      emit(state.copyWith(
+        status: ListLoadStatus.loadProcessing
+      ));
+      
       final List<Info> list = await _infoRepository.getAll();
-      emit(state.copyWith(list: list));
+      emit(state.copyWith(
+        list: list,
+        status: ListLoadStatus.loadComplete
+      ));
     } on Exception catch(error){
-      emit(state.copyWith(error: error));
+      emit(state.copyWith(
+        error: error,
+        status: ListLoadStatus.loadError
+      ));
     }
-
   }
 
-  Future<void> _onMe(
-      MeEvent event,
-      Emitter<ListState> emit
-  ) async {
-    try{
-      final List<Info> list = await _infoRepository.getAll();
-      emit(state.copyWith(me: list[0]));
-    } on Exception catch(error){
-      emit(state.copyWith(error: error));
-    }
-
-  }
 
 }

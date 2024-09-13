@@ -22,3 +22,21 @@ class AllListSelector extends ListSelector<List<Info>> {
   );
 }
 
+class ListLoadStatusSelector extends ListSelector<ListLoadStatus> {
+  ListLoadStatusSelector(Widget Function(ListLoadStatus) builder)
+      : super(
+    selector: (state) => state.status,
+    builder: builder,
+  );
+}
+
+class ListErrorSelector extends ListSelector<Exception?> {
+  ListErrorSelector(Widget Function(Exception?) builder)
+    : super(
+      selector: (state) => state.error,
+      builder: builder
+    );
+
+}
+
+
