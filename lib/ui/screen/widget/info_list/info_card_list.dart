@@ -85,7 +85,6 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
                     ? Colors.green.shade100 
                     : Colors.white,
                   name: list[index].name,
-                  hanja: list[index].hanja,
                   date: list[index].date,
                   time: list[index].time,
                 )

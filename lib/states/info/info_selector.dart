@@ -52,3 +52,11 @@ class InfoFailSelector extends InfoSelector<Exception?> {
       builder:builder
   );
 }
+
+class InfoStatusSelector extends InfoSelector<InfoStatus> {
+  InfoStatusSelector(Widget Function(InfoStatus) builder)
+      : super(
+      selector: (state) => state.status,
+      builder:builder
+  );
+}

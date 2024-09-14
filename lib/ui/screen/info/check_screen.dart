@@ -22,7 +22,6 @@ class CheckScreen extends StatelessWidget {
               children: [
                 InfoCard(
                   name: state.name!,
-                  hanja: state.hanja!.join(''),
                   date: state.date!,
                   time: state.time!
                 ),
@@ -32,10 +31,9 @@ class CheckScreen extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          if(state.name != null && state.hanja!.isNotEmpty && state.date != null && state.time != null){
+                          if(state.name != null && state.date != null && state.time != null){
                             final info = Info(
                                 state.name!,
-                                state.hanja!.join(''),
                                 state.date!,
                                 state.time!
                             );

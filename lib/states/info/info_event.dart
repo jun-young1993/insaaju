@@ -21,8 +21,10 @@ class InputDateEvent extends InfoEvent {
 
 class InputTimeEvent extends InfoEvent {
   final String time;
+  final bool? check;
   const InputTimeEvent({
-    required this.time, 
+    required this.time,
+    this.check = false
   });
 }
 

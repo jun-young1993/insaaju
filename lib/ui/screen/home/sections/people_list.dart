@@ -13,7 +13,7 @@ class PeopleList extends StatelessWidget {
                 _buildMe(),
                 const SizedBox(height: 10),
                 const Divider(),
-                _buildPeopleList()
+                Expanded(child: _buildPeopleList())
               ],
           ),
         )

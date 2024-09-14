@@ -9,6 +9,7 @@ import 'package:insaaju/states/me/me_bloc.dart';
 import 'package:insaaju/states/me/me_event.dart';
 import 'package:insaaju/states/me/me_selector.dart';
 import 'package:insaaju/states/me/me_state.dart';
+import 'package:insaaju/states/section/section_event.dart';
 import 'package:insaaju/states/section/section_selector.dart';
 import 'package:insaaju/states/section/section_state.dart';
 import 'package:insaaju/ui/screen/section/plus_people.dart';
@@ -17,6 +18,8 @@ import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info_list/info_row.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
+
+import '../../../states/section/section_bloc.dart';
 part 'sections/people_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   ListBloc get listBloc => context.read<ListBloc>();
   MeBloc get meBloc => context.read<MeBloc>();
+  SectionBloc get sectionBloc => context.read<SectionBloc>();
 
 
   @override
@@ -50,17 +54,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget? _buildOverlay(SectionType section){
     switch(section){
-      default: 
+      case SectionType.addPeople:
         return PlusPeople();
+      default:
+        return null;
     }
-    
   }
 
   Widget _buildDefault(){
     return AppBackground(
       appBar: _buildAppBar(),
-      showBackIcon: false,
-      isBackground: true,
       child: PeopleList()
     );
   }
@@ -87,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildAddPeople(){
     return   IconButton(
       onPressed: (){
-        
+        sectionBloc.add(const ShowSectionEvent(section: SectionType.addPeople));
       }, 
       icon: const Icon(Icons.person_add),
     );

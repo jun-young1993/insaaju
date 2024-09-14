@@ -1,12 +1,11 @@
-import 'package:insaaju/exceptions/unknown_exception.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
+import 'package:insaaju/states/info/info_state.dart';
 
 class Info {
   final String name;
-  final String hanja;
   final String date;
   final String time;
-  const Info(this.name, this.hanja, this.date, this.time);
+  const Info(this.name, this.date, this.time);
 
   String getTypeKey(FourPillarsOfDestinyType type){
     return toString()+type.getValue();
@@ -23,17 +22,32 @@ class Info {
   }
 
   bool compare(Info info){
-    return name == info.name && hanja == info.hanja && date == info.date && time == info.time;
+    return name == info.name  && date == info.date && time == info.time;
   }
 
   // toJson 메서드
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'hanja': hanja,
       'date': date,
       'time': time,
     };
+  }
+
+  static Info fromState(InfoState state){
+    if(
+      state.name != null
+      && state.date != null
+      && state.time != null
+    ){
+      return Info(
+        state.name!,
+        state.date!,
+        state.time!
+      );
+    }
+
+    throw Exception('InfoState is missing required fields: name, date, or time');
   }
 
 }

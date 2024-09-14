@@ -8,8 +8,6 @@ class AppBackground extends StatefulWidget {
   final VoidCallback? onPress;
   final bool isLoading; // 로딩 상태를 받는 매개변수
   final String? loadingText;
-  final bool showBackIcon;
-  final bool isBackground;
   final AppBar? appBar;
 
   const AppBackground({
@@ -18,8 +16,6 @@ class AppBackground extends StatefulWidget {
     this.onPress,
     this.isLoading = false,
     this.loadingText,
-    this.showBackIcon = true,
-    this.isBackground = false, 
     this.appBar,
   });
 

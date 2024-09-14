@@ -61,7 +61,6 @@ class InfoDefaultRepository extends InfoRepository{
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       return Info(
         infoMap['name'],
-        infoMap['hanja'],
         infoMap['date'],
         infoMap['time'],
       );
@@ -69,8 +68,7 @@ class InfoDefaultRepository extends InfoRepository{
 
     // 중복 여부를 확인: 동일한 name, hanja, date, time 값이 있는지 체크
     bool isDuplicate = savedInfos.any((savedInfo) =>
-    savedInfo.name == info.name &&
-        savedInfo.hanja == info.hanja &&
+        savedInfo.name == info.name &&
         savedInfo.date == info.date &&
         savedInfo.time == info.time);
 
@@ -104,7 +102,6 @@ class InfoDefaultRepository extends InfoRepository{
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       return Info(
         infoMap['name'],
-        infoMap['hanja'],
         infoMap['date'],
         infoMap['time'],
       );

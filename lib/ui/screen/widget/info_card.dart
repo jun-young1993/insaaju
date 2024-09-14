@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class InfoCard extends StatelessWidget {
   final String name;
-  final String hanja;
   final String date;
   final String time;
   final Color color;
@@ -13,7 +12,6 @@ class InfoCard extends StatelessWidget {
   const InfoCard({
     super.key,
     required this.name,
-    required this.hanja,
     required this.date,
     required this.time,
     this.color = Colors.white

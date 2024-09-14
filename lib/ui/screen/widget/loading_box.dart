@@ -67,6 +67,7 @@ class LoadingBox extends StatelessWidget {
           color: Colors.grey, // 로딩 인디케이터 색상
         ),
         _buildCircularProgressTextBetweenBox(),
+        SizedBox(width: 10,),
         if (loadingText != null) // loadingText가 null이 아닐 때만 텍스트 표시
           Text(
             loadingText!,

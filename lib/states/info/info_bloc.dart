@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
@@ -45,13 +46,17 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     }
   }
 
-  void _onInputTime(
+  Future<void> _onInputTime(
     InputTimeEvent event,
     Emitter<InfoState> emit
-  ){
+  ) async {
     try{
-      
       emit(state.asSetTime(event.time));
+      if(event.check == true){
+        await _infoRepository.check(
+          Info.fromState(state)
+        );
+      }
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
@@ -99,7 +104,10 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     Emitter<InfoState> emit
   )async {
     try{
-      emit(state.asChangeStatus(InfoStatus.saving));
+      emit(state.copyWith(
+          status: InfoStatus.saving,
+          error: null
+      ));
       _infoRepository.save(event.info);
       emit(state.asChangeStatus(InfoStatus.saved));
     } on Exception catch(error){

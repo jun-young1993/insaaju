@@ -10,14 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/repository/four_pillars_of_destiny_repository.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/compatibility/sections/compatibility_list.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/birth_date_field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/birth_time_field.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/name_field.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/domain/entities/info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/openai_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/openai_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/compatibility/compatibility_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/compatibility/compatibility_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/repository/info_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/info_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_selector.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/info/info_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/info/check_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/full_screen_overlay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/full_screen_overlay.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_card_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_card_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/loading_box.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/loading_box.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,29 +62,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/junyoungkim/Desktop/junyoung/app/source/insaaju/lib/exceptions&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/insaaju/lib/ui/screen/widget/info",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "settings.javascript.prettier",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info" />
       <recent name="$PROJECT_DIR$/lib/exceptions" />
       <recent name="$PROJECT_DIR$/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info" />
       <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info_list" />
       <recent name="$PROJECT_DIR$/lib/states/list/selections" />
     </key>
@@ -91,7 +105,8 @@
       <workItem from="1725627662555" duration="98000" />
       <workItem from="1725627823750" duration="23011000" />
       <workItem from="1725770453375" duration="17914000" />
-      <workItem from="1725887618787" duration="5075000" />
+      <workItem from="1725887618787" duration="5381000" />
+      <workItem from="1726283826265" duration="10129000" />
     </task>
     <servers />
   </component>

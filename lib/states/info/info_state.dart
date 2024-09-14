@@ -17,7 +17,7 @@ class InfoState {
   final InfoMenu menu;
   final String? date;
   final String? time;
-  final InfoStatus? status;
+  final InfoStatus status;
   final List<List<Map<String, dynamic>>>? hanjaList;
   
   InfoState._({
