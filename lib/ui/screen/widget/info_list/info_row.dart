@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 
 class InfoRow extends StatefulWidget {
   final Info info;
-
+  final double? profileSize;
   InfoRow({
-    required this.info
+    required this.info, this.profileSize
   });
 
   @override
@@ -24,7 +25,7 @@ class _InfoRowState extends State<InfoRow> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildProfile(),
+        _buildProfile(size: widget.profileSize ?? 30),
         const SizedBox(width: 10,),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -47,20 +48,6 @@ class _InfoRowState extends State<InfoRow> {
   Widget _buildProfile({
     double size = 30
   }){
-    return Container(
-      width: size * 2 ,  // 원하는 너비
-      height: size * 2,  // 원하는 높이
-      decoration: BoxDecoration(
-        color: Colors.blue[200],  // 배경 색상
-        borderRadius: BorderRadius.circular(16.0),  // 둥근 모서리
-      ),
-      child: Center(
-        child: Icon(
-          Icons.person,  // 사람 아이콘
-          size: size,  // 아이콘 크기
-          color: Colors.white,  // 아이콘 색상
-        ),
-      ),
-    );
+    return InfoProfile(size: size);
   }
 }

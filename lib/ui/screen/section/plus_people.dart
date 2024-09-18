@@ -9,6 +9,7 @@ import 'package:insaaju/states/section/section_bloc.dart';
 import 'package:insaaju/states/section/section_event.dart';
 import 'package:insaaju/states/section/section_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
+import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_time_field.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
@@ -27,6 +28,7 @@ class PlusPeople extends StatefulWidget {
 class _PlusPeopleState extends State<PlusPeople> {
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   InfoBloc get infoBloc => context.read<InfoBloc>();
+
   @override
   Widget build(BuildContext context) {
     return AppBackground(
@@ -44,16 +46,10 @@ class _PlusPeopleState extends State<PlusPeople> {
   }
 
   Widget _buildAppBarLeading(){
-    return Row(
-      children: [
-        IconButton(
-            onPressed: (){
-              sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
-            },
-            icon: const Icon(Icons.arrow_back)
-        ),
-        // TitleText(text: 'ADD'),
-      ],
+    return AppBarCloseLeadingButton(
+        onPressed: (){
+          sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+        }
     );
   }
 

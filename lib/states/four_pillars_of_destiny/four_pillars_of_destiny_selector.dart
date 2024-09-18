@@ -23,8 +23,8 @@ class InfoFourPillarsOfDestinySelector extends FourPillarsOfDestinySelector<Info
     );
 }
 
-class FourPillarsOfDestinyDataSelector extends FourPillarsOfDestinySelector<Map<FourPillarsOfDestinyType,ChatComplation?>?> {
-    FourPillarsOfDestinyDataSelector(Widget Function(Map<FourPillarsOfDestinyType,ChatComplation?>?) builder)
+class FourPillarsOfDestinyDataSelector extends FourPillarsOfDestinySelector<Map<FourPillarsOfDestinyType,ChatCompletion?>?> {
+    FourPillarsOfDestinyDataSelector(Widget Function(Map<FourPillarsOfDestinyType,ChatCompletion?>?) builder)
     :super(
       selector: (state) => state.fourPillarsOfDestinyData,
       builder: builder

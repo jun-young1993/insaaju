@@ -28,7 +28,7 @@ class _FourPillarsOfDestinyMenusState extends State<FourPillarsOfDestinyMenus> {
     );
   }
 
-  Widget _buildTextMenu(String text, ChatComplation? fourPillarsOfDestinyData) {
+  Widget _buildTextMenu(String text, ChatCompletion? fourPillarsOfDestinyData) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Row(
@@ -54,7 +54,7 @@ class _FourPillarsOfDestinyMenusState extends State<FourPillarsOfDestinyMenus> {
 
   Widget _buildFourPillarsMenu(
       FourPillarsOfDestinyBloc fourPillarsOfDestinyBloc,
-      Map<FourPillarsOfDestinyType, ChatComplation?>? fourPillarsOfDestinyData,
+      Map<FourPillarsOfDestinyType, ChatCompletion?>? fourPillarsOfDestinyData,
       FourPillarsOfDestinyType type) {
     return Column(
       key: ValueKey(type), // 키를 설정하여 상태를 유지

@@ -94,7 +94,7 @@ class FourPillarsOfDestinyState {
   final Info? info;
   final Exception? error;
   final FourPillarsOfDestinyType? type;
-  final Map<FourPillarsOfDestinyType,ChatComplation?>? fourPillarsOfDestinyData;
+  final Map<FourPillarsOfDestinyType,ChatCompletion?>? fourPillarsOfDestinyData;
   final bool loading;
 
   FourPillarsOfDestinyState._({
@@ -127,7 +127,7 @@ class FourPillarsOfDestinyState {
     Info? info,
     Exception? error,
     FourPillarsOfDestinyType? type,
-    Map<FourPillarsOfDestinyType,ChatComplation?>? fourPillarsOfDestinyData,
+    Map<FourPillarsOfDestinyType,ChatCompletion?>? fourPillarsOfDestinyData,
     bool? loading
   }){
     return FourPillarsOfDestinyState._(

@@ -1,6 +1,9 @@
 part of '../home_screen.dart';
 
 class PeopleList extends StatelessWidget {
+  final Function(Info) handleTapList;
+  const PeopleList({super.key, required this.handleTapList});
+
   @override
   Widget build(BuildContext context) {
 
@@ -70,16 +73,18 @@ class PeopleList extends StatelessWidget {
           text: 'LIST',
         ),
         const SizedBox(height: 10),
-        ListLoadStatusSelector((status){
-          switch(status){
-            case ListLoadStatus.loadError:
-              return _buildListAllError();
-            case ListLoadStatus.loadComplete:
-              return _buildListAllSelector();
-            default: 
-              return _buildLoad();
-          }
-        })
+        Expanded(
+          child: ListLoadStatusSelector((status){
+            switch(status){
+              case ListLoadStatus.loadError:
+                return _buildListAllError();
+              case ListLoadStatus.loadComplete:
+                return _buildListAllSelector();
+              default:
+                return _buildLoad();
+            }
+          }),
+        )
       ],
     );
   }
@@ -108,7 +113,7 @@ class PeopleList extends StatelessWidget {
             },
             child: Column(
               children: [
-                InfoRow(info: infos[index]),
+                InfoRow(info: infos[index], profileSize: 18,),
                 const SizedBox(height: 10)
               ],
             ),
@@ -119,7 +124,7 @@ class PeopleList extends StatelessWidget {
   }
 
   void _handlerTapInfo(Info info){
-    print(info);
+    handleTapList(info);
   }
 
 

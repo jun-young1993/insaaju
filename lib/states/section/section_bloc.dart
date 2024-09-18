@@ -14,7 +14,10 @@ class SectionBloc extends Bloc<SectionEvent, SectionState>{
         Emitter<SectionState> emit
     ) async {
       try {
-          emit(state.copyWith(section: event.section));
+          emit(state.copyWith(
+              section: event.section,
+              info: event.info
+          ));
       } on Exception catch( error ) {
           emit(state.copyWith(error: error));
       }

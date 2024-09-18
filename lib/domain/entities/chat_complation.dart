@@ -51,11 +51,11 @@ class ChatComplationChoice {
   }
 }
 
-class ChatComplation {
+class ChatCompletion {
   final String id;
   final List<ChatComplationChoice> choices;
 
-  ChatComplation({
+  ChatCompletion({
     required this.id, 
     required this.choices
   });
@@ -72,14 +72,14 @@ class ChatComplation {
     return jsonEncode(toJson());
   }
 
-  factory ChatComplation.fromJson(Map<String, dynamic> json){
+  factory ChatCompletion.fromJson(Map<String, dynamic> json){
       
       final List<dynamic> choices = json['choices'];
       
       final List<ChatComplationChoice> choicesFromJson = choices
         .map((choiceJson) => ChatComplationChoice.fromJson(choiceJson))
         .toList();
-    return ChatComplation(
+    return ChatCompletion(
       id: json['id'],
       choices: choicesFromJson
     );

@@ -14,10 +14,10 @@ class SectionSelector<T> extends BlocSelector<SectionBloc, SectionState, T>{
     );
 }
 
-class ShowSectionSelector extends SectionSelector<SectionType> {
-    ShowSectionSelector(Widget Function(SectionType) builder)
+class ShowSectionSelector extends SectionSelector<SectionState> {
+    ShowSectionSelector(Widget Function(SectionState) builder)
       : super(
-          selector: (state) => state.section,
+          selector: (state) => state,
           builder: builder
       );
 }

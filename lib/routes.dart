@@ -4,14 +4,18 @@ import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destin
 import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
+import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
 
 class FadeRoute extends PageRouteBuilder {
+
   FadeRoute({required this.page})
       : super(
     pageBuilder: (_, __, ___) => page,
     transitionsBuilder: (_, animation, __, child) => FadeTransition(
       opacity: animation,
-      child: child,
+      child: Scaffold(
+        body: child,
+      ),
     ),
   );
 
@@ -23,6 +27,12 @@ enum Routes {
   list,
   four_pillars_of_destiny,
   compatibility
+}
+
+extension RoutesExtention on Routes {
+  String getValue() {
+    return this.toString().split('.').last;
+  }
 }
 
 class _Paths {
@@ -46,8 +56,9 @@ class _Paths {
 class AppNavigator {
     static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
+
     static Route onGenerateRoute(RouteSettings settings){
-        
+          AppNavigator.currentRoute = settings.name;
           switch(settings.name){
             case _Paths.home:
               return FadeRoute(page: HomeScreen());
@@ -63,6 +74,7 @@ class AppNavigator {
               return FadeRoute(page: HomeScreen());
           }
     }
+
     static Future? push<T>(Routes route, [T? arguments]) =>
         state?.pushNamed(_Paths.of(route), arguments: arguments);
 
@@ -72,4 +84,6 @@ class AppNavigator {
     static void pop() => state?.pop();
 
     static NavigatorState? get state => navigatorKey.currentState;
+
+    static String? currentRoute;
 }

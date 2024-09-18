@@ -87,10 +87,12 @@ class _FullScreenOverlayState extends State<FullScreenOverlay> with SingleTicker
 
         // 오버레이가 있을 때 애니메이션 적용
         if (_isOverlayVisible)
-          SlideTransition(
-            position: _animation,
-            child: widget.child ?? Container(), // 오버레이로 표시될 화면
-          ),
+          Positioned.fill(
+            child: SlideTransition(
+              position: _animation,
+              child: widget.child ?? Container(), // 오버레이로 표시될 화면
+            ),
+          )
       ],
     );
   }

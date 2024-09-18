@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../exceptions/duplicate_exception.dart';
 
 abstract class OpenaiRepository {
-  Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message);
+  Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message);
 
 
 }
@@ -27,7 +27,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   
   
   @override
-  Future<ChatComplation> sendMessage(String templateCode, String modelCode, String message) async {
+  Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message) async {
     
     final url = Uri.parse('$baseUrl/openai/send-message/$templateCode/$modelCode');
     final String secretKey = dotenv.env['SECRET_KEY']!;
@@ -55,7 +55,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
 
     if (response.statusCode == 201) {
       final Map<String, dynamic> data = json.decode(response.body);
-      return ChatComplation.fromJson(data);
+      return ChatCompletion.fromJson(data);
     } else {
       throw CommonException.fromResponse(response);
     }
@@ -79,7 +79,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   Future<bool> saveCompatibility(
       FourPillarsOfDestinyCompatibilityType type,
       List<Info> info,
-      ChatComplation chatComplation
+      ChatCompletion chatComplation
   ) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> savedInfoKeyList = prefs.getStringList(type.toString()) ?? [];

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insaaju/routes.dart';
+import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 
 class AppBackground extends StatefulWidget {
@@ -9,14 +10,16 @@ class AppBackground extends StatefulWidget {
   final bool isLoading; // 로딩 상태를 받는 매개변수
   final String? loadingText;
   final AppBar? appBar;
-
+  final Widget? bottomNavigationBar;
+  final Color? backgroundColor;
   const AppBackground({
     super.key,
     required this.child,
     this.onPress,
     this.isLoading = false,
     this.loadingText,
-    this.appBar,
+    this.appBar, this.bottomNavigationBar,
+    this.backgroundColor
   });
 
   @override
@@ -28,6 +31,7 @@ class _AppBackgroundState extends State<AppBackground> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.backgroundColor,
       appBar: widget.appBar != null
       ? PreferredSize(
           preferredSize: const Size.fromHeight(70.0),
@@ -52,6 +56,7 @@ class _AppBackgroundState extends State<AppBackground> {
             ), // 로딩 오버레이 위젯 추가
         ],
       ),
+      bottomNavigationBar: widget.bottomNavigationBar
     );
   }
 }
@@ -71,3 +76,4 @@ class _LoadingOverlay extends StatelessWidget {
     );
   }
 }
+
