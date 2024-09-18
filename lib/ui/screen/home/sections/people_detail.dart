@@ -15,7 +15,7 @@ class PeopleDetail extends StatefulWidget {
 class _PeopleDetailState extends State<PeopleDetail> {
   late PeopleDetailMenu? selectedMenu;
   SectionBloc get sectionBloc => context.read<SectionBloc>();
-
+  ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
   @override
   void initState() {
     super.initState();
@@ -24,11 +24,19 @@ class _PeopleDetailState extends State<PeopleDetail> {
 
   @override
   Widget build(BuildContext context) {
+    return SectionChatCompletionSelector((status) {
+      switch(status){
+        case SectionLoadStatus.complete:
+          return _buildChatRoom();
+        default:
+          return _buildDefaultDetail();
+      }
+    });
     switch(selectedMenu){
       case PeopleDetailMenu.chat:
         return _buildChatRoom();
       default:
-        return _buildDefaultDetail();
+
     }
   }
 
@@ -78,9 +86,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
         unselectedItemColor: Colors.black54,
         onTap: (int index){
           print('${index} selected');
-          setState(() {
-            selectedMenu = PeopleDetailMenu.chat;
-          });
+          chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info));
         },
         items: _bottomNavigationBarItem(),
     );

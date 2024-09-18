@@ -10,6 +10,7 @@ abstract class InfoRepository {
   Future<Map<String, dynamic>> loadHanjaJson();
   Future<List<List<Map<String, dynamic>>>> getHanjaByCharacters(List<String> characters);
   Future<bool> save(Info info);
+  Future<bool> update(Info original, Info update);
   Future<bool> check(Info info);
   Future<List<Info>> getAll();
 }
@@ -63,6 +64,7 @@ class InfoDefaultRepository extends InfoRepository{
         infoMap['name'],
         infoMap['date'],
         infoMap['time'],
+        mySessionId: infoMap['mySessionId']
       );
     }).toList();
 
@@ -92,6 +94,22 @@ class InfoDefaultRepository extends InfoRepository{
     return result;
   }
 
+  Future<bool> update(Info original, Info update) async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = await getAll();
+
+    // 원래 리스트에서 업데이트 대상 Info를 찾아서 변경된 값으로 대체
+    final List<String> updateList = list.map((savedInfo) {
+      if (savedInfo.compare(original)) {
+        return jsonEncode(update.toJson());
+      }
+      return jsonEncode(savedInfo.toJson());
+    }).toList();
+
+    // SharedPreferences에 업데이트된 리스트 저장
+    return await prefs.setStringList(InfoConstants.info, updateList);
+  }
+
   Future<List<Info>> getAll() async {
     final prefs = await SharedPreferences.getInstance();
     // 저장된 JSON 문자열 리스트 가져오기
@@ -104,6 +122,7 @@ class InfoDefaultRepository extends InfoRepository{
         infoMap['name'],
         infoMap['date'],
         infoMap['time'],
+          mySessionId: infoMap['mySessionId']
       );
     }).toList();
 

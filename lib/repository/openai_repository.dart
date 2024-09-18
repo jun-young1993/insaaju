@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:insaaju/configs/four_pillars_of_destiny_constants.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
+import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/common_exception.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
@@ -15,8 +16,7 @@ import '../exceptions/duplicate_exception.dart';
 
 abstract class OpenaiRepository {
   Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message);
-
-
+  Future<ChatSession> createSession();
 }
 
 class OpenaiDefaultRepository extends OpenaiRepository {
@@ -24,7 +24,35 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   
   OpenaiDefaultRepository();
 
-  
+  @override
+  Future<ChatSession> createSession() async {
+    final url = Uri.parse('$baseUrl/openai/session');
+    final String secretKey = dotenv.env['SECRET_KEY']!;
+
+    // 현재 시간을 가져오기
+    final currentTime = DateTime.now().millisecondsSinceEpoch.toString();
+    final xAccessToken =  encrypt(
+        '$secretKey-$currentTime',
+        secretKey
+    );
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'x-access-token': xAccessToken
+    };
+
+    final response = await http.post(
+        url,
+        headers: headers,
+    );
+    if (response.statusCode == 201) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      return ChatSession.fromJson(data);
+    } else {
+      throw CommonException.fromResponse(response);
+    }
+
+  }
   
   @override
   Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message) async {
@@ -38,7 +66,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
       '$secretKey-$currentTime',
       secretKey
     );
-    print(xAccessToken);
+
     final headers = {
           'Content-Type': 'application/json',
           'x-access-token': xAccessToken

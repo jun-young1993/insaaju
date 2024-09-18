@@ -10,33 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/domain/entities/chat_message.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_bar_close_leading_button.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_bottom_navigation_bar.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/info_profile.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/domain/entities/chat_session.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_selector.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/domain/entities/chat_complation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/chat_complation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/four_pillars_of_destiny_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/four_pillars_of_destiny_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/domain/entities/info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/repository/info_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/info_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/repository/openai_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/openai_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/section/section_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/section/section_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/section/section_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/section/section_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/section/section_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/section/section_selector.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/section/section_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/section/section_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/sections/four_pillars_of_destiny_menus.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/four_pillars_of_destiny/sections/four_pillars_of_destiny_menus.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/full_screen_overlay.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/full_screen_overlay.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_row.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +99,9 @@
       <workItem from="1725770453375" duration="17914000" />
       <workItem from="1725887618787" duration="5381000" />
       <workItem from="1726283826265" duration="10602000" />
-      <workItem from="1726376193517" duration="27758000" />
+      <workItem from="1726376193517" duration="27811000" />
+      <workItem from="1726663269129" duration="5620000" />
+      <workItem from="1726668908748" duration="1954000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,15 @@ class Info {
   final String name;
   final String date;
   final String time;
-  const Info(this.name, this.date, this.time);
+  final String? mySessionId;
+  const Info(
+      this.name,
+      this.date,
+      this.time,
+      {
+        this.mySessionId
+      }
+  );
 
   String getTypeKey(FourPillarsOfDestinyType type){
     return toString()+type.getValue();
@@ -22,7 +30,10 @@ class Info {
   }
 
   bool compare(Info info){
-    return name == info.name  && date == info.date && time == info.time;
+    return name == info.name
+        && date == info.date
+        && time == info.time
+    ;
   }
 
   // toJson 메서드
@@ -31,6 +42,7 @@ class Info {
       'name': name,
       'date': date,
       'time': time,
+      'mySessionId': mySessionId
     };
   }
 

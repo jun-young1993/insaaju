@@ -6,6 +6,7 @@ import 'package:insaaju/app.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
+import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
@@ -53,7 +54,13 @@ Future<void> main() async {
               context.read<InfoRepository>()
             )
           ),
-          BlocProvider(create: (context) => SectionBloc())
+          BlocProvider(create: (context) => SectionBloc()),
+          BlocProvider(
+              create: (context) => ChatCompletionBloc(
+                context.read<OpenaiRepository>(),
+                context.read<InfoRepository>()
+              ),
+          )
         ],
         child: MyApp()
       )
