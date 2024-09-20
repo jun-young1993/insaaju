@@ -32,12 +32,6 @@ class _PeopleDetailState extends State<PeopleDetail> {
           return _buildDefaultDetail();
       }
     });
-    switch(selectedMenu){
-      case PeopleDetailMenu.chat:
-        return _buildChatRoom();
-      default:
-
-    }
   }
 
   Widget _buildChatRoom(){
@@ -86,7 +80,9 @@ class _PeopleDetailState extends State<PeopleDetail> {
         unselectedItemColor: Colors.black54,
         onTap: (int index){
           print('${index} selected');
-          chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info));
+          chatCompletionBloc.add(
+            FindSectionChatCompletionEvent(info: widget.info,)
+          );
         },
         items: _bottomNavigationBarItem(),
     );
@@ -94,11 +90,11 @@ class _PeopleDetailState extends State<PeopleDetail> {
 
   List<BottomNavigationBarItem> _bottomNavigationBarItem(){
     return [
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
           label: '사주 채팅',
           icon: Icon(Icons.chat)
       ),
-      BottomNavigationBarItem(
+      const BottomNavigationBarItem(
           label: 'test',
           icon: Icon(Icons.chat)
       ),

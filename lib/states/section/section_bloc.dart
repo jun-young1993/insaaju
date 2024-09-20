@@ -22,4 +22,5 @@ class SectionBloc extends Bloc<SectionEvent, SectionState>{
           emit(state.copyWith(error: error));
       }
     }
+    
 }
