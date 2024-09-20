@@ -25,6 +25,8 @@ class _PeopleDetailState extends State<PeopleDetail> {
   @override
   Widget build(BuildContext context) {
     return SectionChatCompletionSelector((status) {
+      print('SectionChatCompletionSelector');
+      print(status);
       switch(status){
         case SectionLoadStatus.complete:
           return _buildChatRoom();

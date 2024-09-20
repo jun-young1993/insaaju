@@ -37,6 +37,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       }
       emit(state.asSectionLoadStatusComplete());
     } on Exception catch( error ) {
+      print(error);
       emit(state.asFailer(error));
     }
   }
