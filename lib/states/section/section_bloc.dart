@@ -7,6 +7,7 @@ class SectionBloc extends Bloc<SectionEvent, SectionState>{
       : super(SectionState.initialize())
       {
         on(_onChangeSection);
+        on(_onChangeChildSection);
       }
 
     Future<void> _onChangeSection(
@@ -18,6 +19,21 @@ class SectionBloc extends Bloc<SectionEvent, SectionState>{
               section: event.section,
               info: event.info
           ));
+      } on Exception catch( error ) {
+          emit(state.copyWith(error: error));
+      }
+    }
+
+    Future<void> _onChangeChildSection(
+        ShowChildSectionEvent event,
+        Emitter<SectionState> emit
+    ) async {
+      try {
+          emit(state.copyWith(
+              childSection: event.childSection,
+              info: event.info
+          ));
+          
       } on Exception catch( error ) {
           emit(state.copyWith(error: error));
       }

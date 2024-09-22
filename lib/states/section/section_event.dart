@@ -13,3 +13,12 @@ class ShowSectionEvent extends SectionEvent {
     this.info
   });
 }
+
+class ShowChildSectionEvent extends SectionEvent {
+  final ChildSectionType childSection;
+  final Info? info;
+  const ShowChildSectionEvent({
+    required this.childSection,
+    this.info
+  }) ;
+}

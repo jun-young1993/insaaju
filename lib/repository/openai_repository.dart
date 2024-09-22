@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:insaaju/configs/four_pillars_of_destiny_constants.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
+import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/common_exception.dart';
@@ -17,6 +18,7 @@ import '../exceptions/duplicate_exception.dart';
 abstract class OpenaiRepository {
   Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message);
   Future<ChatSession> createSession();
+  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId);
 }
 
 class OpenaiDefaultRepository extends OpenaiRepository {
@@ -48,6 +50,47 @@ class OpenaiDefaultRepository extends OpenaiRepository {
     if (response.statusCode == 201) {
       final Map<String, dynamic> data = json.decode(response.body);
       return ChatSession.fromJson(data);
+    } else {
+      throw CommonException.fromResponse(response);
+    }
+
+  }
+
+  @override
+  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId) async {
+    print('$baseUrl/openai/chat-completion/session/$sessionId');
+    final url = Uri.parse('$baseUrl/openai/chat-completion/session/$sessionId');
+    final String secretKey = dotenv.env['SECRET_KEY']!;
+
+    // 현재 시간을 가져오기
+    final currentTime = DateTime.now().millisecondsSinceEpoch.toString();
+    final xAccessToken =  encrypt(
+        '$secretKey-$currentTime',
+        secretKey
+    );
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'x-access-token': xAccessToken
+    };
+
+    final response = await http.get(
+        url,
+        headers: headers,
+    );
+    
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      
+      final ChatCompletion chatCompletion = ChatCompletion.fromJson(data['completions']);
+      final List<ChatRoomMessage> messages = chatCompletion.choices.map((choice) {
+        return ChatRoomMessage(
+          role: ChatRoomRoleExtension.fromString(choice.message.role),
+          content: choice.message.content
+        );
+      }).toList();
+       
+      return messages;
     } else {
       throw CommonException.fromResponse(response);
     }

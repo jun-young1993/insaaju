@@ -73,7 +73,6 @@ class ChatCompletion {
   }
 
   factory ChatCompletion.fromJson(Map<String, dynamic> json){
-      
       final List<dynamic> choices = json['choices'];
       
       final List<ChatComplationChoice> choicesFromJson = choices

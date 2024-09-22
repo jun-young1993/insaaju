@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
+import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
+import 'package:insaaju/states/chat_completion/chat_completion_selector.dart';
+import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
+import 'package:insaaju/ui/screen/widget/loading_box.dart';
+import 'package:insaaju/ui/screen/widget/text.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   final Info info;
@@ -20,24 +30,13 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final Color? backgroundColor = Colors.lightGreen[50];
-  final List<String> messages = [
-    "안녕하세요!",
-    "네, 안녕하세요. 오늘 기분은 어떠신가요?",
-    "좋아요! 당신은요?",
-    "저도 좋습니다. 채팅방 UI 작업 중이에요.",
-    "안녕하세요!",
-    "네, 안녕하세요. 오늘 기분은 어떠신가요?",
-    "좋아요! 당신은요?",
-    "저도 좋습니다. 채팅방 UI 작업 중이에요.",
-    "안녕하세요!",
-    "네, 안녕하세요. 오늘 기분은 어떠신가요?",
-    "좋아요! 당신은요?",
-    "저도 좋습니다. 채팅방 UI 작업 중이에요.",
-    "안녕하세요!",
-    "네, 안녕하세요. 오늘 기분은 어떠신가요?",
-    "좋아요! 당신은요?",
-    "저도 좋습니다. 채팅방 UI 작업 중이에요.",
-  ];
+
+  ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
+  @override
+  void initState(){
+    super.initState();
+    chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info,));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +45,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       appBar: _buildAppBar(),
       child: Column(
         children: [
-          Expanded(child: _buildMessageList()), // 메시지 리스트
-          _buildSystemButton(),
+          Expanded(child: _buildMessageListBox()), // 메시지 리스트
           _buildMessageInput(), // 메시지 입력창
         ],
       ),
@@ -55,9 +53,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   // 시스템에서 제공하는 버튼을 채팅 스타일로 제공
-  Widget _buildSystemButton() {
+  Widget _buildSystemButton(FourPillarsOfDestinyType type) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.centerRight,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         margin: const EdgeInsets.symmetric(vertical: 5),
@@ -71,16 +69,27 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                // 버튼 클릭 시 동작
-                print("SYSTEM 버튼 클릭됨");
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white, backgroundColor: Colors.teal, // 버튼 텍스트 색상
+            Flexible(
+              child: Wrap(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      chatCompletionBloc.add(
+                        SendFourPillarsOfDestinyTypeChatCompletionEvent(info: widget.info, type: type)
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.teal, // 버튼 텍스트 색상
+                    ),
+                    child: Text(
+                      type.getTitle(),
+                      softWrap: true
+                    ),
+                  ),
+                ],
               ),
-              child: const Text("클릭하세요"),
-            ),
+            )
+            
           ],
         ),
       ),
@@ -115,16 +124,52 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  Widget _buildMessageList() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(10),
-      itemCount: messages.length,
-      reverse: true, // 가장 최근 메시지가 아래에 오도록 설정
-      itemBuilder: (context, index) {
-        bool isUserMessage = index % 2 == 0; // 짝수 인덱스는 사용자 메시지로 간주
-        return _buildMessageBubble(messages[index], isUserMessage);
-      },
-    );
+  Widget _buildMessageList(){
+    return SectionMessageChatCompletionSelector((messages){
+      return SectionChatRequestTypeSelector((types){
+          final List<ChatRoomMessage> resultMessage = [...messages, ...types.map((type){
+            return ChatRoomMessage(role: ChatRoomRole.button, content: type.toString());
+          }).toList()];
+
+          final List<FourPillarsOfDestinyType> systemButtons = [...types];
+          return ListView.builder(
+            padding: const EdgeInsets.all(10),
+            itemCount: resultMessage.length,
+            reverse: false, // 가장 최근 메시지가 아래에 오도록 설정
+            itemBuilder: (context, index) {
+              switch(resultMessage[index].role){
+                case ChatRoomRole.system:
+                case ChatRoomRole.assistant:
+                  return _buildMessageBubble(resultMessage[index].content, false);
+                case ChatRoomRole.user:
+                  return _buildMessageBubble(resultMessage[index].content, true);
+                case ChatRoomRole.button:
+                  return _buildSystemButton(systemButtons.removeLast());
+                default: 
+                  return _buildMessageBubble(resultMessage[index].content, false);
+              }
+              
+            },
+          );
+      });
+    });
+  }
+
+  Widget _buildMessageListBox() {
+    return SectionChatCompletionSelector((status){
+        switch(status){
+          case SectionLoadStatus.complete:
+            return _buildMessageList();
+          case SectionLoadStatus.fail:
+            return SectionErrorChatCompletionSelector((error){
+              return ErrorText(text: error.toString());
+            });
+          default:
+            return const LoadingBox(
+              loadingText: '대화내용을 불러오는 중...',
+            );
+        }
+    });
   }
 
   Widget _buildMessageBubble(String message, bool isUserMessage) {
@@ -143,11 +188,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             bottomRight: Radius.circular(isUserMessage ? 0 : 12),
           ),
         ),
-        child: Text(
+        child: isUserMessage 
+        ? Text(
           message,
           style: TextStyle(
-            color: isUserMessage ? Colors.white : Colors.black87,
+            color: Colors.white
           ),
+        )
+        : Markdown(
+          shrinkWrap: true,
+          data: message,
         ),
       ),
     );
