@@ -101,7 +101,7 @@ class _PlusPeopleState extends State<PlusPeople> {
       }
       if(status == InfoStatus.saved){
 
-        sectionBloc.add(const ShowSectionEvent(section: SectionType.addPeople));
+        sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
         return const LoadingBox(
           direction: LoadingBoxDirection.row,
           loadingText: "저장되었습니다.",

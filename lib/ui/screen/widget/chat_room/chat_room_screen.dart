@@ -54,6 +54,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   // 시스템에서 제공하는 버튼을 채팅 스타일로 제공
   Widget _buildSystemButton(FourPillarsOfDestinyType type) {
+    print('_buildSystemButton');
+    print(type);
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -130,8 +132,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
           final List<ChatRoomMessage> resultMessage = [...messages, ...types.map((type){
             return ChatRoomMessage(role: ChatRoomRole.button, content: type.toString());
           }).toList()];
-
+          
           final List<FourPillarsOfDestinyType> systemButtons = [...types];
+          
           return ListView.builder(
             padding: const EdgeInsets.all(10),
             itemCount: resultMessage.length,

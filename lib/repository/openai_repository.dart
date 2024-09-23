@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../exceptions/duplicate_exception.dart';
 
 abstract class OpenaiRepository {
-  Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message);
+  Future<ChatCompletion> sendMessage(String systemPromptCode, String userPromptCode, String modelCode, String message);
   Future<ChatSession> createSession();
   Future<List<ChatRoomMessage>> findChatCompletion(String sessionId);
 }
@@ -81,16 +81,28 @@ class OpenaiDefaultRepository extends OpenaiRepository {
     
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
+      final completions = data['completions'];
+      final List<ChatRoomMessage> result = [];
+      if(completions is List){
+        completions.map((completion){
+          final ChatCompletion chatCompletion = ChatCompletion.fromJson(completion);
+
+          final List<ChatRoomMessage> messages = chatCompletion.choices.map((choice) {
+            return ChatRoomMessage(
+              role: ChatRoomRoleExtension.fromString(choice.message.role),
+              content: choice.message.content
+            );
+          }).toList();
+          
+          result.addAll(messages);
+          return messages;
+          
+        }).toList();
+        return result;
+      }
+      throw Exception('openai repository findChatCompletion');
       
-      final ChatCompletion chatCompletion = ChatCompletion.fromJson(data['completions']);
-      final List<ChatRoomMessage> messages = chatCompletion.choices.map((choice) {
-        return ChatRoomMessage(
-          role: ChatRoomRoleExtension.fromString(choice.message.role),
-          content: choice.message.content
-        );
-      }).toList();
-       
-      return messages;
+      
     } else {
       throw CommonException.fromResponse(response);
     }
@@ -98,9 +110,14 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   }
   
   @override
-  Future<ChatCompletion> sendMessage(String templateCode, String modelCode, String message) async {
+  Future<ChatCompletion> sendMessage(
+    String systemPromptCode, 
+    String userPromptCode,
+    String modelCode, 
+    String message
+  ) async {
     
-    final url = Uri.parse('$baseUrl/openai/send-message/$templateCode/$modelCode');
+    final url = Uri.parse('$baseUrl/openai/send-message/$systemPromptCode/$modelCode');
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
       // 현재 시간을 가져오기

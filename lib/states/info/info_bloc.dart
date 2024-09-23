@@ -1,13 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/info_repository.dart';
+import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
 class InfoBloc extends Bloc<InfoEvent, InfoState>{
   final InfoRepository _infoRepository;
-
-  InfoBloc(this._infoRepository) 
+  final OpenaiRepository _openaiRepository;
+  InfoBloc(
+    this._infoRepository, 
+    this._openaiRepository
+  ) 
     : super(InfoState.initialize())
   {
     on(_onInputName);
@@ -108,6 +113,8 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
           status: InfoStatus.saving,
           error: null
       ));
+      final ChatSession session = await _openaiRepository.createSession();
+      event.info.setMySession(session);
       _infoRepository.save(event.info);
       emit(state.asChangeStatus(InfoStatus.saved));
     } on Exception catch(error){

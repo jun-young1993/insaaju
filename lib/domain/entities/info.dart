@@ -1,3 +1,4 @@
+import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
@@ -5,8 +6,8 @@ class Info {
   final String name;
   final String date;
   final String time;
-  final String? mySessionId;
-  const Info(
+  late  String? mySessionId;
+  Info(
       this.name,
       this.date,
       this.time,
@@ -14,6 +15,10 @@ class Info {
         this.mySessionId
       }
   );
+  
+  void setMySession(ChatSession session){
+    mySessionId = session.id;
+  }
 
   String getTypeKey(FourPillarsOfDestinyType type){
     return toString()+type.getValue();

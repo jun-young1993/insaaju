@@ -7,6 +7,7 @@ enum SectionLoadStatus {
   complete,
   fail
 }
+
 class ChatCompletionState {
   final List<ChatCompletion> chatCompletion;
   final Exception? error;

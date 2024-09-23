@@ -36,7 +36,8 @@ Future<void> main() async {
         providers: [
           BlocProvider(
             create: (context) => InfoBloc(
-              context.read<InfoRepository>()
+              context.read<InfoRepository>(),
+              context.read<OpenaiRepository>(),
             )
           ),
           BlocProvider(

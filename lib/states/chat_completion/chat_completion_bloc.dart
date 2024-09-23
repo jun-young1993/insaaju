@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/configs/code_constants.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/exceptions/required_exception.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
@@ -17,6 +19,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
     : super(ChatCompletionState.initialize())
   {
     on(_onFindSection);
+    on(_onSendFourPillarsOfDstinyTypeChatCompletion);
   }
 
   Future<void> _onFindSection(
@@ -27,24 +30,34 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       emit(state.asSectionLoadStatusProcessing());
       late String? mySessionId = event.info.mySessionId;
       if(mySessionId == null){
-        final ChatSession chatSession = await _openaiRepository.createSession();
-        
-        final Info updateInfo = Info(
-          event.info.name,
-          event.info.date,
-          event.info.time,
-          mySessionId: chatSession.id
-        );
-        _infoRepository.update(event.info, updateInfo);
-        mySessionId = chatSession.id;
+        throw RequiredException<String>('my session id');
       }
-
-      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(mySessionId);
       
+      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(mySessionId);
+
       emit(state.asSectionLoadStatusComplete(messages));
     } on Exception catch( error ) {
       
       emit(state.asFailer(error));
     }
   }
+
+   Future<void> _onSendFourPillarsOfDstinyTypeChatCompletion(
+      SendFourPillarsOfDestinyTypeChatCompletionEvent event,
+      Emitter<ChatCompletionState> emit
+    ) async {
+      try{
+        _openaiRepository.sendMessage(
+          CodeConstants.four_pillars_of_destiny, 
+          event.type.getValue(),
+          CodeConstants.gpt_base_model
+        );
+        print('on click');
+        print(state.messages);
+        print(event.info);
+        print(event.type);
+      } on Exception catch ( error ){
+        emit(state.asFailer(error));
+      }
+    }
 }
