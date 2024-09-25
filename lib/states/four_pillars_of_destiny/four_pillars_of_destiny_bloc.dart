@@ -102,21 +102,21 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
             ]
         );
         
-        final chatCompilation = await _openaiRepository.sendMessage(
-          event.fourPillarsOfDestinyType.getValue(),
-          event.modelCode,
-          message
-        );
+        // final chatCompilation = await _openaiRepository.sendMessage(
+        //   event.fourPillarsOfDestinyType.getValue(),
+        //   event.modelCode,
+        //   message
+        // );
 
-        final bool saved = await _fourPillarsOfDestinyRepository.saveFourPillarsOfDestiny(
-          event.fourPillarsOfDestinyType,
-          chatCompilation,
-          event.info
-        );
+        // final bool saved = await _fourPillarsOfDestinyRepository.saveFourPillarsOfDestiny(
+        //   event.fourPillarsOfDestinyType,
+        //   chatCompilation,
+        //   event.info
+        // );
         add(InitializeFourPillarsOfDestinyEvent(info: event.info));
-        if(!saved){
-          throw Exception('fail saved');
-        }
+        // if(!saved){
+        //   throw Exception('fail saved');
+        // }
         emit(state.asLoading(false));
       } on Exception catch(error){
 

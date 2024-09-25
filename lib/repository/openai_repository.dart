@@ -86,7 +86,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
       if(completions is List){
         completions.map((completion){
           final ChatCompletion chatCompletion = ChatCompletion.fromJson(completion);
-
+          
           final List<ChatRoomMessage> messages = chatCompletion.choices.map((choice) {
             return ChatRoomMessage(
               role: ChatRoomRoleExtension.fromString(choice.message.role),

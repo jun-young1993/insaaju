@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:insaaju/domain/entities/code_item.dart';
+
 class ChatComplationMessage {
   final String role;
   final String content;
@@ -54,10 +56,14 @@ class ChatComplationChoice {
 class ChatCompletion {
   final String id;
   final List<ChatComplationChoice> choices;
+  final CodeItem systemPromptCodeItem;
+  final CodeItem userPromptCodeItem;
 
   ChatCompletion({
     required this.id, 
-    required this.choices
+    required this.choices,
+    required this.systemPromptCodeItem,
+    required this.userPromptCodeItem
   });
 
   Map<String, dynamic> toJson(){
@@ -79,9 +85,13 @@ class ChatCompletion {
       final List<ChatComplationChoice> choicesFromJson = choices
         .map((choiceJson) => ChatComplationChoice.fromJson(choiceJson))
         .toList();
-    return ChatCompletion(
-      id: json['id'],
-      choices: choicesFromJson
-    );
-  }
+      final systemPromptCodeItem = CodeItem.fromJson(json['systemPromptCodeItem']);
+      final userPromptCodeItem = CodeItem.fromJson(json['userPromptCodeItem']);
+      return ChatCompletion(
+        id: json['id'],
+        choices: choicesFromJson,
+        systemPromptCodeItem: systemPromptCodeItem,
+        userPromptCodeItem: userPromptCodeItem
+      );
+    }
 }

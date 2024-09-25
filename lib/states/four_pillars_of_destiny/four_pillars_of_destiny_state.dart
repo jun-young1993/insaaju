@@ -7,7 +7,9 @@ import 'package:insaaju/exceptions/unknown_exception.dart';
 enum FourPillarsOfDestinyType {
   fourPillarsOfDestiny,
   daewoon, //  대운(大運)
-  yongsinAndGisin, // 용신(用神)과 기신(忌神)
+  yongsin,
+  gishin,
+  // yongsinAndGisin, // 용신(用神)과 기신(忌神)
   sipsinAnalysis,  // 십신(十神) 분석
   // marriageFortune, // 결혼운
   // wealthFortune,   // 재물운
@@ -24,8 +26,12 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
     switch(this){
       case FourPillarsOfDestinyType.fourPillarsOfDestiny:
         return '기본 구성';
-      case FourPillarsOfDestinyType.yongsinAndGisin:
-        return '용신(用神)과 기신(忌神)';
+      // case FourPillarsOfDestinyType.yongsinAndGisin:
+      //   return '용신(用神)과 기신(忌神)';
+      case FourPillarsOfDestinyType.yongsin:
+        return '용신(用神)';
+      case FourPillarsOfDestinyType.gishin:
+        return '용신(用神)';
       case FourPillarsOfDestinyType.sipsinAnalysis:
         return '십신(十神) 분석';
       case FourPillarsOfDestinyType.daewoon:

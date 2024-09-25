@@ -47,11 +47,18 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       Emitter<ChatCompletionState> emit
     ) async {
       try{
-        _openaiRepository.sendMessage(
-          CodeConstants.four_pillars_of_destiny, 
-          event.type.getValue(),
-          CodeConstants.gpt_base_model
-        );
+        if(event.info.mySessionId == null){
+          throw RequiredException<String>('my session id');
+        }
+        print(event.info.mySessionId);
+        final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(event.info.mySessionId!);
+        print(messages[0].role);
+        print(messages[0].content);
+        // _openaiRepository.sendMessage(
+        //   CodeConstants.four_pillars_of_destiny_system_code, 
+        //   event.type.getValue(),
+        //   CodeConstants.gpt_base_model
+        // );
         print('on click');
         print(state.messages);
         print(event.info);

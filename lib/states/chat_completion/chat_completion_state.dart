@@ -20,7 +20,7 @@ class ChatCompletionState {
     this.error,
     this.sectionLoadStatus = SectionLoadStatus.queue,
     this.messages = const [],
-    this.types = const [FourPillarsOfDestinyType.yongsinAndGisin, FourPillarsOfDestinyType.daewoon, FourPillarsOfDestinyType.sipsinAnalysis]
+    this.types = const [FourPillarsOfDestinyType.yongsin,FourPillarsOfDestinyType.gishin, FourPillarsOfDestinyType.daewoon, FourPillarsOfDestinyType.sipsinAnalysis]
   });
 
   ChatCompletionState.initialize() : this._();
