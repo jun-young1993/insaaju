@@ -13,6 +13,7 @@ abstract class InfoRepository {
   Future<bool> update(Info original, Info update);
   Future<bool> check(Info info);
   Future<List<Info>> getAll();
+  Future<bool> remove(Info target);
 }
 class InfoDefaultRepository extends InfoRepository{
   InfoDefaultRepository();
@@ -92,6 +93,19 @@ class InfoDefaultRepository extends InfoRepository{
     
     // 업데이트된 리스트를 다시 SharedPreferences에 저장
     return result;
+  }
+
+  Future<bool> remove(Info target) async {
+    final prefs = await SharedPreferences.getInstance();
+    final list = await getAll();
+
+    // 삭제 대상 Info를 제외한 나머지 Info 리스트 생성
+    final List<String> updatedList = list.where((savedInfo) {
+      return !savedInfo.compare(target);
+    }).map((info) => jsonEncode(info.toJson())).toList();
+
+    // SharedPreferences에 업데이트된 리스트 저장
+    return await prefs.setStringList(InfoConstants.info, updatedList);
   }
 
   Future<bool> update(Info original, Info update) async {

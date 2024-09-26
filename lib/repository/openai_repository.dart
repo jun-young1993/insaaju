@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../exceptions/duplicate_exception.dart';
 
 abstract class OpenaiRepository {
-  Future<ChatCompletion> sendMessage(String systemPromptCode, String userPromptCode, String modelCode, String message);
+  Future<bool> sendMessage(String systemPromptCode, String userPromptCode, String modelCode, String sessionId, List<ChatBaseRoomMessage> messages);
   Future<ChatSession> createSession();
   Future<List<ChatRoomMessage>> findChatCompletion(String sessionId);
 }
@@ -90,7 +90,9 @@ class OpenaiDefaultRepository extends OpenaiRepository {
           final List<ChatRoomMessage> messages = chatCompletion.choices.map((choice) {
             return ChatRoomMessage(
               role: ChatRoomRoleExtension.fromString(choice.message.role),
-              content: choice.message.content
+              content: choice.message.content,
+              systemPromptCodeItem: chatCompletion.systemPromptCodeItem,
+              userPromptCodeItem: chatCompletion.userPromptCodeItem
             );
           }).toList();
           
@@ -110,14 +112,15 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   }
   
   @override
-  Future<ChatCompletion> sendMessage(
+  Future<bool> sendMessage(
     String systemPromptCode, 
     String userPromptCode,
     String modelCode, 
-    String message
+    String sessionId,
+    List<ChatBaseRoomMessage> messages,
   ) async {
     
-    final url = Uri.parse('$baseUrl/openai/send-message/$systemPromptCode/$modelCode');
+    final url = Uri.parse('$baseUrl/openai/send-message/$systemPromptCode/$userPromptCode/$modelCode/$sessionId');
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
       // 현재 시간을 가져오기
@@ -131,8 +134,9 @@ class OpenaiDefaultRepository extends OpenaiRepository {
           'Content-Type': 'application/json',
           'x-access-token': xAccessToken
     };
+    final messagesJson = messages.map((message) => message.toJson()).toList();
     final body = jsonEncode({
-      'message': message,
+      'messages': messagesJson,
     });
 
     final response = await http.post(
@@ -142,8 +146,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
     );
 
     if (response.statusCode == 201) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      return ChatCompletion.fromJson(data);
+      return true;
     } else {
       throw CommonException.fromResponse(response);
     }

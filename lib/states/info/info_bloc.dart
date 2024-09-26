@@ -1,17 +1,25 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/configs/code_constants.dart';
+import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
+import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
+import 'package:insaaju/utills/format_string.dart';
 
 class InfoBloc extends Bloc<InfoEvent, InfoState>{
   final InfoRepository _infoRepository;
   final OpenaiRepository _openaiRepository;
+  final CodeItemRepository _codeItemRepository;
   InfoBloc(
     this._infoRepository, 
-    this._openaiRepository
+    this._openaiRepository,
+    this._codeItemRepository
   ) 
     : super(InfoState.initialize())
   {
@@ -23,6 +31,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onSave);
     on(_onCheck);
     on(_onInitialize);
+    on(_onRemove);
   }
 
   Future<void> _onInputName(
@@ -104,6 +113,19 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     }
   }
 
+  Future<void> _onRemove(
+    RemoveInfoEvent event,
+    Emitter<InfoState> emit
+  ) async {
+    try{
+      emit(state.copyWith(removeStatus: InfoRemoveStatus.processing));
+      _infoRepository.remove(event.info);
+      emit(state.copyWith(removeStatus: InfoRemoveStatus.complete));
+    } on Exception catch(error) {
+      emit(state.asFailer(error));
+    }
+  } 
+
   Future<void> _onSave(
     SaveEvent event,
     Emitter<InfoState> emit
@@ -116,6 +138,16 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       final ChatSession session = await _openaiRepository.createSession();
       event.info.setMySession(session);
       _infoRepository.save(event.info);
+
+      await _openaiRepository.sendMessage(
+        CodeConstants.four_pillars_of_destiny_system_code, 
+        FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
+        CodeConstants.gpt_base_model,
+        session.id,
+        [
+          ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user)
+        ]
+      );
       emit(state.asChangeStatus(InfoStatus.saved));
     } on Exception catch(error){
       emit(state.asFailer(error));

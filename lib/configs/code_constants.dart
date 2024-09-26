@@ -7,5 +7,6 @@ class CodeConstants {
     static const String four_pillars_of_destiny_compatibility_message_template = 'four_pillars_of_destiny_compatibility_message_template';
     static const String four_pillars_of_destiny_message_template = 'four_pillars_of_destiny_message_template';
     static const String four_pillars_of_destiny_system_code = 'four_pillars_of_destiny';
+    static const String userPromptTemplate = 'user-prompt-template';
 }
 

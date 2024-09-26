@@ -26,4 +26,22 @@ class CodeItem {
       order: json['order'],
     );
   }
+
+  factory CodeItem.copyWith({
+    int? id,
+    int? order,
+    String? key,
+    String? value,
+    String? description,
+    String? isDeleted
+  }){
+    return CodeItem(
+      id: id ?? 0, 
+      order: order ?? 0, 
+      key: key ?? '', 
+      value: value ?? '', 
+      description: description ?? '', 
+      isDeleted: isDeleted ?? ''
+    );
+  }
 }

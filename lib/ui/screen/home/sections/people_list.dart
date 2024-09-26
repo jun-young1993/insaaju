@@ -2,7 +2,12 @@ part of '../home_screen.dart';
 
 class PeopleList extends StatelessWidget {
   final Function(Info) handleTapList;
-  const PeopleList({super.key, required this.handleTapList});
+  final Function(Info) handleRemove;
+  const PeopleList({
+    super.key, 
+    required this.handleTapList,
+    required this.handleRemove
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,16 +112,57 @@ class PeopleList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: infos.length,
         itemBuilder: (context, index){
-          return GestureDetector(
-            onTap: (){
-              _handlerTapInfo(infos[index]);
-            },
-            child: Column(
-              children: [
-                InfoRow(info: infos[index], profileSize: 18,),
-                const SizedBox(height: 10)
-              ],
+          return Dismissible(
+            key: Key(infos[index].toString()), 
+            direction: DismissDirection.endToStart,
+            background: Container(
+              decoration: BoxDecoration(
+                borderRadius:  BorderRadius.circular(8),
+                color: Colors.red,
+              ),
+              alignment: Alignment.centerRight,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
             ),
+            confirmDismiss: (direction) async {
+              final result = await showDialog(
+                context: context,
+                builder: (BuildContext context){
+                  return AlertDialog(
+                    title: Text('삭제'),
+                    content: Text('${infos[index].toString()} 을 삭제하시겠습니까?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: (){ Navigator.of(context).pop(false);},
+                        child: Text('취소'),
+                      ),
+                      TextButton(
+                        onPressed: (){ 
+                          handleRemove(infos[index]);
+                          Navigator.of(context).pop(true);
+                        },
+                        child: Text('확인'),
+                      )
+                    ]
+                  );
+                }
+              );
+              return result;
+            },
+            child: GestureDetector(
+              onTap: (){
+                _handlerTapInfo(infos[index]);
+              },
+              child: Column(
+                children: [
+                  InfoRow(info: infos[index], profileSize: 18,),
+                  const SizedBox(height: 10)
+                ],
+              ),
+            )
           );
         }
       );

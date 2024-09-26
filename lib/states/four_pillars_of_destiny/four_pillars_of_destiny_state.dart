@@ -29,13 +29,13 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
       // case FourPillarsOfDestinyType.yongsinAndGisin:
       //   return '용신(用神)과 기신(忌神)';
       case FourPillarsOfDestinyType.yongsin:
-        return '용신(用神)';
+        return '용신(用神) 분석';
       case FourPillarsOfDestinyType.gishin:
-        return '용신(用神)';
+        return '기신(忌神) 분석';
       case FourPillarsOfDestinyType.sipsinAnalysis:
         return '십신(十神) 분석';
       case FourPillarsOfDestinyType.daewoon:
-        return '대운(大運)';
+        return '대운(大運) 분석';
     // case FourPillarsOfDestinyType.marriageFortune:
     //   return '결혼운';
     // case FourPillarsOfDestinyType.wealthFortune:
@@ -47,7 +47,20 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
       default:
         throw UnknownException<FourPillarsOfDestinyType>(this);
     }
+  }
 
+  bool hasSameValue(String value){
+    return this.getValue() == value;
+  }
+  
+    // 문자열을 기반으로 enum 값 찾기
+  static FourPillarsOfDestinyType? fromValue(String value) {
+    for (var type in FourPillarsOfDestinyType.values) {
+      if (type.getValue() == value) {
+        return type;
+      }
+    }
+    return null; // 일치하는 값이 없을 경우 null 반환
   }
 }
 

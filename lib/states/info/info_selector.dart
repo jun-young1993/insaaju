@@ -60,3 +60,11 @@ class InfoStatusSelector extends InfoSelector<InfoStatus> {
       builder:builder
   );
 }
+
+class InfoRemoveSelector extends InfoSelector<InfoRemoveStatus> {
+  InfoRemoveSelector(Widget Function(InfoRemoveStatus) builder)
+    : super(
+      selector: (state) => state.removeStatus,
+      builder: builder
+    );
+}

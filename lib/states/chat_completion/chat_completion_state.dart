@@ -4,6 +4,8 @@ import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_s
 enum SectionLoadStatus {
   queue,
   processing,
+  processingType,
+  completeType,
   complete,
   fail
 }
@@ -35,6 +37,13 @@ class ChatCompletionState {
 
   ChatCompletionState asSectionLoadStatusQueue(){
     return copyWith(sectionLoadStatus: SectionLoadStatus.queue);
+  }
+
+  ChatCompletionState asSectionLoadStatusProcessingType(){
+    return copyWith(sectionLoadStatus: SectionLoadStatus.processingType);
+  }
+  ChatCompletionState asSectionLoadStatusCompleteType(){
+    return copyWith(sectionLoadStatus: SectionLoadStatus.completeType);
   }
 
   ChatCompletionState asFailer(Exception error) {

@@ -10,6 +10,12 @@ enum InfoStatus {
   saving,
   saved
 }
+
+enum InfoRemoveStatus {
+  queue,
+  processing,
+  complete
+}
 class InfoState {
   final String? name;
   final List<String>? hanja;
@@ -18,6 +24,7 @@ class InfoState {
   final String? date;
   final String? time;
   final InfoStatus status;
+  final InfoRemoveStatus removeStatus;
   final List<List<Map<String, dynamic>>>? hanjaList;
   
   InfoState._({
@@ -28,7 +35,8 @@ class InfoState {
     this.name,
     this.error,
     this.status = InfoStatus.inProgress,
-    this.menu = InfoMenu.name
+    this.menu = InfoMenu.name,
+    this.removeStatus = InfoRemoveStatus.queue
   });
 
   InfoState.initialize() : this._();
@@ -98,7 +106,8 @@ class InfoState {
     String? time,
     Exception? error,
     InfoMenu? menu,
-    InfoStatus? status
+    InfoStatus? status,
+    InfoRemoveStatus? removeStatus
   }){
     return InfoState._(
       hanjaList: hanjaList ?? this.hanjaList,
@@ -108,7 +117,8 @@ class InfoState {
       time: time ?? this.time,
       name: name ?? this.name,
       error: error ?? this.error,
-      menu: menu ?? this.menu
+      menu: menu ?? this.menu,
+      removeStatus: removeStatus ?? this.removeStatus
     );
   }
 }

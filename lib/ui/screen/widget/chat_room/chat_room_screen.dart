@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
+import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
@@ -53,9 +54,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   // 시스템에서 제공하는 버튼을 채팅 스타일로 제공
-  Widget _buildSystemButton(FourPillarsOfDestinyType type) {
-    print('_buildSystemButton');
-    print(type);
+  Widget _buildSystemButton(ChatRoomMessage chatRoomMessage) {
+
+ 
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
@@ -77,14 +78,17 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                   ElevatedButton(
                     onPressed: () {
                       chatCompletionBloc.add(
-                        SendFourPillarsOfDestinyTypeChatCompletionEvent(info: widget.info, type: type)
+                        SendFourPillarsOfDestinyTypeChatCompletionEvent(
+                          info: widget.info, 
+                          type: FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)!
+                        )
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white, backgroundColor: Colors.teal, // 버튼 텍스트 색상
                     ),
                     child: Text(
-                      type.getTitle(),
+                      chatRoomMessage.content,
                       softWrap: true
                     ),
                   ),
@@ -128,33 +132,25 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   Widget _buildMessageList(){
     return SectionMessageChatCompletionSelector((messages){
-      return SectionChatRequestTypeSelector((types){
-          final List<ChatRoomMessage> resultMessage = [...messages, ...types.map((type){
-            return ChatRoomMessage(role: ChatRoomRole.button, content: type.toString());
-          }).toList()];
+      return ListView.builder(
+        padding: const EdgeInsets.all(10),
+        itemCount: messages.length,
+        reverse: false, // 가장 최근 메시지가 아래에 오도록 설정
+        itemBuilder: (context, index) {
+          switch(messages[index].role){
+            case ChatRoomRole.system:
+            case ChatRoomRole.assistant:
+              return _buildMessageBubble(messages[index], false);
+            case ChatRoomRole.user:
+              return _buildMessageBubble(messages[index], true);
+            case ChatRoomRole.button:
+              return _buildSystemButton(messages[index]);
+            default: 
+              return _buildMessageBubble(messages[index], false);
+          }
           
-          final List<FourPillarsOfDestinyType> systemButtons = [...types];
-          
-          return ListView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: resultMessage.length,
-            reverse: false, // 가장 최근 메시지가 아래에 오도록 설정
-            itemBuilder: (context, index) {
-              switch(resultMessage[index].role){
-                case ChatRoomRole.system:
-                case ChatRoomRole.assistant:
-                  return _buildMessageBubble(resultMessage[index].content, false);
-                case ChatRoomRole.user:
-                  return _buildMessageBubble(resultMessage[index].content, true);
-                case ChatRoomRole.button:
-                  return _buildSystemButton(systemButtons.removeLast());
-                default: 
-                  return _buildMessageBubble(resultMessage[index].content, false);
-              }
-              
-            },
-          );
-      });
+        },
+      );
     });
   }
 
@@ -175,7 +171,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     });
   }
 
-  Widget _buildMessageBubble(String message, bool isUserMessage) {
+  Widget _buildMessageBubble(ChatRoomMessage chatRoomMessage, bool isUserMessage) {
     return Align(
       alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -193,14 +189,14 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
         ),
         child: isUserMessage 
         ? Text(
-          message,
+          chatRoomMessage.content,
           style: TextStyle(
             color: Colors.white
           ),
         )
         : Markdown(
           shrinkWrap: true,
-          data: message,
+          data: chatRoomMessage.content,
         ),
       ),
     );

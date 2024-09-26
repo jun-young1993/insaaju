@@ -1,3 +1,4 @@
+import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 
 enum ChatRoomRole {
@@ -7,6 +8,9 @@ enum ChatRoomRole {
   user
 }
 extension ChatRoomRoleExtension on ChatRoomRole {
+  String getValue() {
+    return this.toString().split('.').last;
+  }
   static ChatRoomRole fromString(String roleString) {
     switch (roleString.toLowerCase()) {
       case 'button':
@@ -22,11 +26,29 @@ extension ChatRoomRoleExtension on ChatRoomRole {
     }
   }
 }
-class ChatRoomMessage {
+
+class ChatBaseRoomMessage {
   final ChatRoomRole role;
   final String content;
-  ChatRoomMessage({
+  ChatBaseRoomMessage({
     required this.role,
-    required this.content
+    required this.content,
+  });
+  Map<String, dynamic> toJson(){
+    return {
+      'role' : role.getValue(),
+      'content' : content
+    };
+  }
+}
+class ChatRoomMessage extends ChatBaseRoomMessage {
+  
+  final CodeItem systemPromptCodeItem;
+  final CodeItem userPromptCodeItem;
+  ChatRoomMessage({
+    required this.systemPromptCodeItem,
+    required this.userPromptCodeItem, 
+    required super.role, 
+    required super.content
   });
 }

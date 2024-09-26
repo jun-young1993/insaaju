@@ -5,6 +5,8 @@ import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_selector.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
+import 'package:insaaju/states/info/info_bloc.dart';
+import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
 import 'package:insaaju/states/list/list_event.dart';
 import 'package:insaaju/states/list/list_selector.dart';
@@ -42,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ListBloc get listBloc => context.read<ListBloc>();
   MeBloc get meBloc => context.read<MeBloc>();
   SectionBloc get sectionBloc => context.read<SectionBloc>();
+  InfoBloc get infoBloc => context.read<InfoBloc>();
 
   @override
   void initState(){
@@ -88,6 +91,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   section: SectionType.detailPeople,
                   info: info
               )
+          );
+        },
+        handleRemove: (info){
+          infoBloc.add(
+            RemoveInfoEvent(
+              info: info,
+            )
           );
         },
       ),

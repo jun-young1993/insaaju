@@ -1,5 +1,6 @@
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/info/info_state.dart';
+import 'package:insaaju/states/list/list_bloc.dart';
 
 abstract class InfoEvent {
   const InfoEvent();
@@ -48,6 +49,14 @@ class SaveEvent extends InfoEvent {
     required this.info
   });
 }
+
+class RemoveInfoEvent extends InfoEvent {
+  final Info info;
+  const RemoveInfoEvent({
+    required this.info,
+  });
+}
+
 
 class CheckEvent extends InfoEvent {
   final Info info;
