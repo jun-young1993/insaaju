@@ -13,8 +13,8 @@ class AppBottomNavigationBar extends StatelessWidget {
   final List<AppBottomNavigationItem> items = [
     AppBottomNavigationItem(
         route: Routes.home,
-        icon: Icon(Icons.home),
-        name: '홈'
+        icon: Icon(Icons.people),
+        name: '친구'
     ),
     AppBottomNavigationItem(
         route: Routes.four_pillars_of_destiny,

@@ -116,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   AppBar _buildAppBar(){
     return AppBar(
-      leading: const TitleText(text: 'HOME'),
+      leading: const TitleText(text: '친구'),
       leadingWidth: 80.0,
       actions: [
         _buildSearchIcon(),

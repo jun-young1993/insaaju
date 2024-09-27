@@ -10,8 +10,10 @@ class BirthDateField extends StatefulWidget {
 
 }
 class _BirthDateFieldState extends State<BirthDateField> {
-
+  final List<String> solarAndLunar = ['양력','음력'];
+  late String solarAndLunarValue = solarAndLunar.first;
   final TextEditingController _dateController = TextEditingController();
+  
 
 
   Future<void> _selectDate(BuildContext context) async {
@@ -24,20 +26,43 @@ class _BirthDateFieldState extends State<BirthDateField> {
 
     if (selectedDate != null) {
       _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
-      widget.onSubmitted(_dateController.text);
+      widget.onSubmitted("${solarAndLunarValue} ${_dateController.text}");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _dateController,
-      decoration: const InputDecoration(
-        // border: OutlineInputBorder(),
-        labelText: 'Enter your birthdate',
-      ),
-      readOnly: true,
-      onTap: () => _selectDate(context),
+    return Row(
+      children: [
+        DropdownButton<String>(
+          value: solarAndLunarValue,
+          icon: const Icon(Icons.arrow_downward),
+          onChanged: (String? value){
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              setState(() {
+                solarAndLunarValue = value!;
+              });
+            });
+          },
+          items: solarAndLunar.map<DropdownMenuItem<String>>((String value){
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value)
+            );
+          }).toList()
+        ),
+        Expanded(
+          child: TextField(
+              controller: _dateController,
+              decoration: const InputDecoration(
+                // border: OutlineInputBorder(),
+                labelText: 'Enter your birthdate',
+              ),
+              readOnly: true,
+              onTap: () => _selectDate(context),
+            ),
+        )
+      ],
     );
   }
 

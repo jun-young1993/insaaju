@@ -31,12 +31,25 @@ class ChatRoomScreen extends StatefulWidget {
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final Color? backgroundColor = Colors.lightGreen[50];
-
+  final ScrollController _scrollController = ScrollController();
   ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
   @override
   void initState(){
     super.initState();
     chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info,));
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // 사용 후 컨트롤러 해제
+    super.dispose();
+  }
+
+  void _scrollToBottom() {
+    // 최대 스크롤 값으로 스크롤
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
   }
 
   @override
@@ -132,7 +145,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   Widget _buildMessageList(){
     return SectionMessageChatCompletionSelector((messages){
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       return ListView.builder(
+        controller: _scrollController,
         padding: const EdgeInsets.all(10),
         itemCount: messages.length,
         reverse: false, // 가장 최근 메시지가 아래에 오도록 설정
