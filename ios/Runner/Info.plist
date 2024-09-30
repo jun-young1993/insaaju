@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>GADpplicationIdentifier</key>
+	<string>ca-app-pub-4656262305566191~7775249596</string>
 </dict>
 </plist>

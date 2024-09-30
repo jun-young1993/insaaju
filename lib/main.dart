@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/app.dart';
-import 'package:insaaju/domain/entities/chat_complation.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
@@ -15,13 +13,14 @@ import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
 import 'package:insaaju/states/me/me_bloc.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
-
 import 'repository/four_pillars_of_destiny_repository.dart';
+
 Future<void> main() async {
 
 // print(ChatCompletion.fromJson());
 // print(test);
   await dotenv.load(fileName: "assets/.env");
+  MobileAds.instance.initialize();
   runApp(
     MultiRepositoryProvider(
       providers: [
