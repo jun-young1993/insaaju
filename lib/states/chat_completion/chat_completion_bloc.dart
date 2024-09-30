@@ -107,20 +107,25 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
           return;
         }
         
-        final ChatRoomMessage fourPillarsOfDestinyMessage = messages.firstWhere((message) => FourPillarsOfDestinyType.fourPillarsOfDestiny.hasSameValue(message.userPromptCodeItem.key));
-        if(fourPillarsOfDestinyMessage == null){
-          throw RequiredException('fourPillarsOfDestiny');
-        }
+
         final CodeItem fourPillarsOfDestinyCodeItem = await _codeItemRepository.fetchCodeItem(CodeConstants.userPromptTemplate, FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue());
         
         final List<ChatBaseRoomMessage> sendMessages = [
           ChatBaseRoomMessage(content: fourPillarsOfDestinyCodeItem.value, role: ChatRoomRole.user),
           ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user),
-          ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage.content, role: ChatRoomRole.assistant),
         ];
+        final ChatRoomMessage? fourPillarsOfDestinyMessage = messages.firstWhereOrNull((message) => FourPillarsOfDestinyType.fourPillarsOfDestiny.hasSameValue(message.userPromptCodeItem.key));
+        if(
+            event.type != FourPillarsOfDestinyType.fourPillarsOfDestiny
+            && fourPillarsOfDestinyMessage == null
+        ){
+          throw RequiredException('fourPillarsOfDestiny');
+        }else{
+          sendMessages.add(ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage!.content, role: ChatRoomRole.assistant));
+        }
 
         await _openaiRepository.sendMessage(
-          CodeConstants.four_pillars_of_destiny_system_code, 
+          CodeConstants.four_pillars_of_destiny_system_code,
           event.type.getValue(),
           CodeConstants.gpt_base_model,
           event.info.mySessionId!,

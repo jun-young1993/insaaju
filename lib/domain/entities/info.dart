@@ -67,4 +67,31 @@ class Info {
     throw Exception('InfoState is missing required fields: name, date, or time');
   }
 
+  factory Info.toEmpty(){
+    return Info(
+      '',
+      '',
+      ''
+    );
+  }
+
+}class ExtendedInfo extends Info {
+
+  ExtendedInfo(
+  {String? name}
+  ) : super(
+    name ?? '탭 해서 프로필 생성하기',
+    '',
+    '',
+  );
+
+  @override
+  String toString() {
+    return '프로필을 생성해주세요';
+  }
+
+  @override
+  String toStringDateTime(){
+    return '프로필을 생성해주세요';
+  }
 }

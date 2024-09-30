@@ -1,6 +1,7 @@
 import 'package:insaaju/domain/entities/info.dart';
 enum MeLoadStatus {
   loadQueue,
+  loadIsEmpty,
   loadComplete,
   loadProcessing,
   loadError

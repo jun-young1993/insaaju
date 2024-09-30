@@ -70,4 +70,9 @@ class InfoInitializeEvent extends InfoEvent {
   const InfoInitializeEvent();
 }
 
+class ChangeInfoStatusEvent extends InfoEvent {
+  final InfoStatus infoStatus;
+  const ChangeInfoStatusEvent(this.infoStatus);
+}
+
 

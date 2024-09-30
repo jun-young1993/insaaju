@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/exceptions/unknown_exception.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_selector.dart';
 import 'package:insaaju/states/info/info_state.dart';
+import 'package:insaaju/states/me/me_bloc.dart';
+import 'package:insaaju/states/me/me_event.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
 import 'package:insaaju/states/section/section_event.dart';
+import 'package:insaaju/states/section/section_selector.dart';
 import 'package:insaaju/states/section/section_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
+import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_time_field.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
 import 'package:insaaju/ui/screen/widget/info/name_field.dart';
@@ -18,9 +23,9 @@ import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 
 class PlusPeople extends StatefulWidget {
+  final SectionType sectionType;
 
-
-  const PlusPeople({super.key});
+  const PlusPeople({super.key, required this.sectionType});
   @override
   _PlusPeopleState createState() => _PlusPeopleState();
 }
@@ -28,6 +33,7 @@ class PlusPeople extends StatefulWidget {
 class _PlusPeopleState extends State<PlusPeople> {
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   InfoBloc get infoBloc => context.read<InfoBloc>();
+  MeBloc get meBloc => context.read<MeBloc>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +46,9 @@ class _PlusPeopleState extends State<PlusPeople> {
   AppBar _buildAppBar(){
     return AppBar(
       leading: _buildAppBarLeading(),
-      title: Text('ADD'),
+      title: ShowSectionSelector((state){
+        return Text(state.section.getTitle());
+      }),
       leadingWidth: 80.0,
     );
   }
@@ -92,36 +100,38 @@ class _PlusPeopleState extends State<PlusPeople> {
   }
 
   Widget _buildSaveButton(InfoState info){
-    return InfoStatusSelector((status){
-      if(status == InfoStatus.saving){
-        return const LoadingBox(
-          direction: LoadingBoxDirection.row,
-          loadingText: "저장중입니다...",
-        );
-      }
-      if(status == InfoStatus.saved){
+      return InfoStatusSelector((status){
+        print(status);
+        if(status == InfoStatus.saving){
+          return LoadingBox(
+            direction: LoadingBoxDirection.row,
+            loadingText: InfoStatus.saving.getTitle(),
+          );
+        }
+        if(status == InfoStatus.saved){
 
-        sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
-        return const LoadingBox(
-          direction: LoadingBoxDirection.row,
-          loadingText: "저장되었습니다.",
+          sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+          return LoadingBox(
+            direction: LoadingBoxDirection.row,
+            loadingText: InfoStatus.saved.getTitle(),
+          );
+        }
+        return AppButton(
+          onPressed: (info.name != null && info.date != null && info.time != null && status != InfoStatus.saving)
+              ? () {
+                if(widget.sectionType == SectionType.addPeople){
+                  infoBloc.add(SaveEvent(info: Info.fromState(info)));
+                }else if(widget.sectionType == SectionType.addMe){
+                  meBloc.add(SaveMeInfoEvent(info: Info.fromState(info)));
+                }else{
+                  throw UnknownException<SectionType>(widget.sectionType);
+                }
+              }
+              : null,
+          child: Text(widget.sectionType.getTitle()),
         );
-      }
-      return AppButton(
-        onPressed: (
-            info.name != null
-                && info.date != null
-                && info.time != null
-                && status != InfoStatus.saving
-        )
-            ? () {
-              infoBloc.add(SaveEvent(info: Info.fromState(info)));
-            }
-            : null,
-        child: Text("저장하기"),
-      );
 
-    });
+      });
   }
 
   Widget _buildColumnSizedBox(){

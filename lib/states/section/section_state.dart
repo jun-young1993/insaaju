@@ -3,7 +3,20 @@ import 'package:insaaju/domain/entities/info.dart';
 enum SectionType {
   unselected,
   addPeople,
+  addMe,
   detailPeople,
+}
+extension SectionTypeExtension on SectionType {
+  String  getTitle(){
+    switch(this){
+      case SectionType.addPeople:
+        return '친구 추가하기';
+      case SectionType.addMe:
+        return '프로필 생성하기';
+      default:
+        return 'unknown';
+    }
+  }
 }
 enum ChildSectionType {
   unselected,

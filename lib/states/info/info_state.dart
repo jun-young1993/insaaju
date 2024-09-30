@@ -1,3 +1,5 @@
+import 'package:insaaju/exceptions/unknown_exception.dart';
+
 enum InfoMenu {
   name,
   hanja,
@@ -9,6 +11,20 @@ enum InfoStatus {
   inProgress,
   saving,
   saved
+}
+
+extension InfoStatusExtension on InfoStatus {
+  String getTitle(){
+    switch(this){
+      case InfoStatus.inProgress:
+      case InfoStatus.saving:
+        return '저장중입니다...';
+      case InfoStatus.saved:
+        return '저장되었습니다.';
+      default:
+        throw UnknownException<InfoStatus>(this);
+    }
+  }
 }
 
 enum InfoRemoveStatus {

@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/configs/code_constants.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
-import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
@@ -10,7 +9,6 @@ import 'package:insaaju/repository/openai_repository.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
-import 'package:insaaju/utills/format_string.dart';
 
 class InfoBloc extends Bloc<InfoEvent, InfoState>{
   final InfoRepository _infoRepository;
@@ -32,6 +30,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onCheck);
     on(_onInitialize);
     on(_onRemove);
+    on(_onChangeStatus);
   }
 
   Future<void> _onInputName(
@@ -137,7 +136,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       ));
       final ChatSession session = await _openaiRepository.createSession();
       event.info.setMySession(session);
-      _infoRepository.save(event.info);
+      await _infoRepository.save(event.info);
 
       await _openaiRepository.sendMessage(
         CodeConstants.four_pillars_of_destiny_system_code, 
@@ -164,5 +163,16 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       emit(state.asFailer(error));
     }
   }
-  
+
+  Future<void> _onChangeStatus(
+      ChangeInfoStatusEvent event,
+      Emitter<InfoState> emit
+  ) async {
+    try {
+      emit(state.copyWith(status: event.infoStatus));
+      print('bloc change ${event.infoStatus}');
+    } on Exception catch( error ) {
+      emit(state.asFailer(error));
+    }
+  }
 }

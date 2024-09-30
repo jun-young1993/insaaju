@@ -3,10 +3,11 @@ part of '../home_screen.dart';
 class PeopleList extends StatelessWidget {
   final Function(Info) handleTapList;
   final Function(Info) handleRemove;
+  final VoidCallback handleMeCreate;
   const PeopleList({
     super.key, 
     required this.handleTapList,
-    required this.handleRemove
+    required this.handleRemove, required this.handleMeCreate
   });
 
   @override
@@ -32,19 +33,23 @@ class PeopleList extends StatelessWidget {
       return Row(
         children: [
           MeLoadStatusSelector((status){
+            print(status);
             switch(status){
+              case MeLoadStatus.loadIsEmpty:
+                return GestureDetector(
+                  onTap: (){
+                    handleMeCreate();
+                  },
+                  child: InfoRow(info: ExtendedInfo())
+                );
               case MeLoadStatus.loadComplete:
                 return MeFindSelector((info){
-                  if(info == null){
-                    return const Text('no title');
-                  }else{
-                    return GestureDetector(
-                      onTap: (){
-                        _handlerTapInfo(info);
-                      },
-                      child: InfoRow(info: info),
-                    );
-                  }
+                  return GestureDetector(
+                    onTap: (){
+                      _handlerTapInfo(info);
+                    },
+                    child: InfoRow(info: info),
+                  );
                 });
               case MeLoadStatus.loadError:
                 return _buildMeError();

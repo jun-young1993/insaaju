@@ -14,6 +14,8 @@ abstract class InfoRepository {
   Future<bool> check(Info info);
   Future<List<Info>> getAll();
   Future<bool> remove(Info target);
+  Future<bool> saveOrUpdateMe(Info info);
+  Future<Info?> findMe();
 }
 class InfoDefaultRepository extends InfoRepository{
   InfoDefaultRepository();
@@ -93,6 +95,29 @@ class InfoDefaultRepository extends InfoRepository{
     
     // 업데이트된 리스트를 다시 SharedPreferences에 저장
     return result;
+  }
+
+  Future<Info?> findMe() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? jsonString = prefs.getString(InfoConstants.info_me);
+    print(jsonString);
+    if(jsonString != null){
+      Map<String, dynamic> infoMap = jsonDecode(jsonString);
+      return Info(
+          infoMap['name'],
+          infoMap['date'],
+          infoMap['time'],
+          mySessionId: infoMap['mySessionId']
+      );
+    }
+    return null;
+  }
+
+  Future<bool> saveOrUpdateMe(Info info) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    return await prefs.setString(InfoConstants.info_me, jsonEncode(info.toJson()));
+
   }
 
   Future<bool> remove(Info target) async {

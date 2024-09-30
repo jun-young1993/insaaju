@@ -16,10 +16,10 @@ class MeSelector<T> extends BlocSelector<MeBloc, MeState, T> {
   );
 }
 
-class MeFindSelector extends MeSelector<Info?> {
-  MeFindSelector(Widget Function(Info?) builder)
+class MeFindSelector extends MeSelector<Info> {
+  MeFindSelector(Widget Function(Info) builder)
       : super(
-    selector: (state) => state.info,
+    selector: (state) => state.info!,
     builder: builder,
   );
 }

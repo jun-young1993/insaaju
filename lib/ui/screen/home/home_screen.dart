@@ -22,6 +22,7 @@ import 'package:insaaju/ui/screen/section/plus_people.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
+import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/chat_room/chat_room_screen.dart';
 import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
@@ -71,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget? _buildOverlay(SectionType section, Info? info){
     switch(section){
       case SectionType.addPeople:
-        return const PlusPeople();
+      case SectionType.addMe:
+        return PlusPeople(sectionType: section);
       case SectionType.detailPeople:
         return (info != null)
             ? PeopleDetail(info: info,)
@@ -85,6 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return AppBackground(
       appBar: _buildAppBar(),
       child: PeopleList(
+        handleMeCreate: (){
+          sectionBloc.add(const ShowSectionEvent(section: SectionType.addMe));
+        },
         handleTapList: (info) {
           sectionBloc.add(
                ShowSectionEvent(

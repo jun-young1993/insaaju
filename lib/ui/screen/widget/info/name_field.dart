@@ -12,7 +12,7 @@ class NameField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: const InputDecoration(
-        labelText: 'Enter Name',
+        labelText: '이름',
       ),
       onSubmitted: (String value) {
         onSubmitted(value);

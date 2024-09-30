@@ -22,6 +22,7 @@ Future<void> main() async {
 // print(ChatCompletion.fromJson());
 // print(test);
   await dotenv.load(fileName: "assets/.env");
+
   runApp(
     MultiRepositoryProvider(
       providers: [
@@ -42,9 +43,9 @@ Future<void> main() async {
         providers: [
           BlocProvider(
             create: (context) => InfoBloc(
-              context.read<InfoRepository>(),
-              context.read<OpenaiRepository>(),
-              context.read<CodeItemRepository>()
+                context.read<InfoRepository>(),
+                context.read<OpenaiRepository>(),
+                context.read<CodeItemRepository>()
             )
           ),
           BlocProvider(
@@ -59,7 +60,10 @@ Future<void> main() async {
           )),
           BlocProvider(
             create: (context) => MeBloc(
-              context.read<InfoRepository>()
+              context.read<InfoRepository>(),
+              context.read<OpenaiRepository>(),
+              context.read<InfoBloc>(),
+              // getInfoBloc(context)
             )
           ),
           BlocProvider(create: (context) => SectionBloc()),
@@ -75,6 +79,7 @@ Future<void> main() async {
       )
     )
   );
+
 
 
   
