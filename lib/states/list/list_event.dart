@@ -3,5 +3,6 @@ abstract class ListEvent {
 }
 
 class AllListEvent extends ListEvent {
-  const AllListEvent();
+  final String? searchText;
+  const AllListEvent({this.searchText});
 }

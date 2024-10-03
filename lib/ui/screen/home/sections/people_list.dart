@@ -19,7 +19,11 @@ class PeopleList extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildMe(),
+                // _buildMe(),
+                MeProfile(
+                  handleMeCreate: handleMeCreate,
+                  handleTapList: handleTapList,
+                ),
                 const SizedBox(height: 10),
                 const Divider(),
                 Expanded(child: _buildPeopleList())
@@ -29,38 +33,7 @@ class PeopleList extends StatelessWidget {
       );
   }
 
-  Widget _buildMe(){
-      return Row(
-        children: [
-          MeLoadStatusSelector((status){
-            switch(status){
-              case MeLoadStatus.loadIsEmpty:
-                return GestureDetector(
-                  onTap: (){
-                    handleMeCreate();
-                  },
-                  child: InfoRow(info: ExtendedInfo())
-                );
-              case MeLoadStatus.loadComplete:
-                return MeFindSelector((info){
-                  return GestureDetector(
-                    onTap: (){
-                      _handlerTapInfo(info);
-                    },
-                    child: InfoRow(info: info),
-                  );
-                });
-              case MeLoadStatus.loadError:
-                return _buildMeError();
-              case MeLoadStatus.loadQueue:
-              case MeLoadStatus.loadProcessing:
-              default:
-                return _buildLoad();
-            }
-          })
-        ]
-      );
-  }
+
 
   Widget _buildLoad(){
     return  LoadingBox(
@@ -98,11 +71,6 @@ class PeopleList extends StatelessWidget {
     );
   }
 
-  Widget _buildMeError(){
-    return MeErrorSelector((error){
-      return ErrorText(text: error.toString(),);
-    });
-  }
 
   Widget _buildListAllError(){
     return ListErrorSelector((error) {

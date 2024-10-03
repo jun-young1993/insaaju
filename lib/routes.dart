@@ -4,6 +4,7 @@ import 'package:insaaju/ui/screen/four_pillars_of_destiny/four_pillars_of_destin
 import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
+import 'package:insaaju/ui/screen/setting/setting_screen.dart';
 import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
 
 class FadeRoute extends PageRouteBuilder {
@@ -26,7 +27,8 @@ enum Routes {
   info,
   list,
   four_pillars_of_destiny,
-  compatibility
+  compatibility,
+  setting
 }
 
 extension RoutesExtention on Routes {
@@ -41,13 +43,15 @@ class _Paths {
   static const String list = 'list';
   static const String four_pillars_of_destiny = 'four_pillars_of_destiny';
   static const String compatibility = 'compatibility';
+  static const String setting = 'setting';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
     Routes.info: _Paths.info,
     Routes.list: _Paths.list,
     Routes.four_pillars_of_destiny: _Paths.four_pillars_of_destiny,
-    Routes.compatibility: _Paths.compatibility
+    Routes.compatibility: _Paths.compatibility,
+    Routes.setting: _Paths.setting
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -61,17 +65,19 @@ class AppNavigator {
           AppNavigator.currentRoute = settings.name;
           switch(settings.name){
             case _Paths.home:
-              return FadeRoute(page: HomeScreen());
+              return FadeRoute(page: const HomeScreen());
             case _Paths.info:
-              return FadeRoute(page: InfoScreen());
+              return FadeRoute(page: const InfoScreen());
             case _Paths.list:
-              return FadeRoute(page: ListScreen());
+              return FadeRoute(page: const ListScreen());
             case _Paths.four_pillars_of_destiny:
-              return FadeRoute(page: FourPillarsOfDestinyScreen());
+              return FadeRoute(page: const FourPillarsOfDestinyScreen());
             case _Paths.compatibility:
-              return FadeRoute(page: CompatibilityScreen());
+              return FadeRoute(page: const CompatibilityScreen());
+            case _Paths.setting:
+              return FadeRoute(page: const SettingScreen());
             default:
-              return FadeRoute(page: HomeScreen());
+              return FadeRoute(page: const HomeScreen());
           }
     }
 

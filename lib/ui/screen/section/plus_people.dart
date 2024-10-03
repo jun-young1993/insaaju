@@ -7,6 +7,8 @@ import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_selector.dart';
 import 'package:insaaju/states/info/info_state.dart';
+import 'package:insaaju/states/list/list_bloc.dart';
+import 'package:insaaju/states/list/list_event.dart';
 import 'package:insaaju/states/me/me_bloc.dart';
 import 'package:insaaju/states/me/me_event.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
@@ -36,12 +38,57 @@ class _PlusPeopleState extends State<PlusPeople> {
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   InfoBloc get infoBloc => context.read<InfoBloc>();
   MeBloc get meBloc => context.read<MeBloc>();
+  ListBloc get listBloc => context.read<ListBloc>();
   BannerAd? _bannerAd;
+  RewardedAd? _rewardedAd;
 
   @override
   void initState(){
     super.initState();
     _createBannerAd();
+    _loadRewardedAd();
+  }
+
+  void _loadRewardedAd(){
+    RewardedAd.load(
+        adUnitId: AdMobConstant.rewardAdUnitId!,
+        request: const AdRequest(),
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+            onAdLoaded: (RewardedAd ad) {
+              ad.fullScreenContentCallback = FullScreenContentCallback(
+                  onAdDismissedFullScreenContent: (ad){
+                    setState(() {
+                      ad.dispose();
+                      _rewardedAd = null;
+                    });
+                    _loadRewardedAd();
+                  }
+              );
+              setState(() {
+                _rewardedAd = ad;
+              });
+            },
+            onAdFailedToLoad: (LoadAdError error) {
+              showDialog(
+                  context: context,
+                  builder: (context){
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: ErrorText(text: error.toString()),
+                      actions: [
+                        TextButton(
+                          child: Text('cancel'.toUpperCase()),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    );
+                  }
+              );
+            }
+        )
+    );
   }
 
   @override
@@ -147,6 +194,7 @@ class _PlusPeopleState extends State<PlusPeople> {
         if(status == InfoStatus.saved){
 
           sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+          listBloc.add(const AllListEvent());
           return LoadingBox(
             direction: LoadingBoxDirection.row,
             loadingText: InfoStatus.saved.getTitle(),
@@ -156,7 +204,11 @@ class _PlusPeopleState extends State<PlusPeople> {
           onPressed: (info.name != null && info.date != null && info.time != null && status != InfoStatus.saving)
               ? () {
                 if(widget.sectionType == SectionType.addPeople){
-                  infoBloc.add(SaveEvent(info: Info.fromState(info)));
+                  _rewardedAd?.show(
+                      onUserEarnedReward: (_, reward) {
+                        infoBloc.add(SaveEvent(info: Info.fromState(info)));
+                      }
+                  );
                 }else if(widget.sectionType == SectionType.addMe){
                   meBloc.add(SaveMeInfoEvent(info: Info.fromState(info)));
                 }else{

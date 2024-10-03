@@ -22,6 +22,13 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
     return this.toString().split('.').last;
   }
 
+  bool isBase(){
+    if(this == FourPillarsOfDestinyType.fourPillarsOfDestiny){
+      return true;
+    }
+    return false;
+  }
+
   String getTitle(){
     switch(this){
       case FourPillarsOfDestinyType.fourPillarsOfDestiny:

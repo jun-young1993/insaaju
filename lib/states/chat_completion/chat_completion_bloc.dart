@@ -2,9 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/configs/code_constants.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
-import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/code_item.dart';
-import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/exceptions/four_of_destiny_required_exception.dart';
 import 'package:insaaju/exceptions/required_exception.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
@@ -81,8 +80,10 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       chatRoomMessages.addAll(missingMessages);
       emit(state.asSectionLoadStatusComplete(chatRoomMessages));
     } on Exception catch( error ) {
-      
-      emit(state.asFailer(error));
+      emit(state.copyWith(
+        sectionLoadStatus: SectionLoadStatus.fail,
+        error: error
+      ));
     }
   }
 
@@ -115,13 +116,16 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
           ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user),
         ];
         final ChatRoomMessage? fourPillarsOfDestinyMessage = messages.firstWhereOrNull((message) => FourPillarsOfDestinyType.fourPillarsOfDestiny.hasSameValue(message.userPromptCodeItem.key));
+
         if(
             event.type != FourPillarsOfDestinyType.fourPillarsOfDestiny
             && fourPillarsOfDestinyMessage == null
         ){
-          throw RequiredException('fourPillarsOfDestiny');
+          throw FourOfDestinyRequiredException('fourPillarsOfDestiny');
         }else{
-          sendMessages.add(ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage!.content, role: ChatRoomRole.assistant));
+          if(fourPillarsOfDestinyMessage != null){
+            sendMessages.add(ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage!.content, role: ChatRoomRole.assistant));
+          }
         }
 
         await _openaiRepository.sendMessage(
@@ -135,7 +139,10 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
         add(FindSectionChatCompletionEvent(info: event.info));
         
       } on Exception catch ( error ){
-        emit(state.asFailer(error));
+        emit(state.copyWith(
+            sectionLoadStatus: SectionLoadStatus.fail,
+            error: error
+        ));
       }
     }
 }

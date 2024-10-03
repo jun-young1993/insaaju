@@ -79,8 +79,10 @@ class _PeopleDetailState extends State<PeopleDetail> {
         selectedItemColor: Colors.black54,
         unselectedItemColor: Colors.black54,
         onTap: (int index){
-          print('${index} selected');
-          sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.chatRoom, info: widget.info));
+          if(index == 0){
+            sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.chatRoom, info: widget.info));
+          }
+
           print('change');
 
         },
@@ -95,7 +97,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
           icon: Icon(Icons.chat)
       ),
       const BottomNavigationBarItem(
-          label: 'test',
+          label: '준비중...',
           icon: Icon(Icons.chat)
       ),
     ];

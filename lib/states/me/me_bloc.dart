@@ -1,8 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/configs/code_constants.dart';
+import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
@@ -30,10 +33,18 @@ class MeBloc extends Bloc<MeEvent, MeState> {
     try {
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saving));
       final ChatSession session = await _openaiRepository.createSession();
-      print(session);
+
       event.info.setMySession(session);
       await _infoRepository.saveOrUpdateMe(event.info);
-      print('saveOrUpdate');
+      await _openaiRepository.sendMessage(
+          CodeConstants.four_pillars_of_destiny_system_code,
+          FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
+          CodeConstants.gpt_base_model,
+          session.id,
+          [
+            ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user)
+          ]
+      );
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saved));
       add(const FindMeEvent());
     } on Exception catch( error ) {

@@ -13,13 +13,13 @@ class AppBottomNavigationBar extends StatelessWidget {
   final List<AppBottomNavigationItem> items = [
     AppBottomNavigationItem(
         route: Routes.home,
-        icon: Icon(Icons.people),
+        icon: const Icon(Icons.people),
         name: '친구'
     ),
     AppBottomNavigationItem(
-        route: Routes.four_pillars_of_destiny,
-        icon: Icon(Icons.access_time_rounded),
-        name: '사주'
+        route: Routes.setting,
+        icon: const Icon(Icons.settings),
+        name: '설정'
     ),
   ];
 

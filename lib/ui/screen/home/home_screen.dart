@@ -23,6 +23,8 @@ import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/info_list/info_row.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
+import 'package:insaaju/ui/screen/widget/me_profile.dart';
+import 'package:insaaju/ui/screen/widget/search_icon.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
 
@@ -104,16 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget? _buildBottomNavigationBar(SectionType section){
-
-      switch(section){
-        case SectionType.unselected:
-          return AppBottomNavigationBar();
-        default:
-          return null;
-      }
-  }
-
   AppBar _buildAppBar(){
     return AppBar(
       leading: const TitleText(text: '친구'),
@@ -126,11 +118,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildSearchIcon(){
-    return IconButton(
-      onPressed: (){
-        
-      }, 
-      icon: const Icon(Icons.search)
+    return SearchIcon(
+      onSubmitted: (String search) {
+        listBloc.add(AllListEvent(searchText: search));
+      },
+      onExpanded: (expanded){
+        if(expanded){
+          listBloc.add(AllListEvent());
+        }
+      },
     );
   }
 

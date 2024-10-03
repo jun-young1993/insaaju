@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/exceptions/four_of_destiny_required_exception.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_selector.dart';
@@ -14,6 +16,7 @@ import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
+import 'package:insaaju/utills/ad_mob_const.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   final Info info;
@@ -33,10 +36,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   final Color? backgroundColor = Colors.lightGreen[50];
   final ScrollController _scrollController = ScrollController();
   ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
+  RewardedAd? _rewardedAd;
+
   @override
   void initState(){
     super.initState();
     chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info,));
+    _loadRewardedAd();
   }
 
   @override
@@ -50,6 +56,48 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     }
+  }
+
+  void _loadRewardedAd(){
+    RewardedAd.load(
+      adUnitId: AdMobConstant.rewardAdUnitId!,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            ad.fullScreenContentCallback = FullScreenContentCallback(
+              onAdDismissedFullScreenContent: (ad){
+                setState(() {
+                  ad.dispose();
+                  _rewardedAd = null;
+                });
+                _loadRewardedAd();
+              }
+            );
+            setState(() {
+              _rewardedAd = ad;
+            });
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            showDialog(
+                context: context,
+                builder: (context){
+                  return AlertDialog(
+                    title: const Text('Error'),
+                    content: ErrorText(text: error.toString()),
+                    actions: [
+                      TextButton(
+                        child: Text('cancel'.toUpperCase()),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  );
+                }
+            );
+          }
+      )
+    );
   }
 
   @override
@@ -68,7 +116,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   // 시스템에서 제공하는 버튼을 채팅 스타일로 제공
   Widget _buildSystemButton(ChatRoomMessage chatRoomMessage) {
-
+    final FourPillarsOfDestinyType fourPillarsOfDestinyType = FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)!;
  
     return Align(
       alignment: Alignment.centerRight,
@@ -88,19 +136,47 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             Flexible(
               child: Wrap(
                 children: [
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     onPressed: () {
-                      chatCompletionBloc.add(
-                        SendFourPillarsOfDestinyTypeChatCompletionEvent(
-                          info: widget.info, 
-                          type: FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)!
-                        )
+                      showDialog(
+                        context: context,
+                        builder: (context){
+                          return AlertDialog(
+                              title: const Text('리워드 광고'),
+                              content: Text("광고 시청후 ${fourPillarsOfDestinyType.getTitle()} 하기"),
+                              actions: [
+                                TextButton(
+                                  child: const Text('취소'),
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('확인'),
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                    _rewardedAd?.show(
+                                      onUserEarnedReward: (_, reward) {
+                                        chatCompletionBloc.add(
+                                          SendFourPillarsOfDestinyTypeChatCompletionEvent(
+                                            info: widget.info,
+                                            type: fourPillarsOfDestinyType
+                                          )
+                                        );
+                                      }
+                                    );
+                                  },
+                                )
+                              ],
+                          );
+                        }
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white, backgroundColor: Colors.teal, // 버튼 텍스트 색상
                     ),
-                    child: Text(
+                    icon: Icon(Icons.play_circle_filled),
+                    label: Text(
                       chatRoomMessage.content,
                       softWrap: true
                     ),
@@ -170,24 +246,21 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   Widget _buildMessageListBox() {
-    return SectionErrorChatCompletionSelector((error) {
-      if(error != null) {
-        return ErrorText(text: error.toString());
+
+    return SectionChatCompletionSelector((status){
+      print(status);
+      switch(status){
+        case SectionLoadStatus.complete:
+          return _buildMessageList();
+        case SectionLoadStatus.fail:
+          return SectionErrorChatCompletionSelector((error){
+            return ErrorText(text: error.toString());
+          });
+        default:
+          return const LoadingBox(
+            loadingText: '대화내용을 불러오는 중...',
+          );
       }
-      return SectionChatCompletionSelector((status){
-        switch(status){
-          case SectionLoadStatus.complete:
-            return _buildMessageList();
-          case SectionLoadStatus.fail:
-            return SectionErrorChatCompletionSelector((error){
-              return ErrorText(text: error.toString());
-            });
-          default:
-            return const LoadingBox(
-              loadingText: '대화내용을 불러오는 중...',
-            );
-        }
-      });
     });
 
   }
