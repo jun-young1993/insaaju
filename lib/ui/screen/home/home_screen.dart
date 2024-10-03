@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/info.dart';
-import 'package:insaaju/states/chat_completion/chat_completion_bloc.dart';
-import 'package:insaaju/states/chat_completion/chat_completion_event.dart';
-import 'package:insaaju/states/chat_completion/chat_completion_selector.dart';
-import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
@@ -22,7 +18,6 @@ import 'package:insaaju/ui/screen/section/plus_people.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
-import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/chat_room/chat_room_screen.dart';
 import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
@@ -77,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case SectionType.detailPeople:
         return (info != null)
             ? PeopleDetail(info: info,)
-            : ErrorText(text: 'not found info');
+            : const ErrorText(text: 'not found info');
       default:
         return null;
     }

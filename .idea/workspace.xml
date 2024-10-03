@@ -10,27 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/configs/info_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configs/info_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/domain/entities/info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/info_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/info_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/info/info_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/info/info_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/me/me_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/me/me_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/me/me_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/me/me_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/me/me_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/me/me_selector.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/me/me_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/me/me_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/section/section_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/section/section_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_list.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/section/plus_people.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info/birth_date_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/birth_date_field.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info/name_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/name_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Podfile.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +68,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -113,6 +106,10 @@
       <workItem from="1726668908748" duration="1976000" />
       <workItem from="1727491458242" duration="803000" />
       <workItem from="1727494505374" duration="12951000" />
+      <workItem from="1727711379492" duration="32000" />
+      <workItem from="1727918859230" duration="348000" />
+      <workItem from="1727919218795" duration="50000" />
+      <workItem from="1727919280794" duration="4841000" />
     </task>
     <servers />
   </component>

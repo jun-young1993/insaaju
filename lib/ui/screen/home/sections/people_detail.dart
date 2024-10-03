@@ -38,7 +38,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
     return ChatRoomScreen(
           info: widget.info,
           onPressed: (){
-            sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+            sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.unselected, info: widget.info));
           },
         );
   }
@@ -103,11 +103,18 @@ class _PeopleDetailState extends State<PeopleDetail> {
 
   AppBar _buildAppBar(){
     return AppBar(
-      leading: AppBarCloseLeadingButton(
-          onPressed: (){
-            sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
-          }
-      ),
+      leading: ShowSectionSelector((status) {
+        return AppBarCloseLeadingButton(
+            onPressed: (){
+              if(status.childSection == ChildSectionType.unselected){
+                sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+              }else{
+                sectionBloc.add(const ShowChildSectionEvent(childSection: ChildSectionType.unselected));
+              }
+
+            }
+        );
+      })
     );
   }
 

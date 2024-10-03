@@ -75,8 +75,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         margin: const EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
             topRight: Radius.circular(12),
             bottomLeft: Radius.circular(12),
             bottomRight: Radius.circular(12),
@@ -118,7 +118,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget _buildAppBarTitle() {
     return Row(
       children: [
-        InfoProfile(size: 15), // 상대방 프로필
+        const InfoProfile(size: 15), // 상대방 프로필
         const SizedBox(width: 10),
         Text(
           widget.info.name,
@@ -170,7 +170,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   }
 
   Widget _buildMessageListBox() {
-    return SectionChatCompletionSelector((status){
+    return SectionErrorChatCompletionSelector((error) {
+      if(error != null) {
+        return ErrorText(text: error.toString());
+      }
+      return SectionChatCompletionSelector((status){
         switch(status){
           case SectionLoadStatus.complete:
             return _buildMessageList();
@@ -183,7 +187,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
               loadingText: '대화내용을 불러오는 중...',
             );
         }
+      });
     });
+
   }
 
   Widget _buildMessageBubble(ChatRoomMessage chatRoomMessage, bool isUserMessage) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
@@ -21,6 +22,7 @@ import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
 import 'package:insaaju/ui/screen/widget/info/name_field.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
+import 'package:insaaju/utills/ad_mob_const.dart';
 
 class PlusPeople extends StatefulWidget {
   final SectionType sectionType;
@@ -34,12 +36,46 @@ class _PlusPeopleState extends State<PlusPeople> {
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   InfoBloc get infoBloc => context.read<InfoBloc>();
   MeBloc get meBloc => context.read<MeBloc>();
+  BannerAd? _bannerAd;
+
+  @override
+  void initState(){
+    super.initState();
+    _createBannerAd();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBackground(
       appBar: _buildAppBar(),
-      child: _buildInfoForm(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildInfoForm(),
+          _buildBottomBannerAd()
+        ],
+      ),
+    );
+  }
+
+  void _createBannerAd(){
+    _bannerAd = BannerAd(
+      size: AdSize.fullBanner,
+      adUnitId: AdMobConstant.bannerAdUnitId!,
+      listener: AdMobConstant.bannerAdListener,
+      request: const AdRequest()
+    )..load();
+  }
+
+  Widget _buildBottomBannerAd(){
+    return _bannerAd == null
+    ? Container()
+    : Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      height: 75,
+      child: AdWidget(
+        ad: _bannerAd!
+      )
     );
   }
 

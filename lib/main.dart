@@ -17,8 +17,6 @@ import 'repository/four_pillars_of_destiny_repository.dart';
 
 Future<void> main() async {
 
-// print(ChatCompletion.fromJson());
-// print(test);
   await dotenv.load(fileName: "assets/.env");
   MobileAds.instance.initialize();
   runApp(

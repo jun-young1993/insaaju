@@ -33,7 +33,6 @@ class PeopleList extends StatelessWidget {
       return Row(
         children: [
           MeLoadStatusSelector((status){
-            print(status);
             switch(status){
               case MeLoadStatus.loadIsEmpty:
                 return GestureDetector(
