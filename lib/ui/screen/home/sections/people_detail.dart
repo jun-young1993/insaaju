@@ -28,10 +28,21 @@ class _PeopleDetailState extends State<PeopleDetail> {
       switch(status.childSection){
         case ChildSectionType.chatRoom:
           return _buildChatRoom();
+        case ChildSectionType.toDayDestiny:
+          return _buildToDayDestiny();
         default:
           return _buildDefaultDetail();
       }
     });
+  }
+
+  Widget _buildToDayDestiny(){
+    return ToDayDestinyScreen(
+      info: widget.info, 
+      onPressed: (){
+        sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.unselected, info: widget.info));
+      },
+    );
   }
 
   Widget _buildChatRoom(){
@@ -79,12 +90,14 @@ class _PeopleDetailState extends State<PeopleDetail> {
         selectedItemColor: Colors.black54,
         unselectedItemColor: Colors.black54,
         onTap: (int index){
+          // 사주 채팅
           if(index == 0){
             sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.chatRoom, info: widget.info));
           }
-
-          print('change');
-
+          // 오늘의 운세
+          if(index == 1){
+            sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.toDayDestiny, info: widget.info));
+          }
         },
         items: _bottomNavigationBarItem(),
     );
@@ -97,8 +110,8 @@ class _PeopleDetailState extends State<PeopleDetail> {
           icon: Icon(Icons.chat)
       ),
       const BottomNavigationBarItem(
-          label: '준비중...',
-          icon: Icon(Icons.chat)
+          label: '오늘의 운세',
+          icon: Icon(Icons.bubble_chart)
       ),
     ];
   }

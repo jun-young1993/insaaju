@@ -35,7 +35,7 @@ class ChatRoomScreen extends StatefulWidget {
 }
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
-  final Color? backgroundColor = Colors.lightGreen[50];
+  
   final ScrollController _scrollController = ScrollController();
   ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
   RewardedAd? _rewardedAd;
@@ -108,7 +108,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   @override
   Widget build(BuildContext context) {
     return AppBackground(
-      backgroundColor: backgroundColor, // AppBar 배경색 설정
       appBar: _buildAppBar(),
       child: Column(
         children: [
@@ -214,7 +213,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: backgroundColor,
+      
       title: _buildAppBarTitle(),
       leading: AppBarCloseLeadingButton(
         onPressed: () {
