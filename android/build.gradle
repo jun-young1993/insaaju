@@ -16,3 +16,9 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:insaaju/routes.dart';
@@ -44,11 +46,16 @@ class _AppBackgroundState extends State<AppBackground> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // if(widget.isBackground)
-          //   Image.asset(
-          //     'assets/images/background.jpeg',
-          //     fit: BoxFit.cover,
-          //   ),
+          Image.asset(
+            'assets/images/background.webp',
+            fit: BoxFit.cover,
+          ),
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // 블러 효과
+            child: Container(
+              color: Colors.white.withOpacity(0.0), // 배경을 투명하게 유지
+            ),
+          ),
           widget.child,
           if (widget.isLoading) // 로딩 상태가 true일 때 로딩 위젯을 표시
             _LoadingOverlay(

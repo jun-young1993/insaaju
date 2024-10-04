@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -18,7 +20,6 @@ import 'package:insaaju/states/section/section_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
-import 'package:insaaju/ui/screen/widget/full_screen_overlay.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_time_field.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
 import 'package:insaaju/ui/screen/widget/info/name_field.dart';
@@ -45,8 +46,11 @@ class _PlusPeopleState extends State<PlusPeople> {
   @override
   void initState(){
     super.initState();
-    _createBannerAd();
-    _loadRewardedAd();
+    if(Platform.isAndroid || Platform.isIOS){
+      _createBannerAd();
+      _loadRewardedAd();  
+    }
+    
   }
 
   void _loadRewardedAd(){

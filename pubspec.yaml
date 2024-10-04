@@ -44,6 +44,7 @@ dependencies:
   flutter_markdown: ^0.7.3+1
   collection: ^1.18.0
   google_mobile_ads: ^5.1.0
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +71,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/hanja/hanja.json
-      - assets/images/background.jpeg
+      - assets/images/background.webp
       - assets/.env
+      - assets/images/favicon-1024x1024.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

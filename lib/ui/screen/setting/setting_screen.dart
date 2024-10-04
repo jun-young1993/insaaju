@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +43,10 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState(){
     super.initState();
-    _createBannerAd();
+    if(Platform.isAndroid || Platform.isIOS){
+      _createBannerAd();
+    }
+    
     meBloc.add(const FindMeEvent());
   }
 

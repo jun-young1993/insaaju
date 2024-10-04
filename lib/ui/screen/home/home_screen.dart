@@ -9,8 +9,6 @@ import 'package:insaaju/states/list/list_selector.dart';
 import 'package:insaaju/states/list/list_state.dart';
 import 'package:insaaju/states/me/me_bloc.dart';
 import 'package:insaaju/states/me/me_event.dart';
-import 'package:insaaju/states/me/me_selector.dart';
-import 'package:insaaju/states/me/me_state.dart';
 import 'package:insaaju/states/section/section_event.dart';
 import 'package:insaaju/states/section/section_selector.dart';
 import 'package:insaaju/states/section/section_state.dart';

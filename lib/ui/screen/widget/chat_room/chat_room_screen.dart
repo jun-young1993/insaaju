@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -42,7 +44,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   void initState(){
     super.initState();
     chatCompletionBloc.add(FindSectionChatCompletionEvent(info: widget.info,));
-    _loadRewardedAd();
+    if(Platform.isAndroid || Platform.isIOS){
+      _loadRewardedAd();
+    }
+    
   }
 
   @override
@@ -108,7 +113,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       child: Column(
         children: [
           Expanded(child: _buildMessageListBox()), // 메시지 리스트
-          _buildMessageInput(), // 메시지 입력창
+          // _buildMessageInput(), // 메시지 입력창
         ],
       ),
     );
