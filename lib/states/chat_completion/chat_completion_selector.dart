@@ -46,3 +46,11 @@ class SectionChatRequestTypeSelector extends ChatCompletionSelector<List<FourPil
     builder: builder
   );
 }
+
+class ToDayChatStatusSelector extends ChatCompletionSelector<ToDayStatus> {
+  ToDayChatStatusSelector(Widget Function(ToDayStatus) builder)
+      :super(
+      selector: (state) => state.toDayStatus,
+      builder: builder
+  );
+}

@@ -20,3 +20,18 @@ class SendFourPillarsOfDestinyTypeChatCompletionEvent extends ChatCompletionEven
     required this.info
   });
 }
+
+class SendToDayDestinyChatCompletionEvent extends ChatCompletionEvent {
+  final Info info;
+  SendToDayDestinyChatCompletionEvent({
+    required this.info
+  });
+}
+
+class FindToDayDestinyChatCompletionEvent extends ChatCompletionEvent {
+  final Info info;
+  FindToDayDestinyChatCompletionEvent({
+    required this.info
+  });
+}
+

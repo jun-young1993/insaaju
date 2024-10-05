@@ -24,7 +24,9 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
     : super(ChatCompletionState.initialize())
   {
     on(_onFindSection);
-    on(_onSendFourPillarsOfDstinyTypeChatCompletion);
+    on(_onSendFourPillarsOfDestinyTypeChatCompletion);
+    on(_onFindToDayDestinyChatCompletion);
+    on(_onSendFourPillarsOfDestinyToDay);
   }
 
   Future<void> _onFindSection(
@@ -34,13 +36,15 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
     try{
       emit(state.asSectionLoadStatusProcessing());
       late String? mySessionId = event.info.mySessionId;
-      print('sessionId: ${mySessionId}');
-      
+
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
       }
       
-      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(mySessionId);
+      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(
+          mySessionId,
+          query: {'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_system_code}
+      );
 
       final List<ChatRoomMessage> chatRoomMessages = messages.expand((message) {
         final FourPillarsOfDestinyType? userType = FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key);
@@ -87,10 +91,10 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
     }
   }
 
-   Future<void> _onSendFourPillarsOfDstinyTypeChatCompletion(
+   Future<void> _onSendFourPillarsOfDestinyTypeChatCompletion(
       SendFourPillarsOfDestinyTypeChatCompletionEvent event,
       Emitter<ChatCompletionState> emit
-    ) async {
+  ) async {
       try{
 
         if(event.info.mySessionId == null){
@@ -145,4 +149,85 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
         ));
       }
     }
+
+  Future<void> _onFindToDayDestinyChatCompletion(
+      FindToDayDestinyChatCompletionEvent event,
+      Emitter<ChatCompletionState> emit
+  ) async {
+    try {
+      emit(state.copyWith(
+        toDayStatus: ToDayStatus.processing
+      ));
+      late String? mySessionId = event.info.mySessionId;
+      if(mySessionId == null){
+        throw RequiredException<String>('my session id');
+      }
+      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(
+          mySessionId,
+          query: {'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_to_day_system_code}
+      );
+      if(messages.isEmpty){
+        emit(state.copyWith(
+            toDayStatus: ToDayStatus.isEmpty
+        ));
+      }else{
+        emit(state.copyWith(
+            toDayStatus: ToDayStatus.complete,
+            messages: messages
+        ));
+      }
+    } on Exception catch( error ) {
+      emit(state.copyWith(
+          toDayStatus: ToDayStatus.fail,
+          error: error
+      ));
+    }
+  }
+
+  Future<void> _onSendFourPillarsOfDestinyToDay(
+      SendToDayDestinyChatCompletionEvent event,
+      Emitter<ChatCompletionState> emit
+  ) async {
+    try {
+      emit(state.copyWith(
+          toDayStatus: ToDayStatus.processing
+      ));
+      late String? mySessionId = event.info.mySessionId;
+      if(mySessionId == null){
+        throw RequiredException<String>('my session id');
+      }
+
+      final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(mySessionId);
+      final ChatRoomMessage? fourPillarsOfDestinyMessage = messages.firstWhereOrNull((message) => FourPillarsOfDestinyType.fourPillarsOfDestiny.hasSameValue(message.userPromptCodeItem.key));
+      final CodeItem fourPillarsOfDestinyCodeItem = await _codeItemRepository.fetchCodeItem(CodeConstants.userPromptTemplate, FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue());
+
+      final List<ChatBaseRoomMessage> sendMessages = [
+        ChatBaseRoomMessage(content: fourPillarsOfDestinyCodeItem.value, role: ChatRoomRole.user),
+        ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user),
+      ];
+      if(
+      fourPillarsOfDestinyMessage == null
+      ){
+        throw FourOfDestinyRequiredException('fourPillarsOfDestiny');
+      }else{
+        sendMessages.add(ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage!.content, role: ChatRoomRole.assistant));
+      }
+      await _openaiRepository.sendMessage(
+          CodeConstants.four_pillars_of_destiny_to_day_system_code,
+          CodeConstants.four_pillars_of_destiny_to_day_user_code,
+          CodeConstants.gpt_base_model,
+          event.info.mySessionId!,
+          sendMessages
+      );
+      emit(state.copyWith(
+          toDayStatus: ToDayStatus.complete
+      ));
+      add(FindToDayDestinyChatCompletionEvent(info: event.info));
+    } on Exception catch( error ) {
+      emit(state.copyWith(
+          toDayStatus: ToDayStatus.fail,
+          error: error
+      ));
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/domain/entities/info.dart';
@@ -105,7 +106,13 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     const SizedBox(height: 10),
                     const Divider(),
-                    _settingRow(icon: Icons.key, keyText: 'ID', valueText: info.mySessionId ?? '')
+                    _settingRow(
+                        icon: Icons.key,
+                        keyText: 'ID',
+                        valueText: info.mySessionId ?? '',
+                        isCopy: true,
+                        widgetContext: context
+                    )
                   ],
                 ),
                 _buildBottomBannerAd()
@@ -120,41 +127,57 @@ class _SettingScreenState extends State<SettingScreen> {
     required IconData icon,
     required String keyText,
     String valueText = '',
+    bool isCopy = false,
+    BuildContext? widgetContext
   }){
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Icon(
-          icon,
-          size: 35,
-          color: Colors.blueAccent, // 아이콘 색상을 설정할 수 있습니다.
-        ),
-        const SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                keyText,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[700], // 텍스트 색상 설정
-                ),
-              ),
-              const SizedBox(height: 5), // keyText와 valueText 사이의 간격
-              Text(
-                valueText,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black, // value 텍스트의 색상
-                ),
-              ),
-            ],
+    return GestureDetector(
+      onTap: () {
+          if(isCopy){
+            Clipboard.setData(ClipboardData(text: valueText));
+            ScaffoldMessenger.of(widgetContext ?? context).showSnackBar(
+              SnackBar(
+                content: Text('복사되었습니다: $valueText')
+              )
+            );
+          }
+
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 35,
+            color: Colors.blueAccent, // 아이콘 색상을 설정할 수 있습니다.
           ),
-        ),
-      ],
-    );
+          const SizedBox(width: 10), // 아이콘과 텍스트 사이의 간격
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  keyText,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700], // 텍스트 색상 설정
+                  ),
+                ),
+                const SizedBox(height: 5), // keyText와 valueText 사이의 간격
+                Text(
+                  valueText,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black, // value 텍스트의 색상
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ) ;
+
   }
 
   Widget _buildBottomBannerAd(){

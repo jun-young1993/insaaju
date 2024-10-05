@@ -53,7 +53,7 @@ class _AppBackgroundState extends State<AppBackground> {
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // 블러 효과
             child: Container(
-              color: Colors.white.withOpacity(0.0), // 배경을 투명하게 유지
+              color: Colors.white.withOpacity(0.3), // 배경을 투명하게 유지
             ),
           ),
           widget.child,

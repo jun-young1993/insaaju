@@ -18,7 +18,7 @@ import '../exceptions/duplicate_exception.dart';
 abstract class OpenaiRepository {
   Future<bool> sendMessage(String systemPromptCode, String userPromptCode, String modelCode, String sessionId, List<ChatBaseRoomMessage> messages);
   Future<ChatSession> createSession();
-  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId);
+  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId, {Map<String, dynamic>? query});
 }
 
 class OpenaiDefaultRepository extends OpenaiRepository {
@@ -57,9 +57,13 @@ class OpenaiDefaultRepository extends OpenaiRepository {
   }
 
   @override
-  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId) async {
+  Future<List<ChatRoomMessage>> findChatCompletion(String sessionId, {Map<String, dynamic>? query}) async {
     print('$baseUrl/openai/chat-completion/session/$sessionId');
-    final url = Uri.parse('$baseUrl/openai/chat-completion/session/$sessionId');
+    final url = Uri.parse('$baseUrl/openai/chat-completion/session/$sessionId').replace(
+      queryParameters: query != null && query.isNotEmpty
+          ? query.map((key, value) => MapEntry(key, value.toString())) // query 값 변환
+          : null,
+    );
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
     // 현재 시간을 가져오기

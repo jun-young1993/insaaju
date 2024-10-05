@@ -10,16 +10,26 @@ enum SectionLoadStatus {
   fail
 }
 
+enum ToDayStatus {
+  queue,
+  isEmpty,
+  processing,
+  complete,
+  fail
+}
+
 class ChatCompletionState {
   final List<ChatCompletion> chatCompletion;
   final Exception? error;
   final SectionLoadStatus sectionLoadStatus;
+  final ToDayStatus toDayStatus;
   final List<ChatRoomMessage> messages;
   final List<FourPillarsOfDestinyType> types;
 
   ChatCompletionState._({
     this.chatCompletion = const [],
     this.error,
+    this.toDayStatus = ToDayStatus.queue,
     this.sectionLoadStatus = SectionLoadStatus.queue,
     this.messages = const [],
     this.types = const [FourPillarsOfDestinyType.yongsin,FourPillarsOfDestinyType.gishin, FourPillarsOfDestinyType.daewoon, FourPillarsOfDestinyType.sipsinAnalysis]
@@ -54,9 +64,11 @@ class ChatCompletionState {
     List<ChatCompletion>? chatCompletion,
     Exception? error,
     SectionLoadStatus? sectionLoadStatus,
-    List<ChatRoomMessage>? messages
+    List<ChatRoomMessage>? messages,
+    ToDayStatus? toDayStatus
   }) {
     return ChatCompletionState._(
+        toDayStatus: toDayStatus ?? this.toDayStatus,
         sectionLoadStatus: sectionLoadStatus ?? this.sectionLoadStatus,
         chatCompletion: chatCompletion ?? this.chatCompletion,
         error: error ?? this.error,
