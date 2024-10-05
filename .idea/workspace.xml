@@ -10,16 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/ui/screen/widget/destination_card.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/configs/code_constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/configs/code_constants.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/repository/openai_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/repository/openai_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_selector.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_selector.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/chat_completion/chat_completion_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/setting/setting_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/setting/setting_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/app_background.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +101,7 @@
       <workItem from="1727918859230" duration="348000" />
       <workItem from="1727919218795" duration="50000" />
       <workItem from="1727919280794" duration="14524000" />
-      <workItem from="1728093262631" duration="13402000" />
+      <workItem from="1728093262631" duration="16590000" />
     </task>
     <servers />
   </component>

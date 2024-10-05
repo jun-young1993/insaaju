@@ -43,46 +43,48 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       
       final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(
           mySessionId,
-          query: {'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_system_code}
+          query: {
+            'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_system_code,
+          }
       );
 
-      final List<ChatRoomMessage> chatRoomMessages = messages.expand((message) {
-        final FourPillarsOfDestinyType? userType = FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key);
-        if (userType != null) {
-          return [
-            ChatRoomMessage(
-              role: ChatRoomRole.button,
-              content: userType.getTitle(),
-              systemPromptCodeItem: CodeItem.copyWith(key: userType.getValue()), 
-              userPromptCodeItem: CodeItem.copyWith(key: userType.getValue()),
-            ),
-            message
-          ];
-        }
-        return [message];
-      }).toList();
-
-      // `userType`이 null인 경우를 추적
-      final Set<FourPillarsOfDestinyType> existingTypes = messages
-          .map((message) => FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key))
-          .where((userType) => userType != null)
-          .cast<FourPillarsOfDestinyType>()
-          .toSet();
-
-      // `FourPillarsOfDestinyType`에서 빠진 요소들 추가
-      final List<ChatRoomMessage> missingMessages = FourPillarsOfDestinyType.values
-          .where((type) => !existingTypes.contains(type))
-          .map((type) => ChatRoomMessage(
-                role: ChatRoomRole.button,
-                content: type.getTitle(),
-                systemPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
-                userPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
-              ))
-          .toList();
+      // final List<ChatRoomMessage> chatRoomMessages = messages.expand((message) {
+      //   final FourPillarsOfDestinyType? userType = FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key);
+      //   if (userType != null) {
+      //     return [
+      //       ChatRoomMessage(
+      //         role: ChatRoomRole.button,
+      //         content: userType.getTitle(),
+      //         systemPromptCodeItem: CodeItem.copyWith(key: userType.getValue()),
+      //         userPromptCodeItem: CodeItem.copyWith(key: userType.getValue()),
+      //       ),
+      //       message
+      //     ];
+      //   }
+      //   return [message];
+      // }).toList();
+      //
+      // // `userType`이 null인 경우를 추적
+      // final Set<FourPillarsOfDestinyType> existingTypes = messages
+      //     .map((message) => FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key))
+      //     .where((userType) => userType != null)
+      //     .cast<FourPillarsOfDestinyType>()
+      //     .toSet();
+      //
+      // // `FourPillarsOfDestinyType`에서 빠진 요소들 추가
+      // final List<ChatRoomMessage> missingMessages = FourPillarsOfDestinyType.values
+      //     .where((type) => !existingTypes.contains(type))
+      //     .map((type) => ChatRoomMessage(
+      //           role: ChatRoomRole.button,
+      //           content: type.getTitle(),
+      //           systemPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
+      //           userPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
+      //         ))
+      //     .toList();
 
       // 빠진 요소들을 `chatRoomMessages`의 맨 뒤에 추가
-      chatRoomMessages.addAll(missingMessages);
-      emit(state.asSectionLoadStatusComplete(chatRoomMessages));
+      // chatRoomMessages.addAll(missingMessages);
+      emit(state.asSectionLoadStatusComplete(messages));
     } on Exception catch( error ) {
       emit(state.copyWith(
         sectionLoadStatus: SectionLoadStatus.fail,

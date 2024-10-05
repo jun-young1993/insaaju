@@ -15,6 +15,7 @@ import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
+import 'package:insaaju/ui/screen/widget/destination_card.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
@@ -35,8 +36,10 @@ class ChatRoomScreen extends StatefulWidget {
 }
 
 class _ChatRoomScreenState extends State<ChatRoomScreen> {
-  
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
   final ScrollController _scrollController = ScrollController();
+
   ChatCompletionBloc get chatCompletionBloc => context.read<ChatCompletionBloc>();
   RewardedAd? _rewardedAd;
 
@@ -61,6 +64,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     }
+  }
+  void _onIconPressed(int index) {
+    setState(() {
+      _currentPage = index;
+    });
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   void _loadRewardedAd(){
@@ -109,12 +119,47 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget build(BuildContext context) {
     return AppBackground(
       appBar: _buildAppBar(),
-      child: Column(
-        children: [
-          Expanded(child: _buildMessageListBox()), // 메시지 리스트
-          // _buildMessageInput(), // 메시지 입력창
-        ],
-      ),
+      child:_buildPageView()
+      // Column(
+      //   children: [
+      //     Expanded(child: _buildMessageListBox()), // 메시지 리스트
+      //     // _buildMessageInput(), // 메시지 입력창
+      //   ],
+      // ),
+    );
+  }
+
+  Widget _buildPageView(){
+    return PageView.builder(
+      controller: _pageController,
+      onPageChanged: (index) {
+        setState(() {
+          _currentPage = index;
+        });
+      },
+      itemCount: FourPillarsOfDestinyType.values.length,
+      itemBuilder: (context, index){
+        return SectionMessageChatCompletionSelector((messages) {
+          print(messages.length);
+          if(messages.length > index){
+            return _buildPage(messages[index]);
+          }else{
+            return Text('hi');
+          }
+        });
+      }
+    );
+  }
+
+
+  Widget _buildPage(ChatRoomMessage chatRoomMessage){
+    print(chatRoomMessage.userPromptCodeItem.key);
+    return DestinationCard(
+        title: FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)?.getTitle(),
+        child: Markdown(
+            shrinkWrap: true,
+            data: chatRoomMessage.content
+        )
     );
   }
 

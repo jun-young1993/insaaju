@@ -11,6 +11,7 @@ import 'package:insaaju/states/chat_completion/chat_completion_selector.dart';
 import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
+import 'package:insaaju/ui/screen/widget/destination_card.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
@@ -120,36 +121,10 @@ class _ToDayDestinyState extends State<ToDayDestinyScreen> {
     required CrossAxisAlignment crossAxisAlignment,
     required Widget child
   }){
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-          color: Colors.white.withOpacity(0.8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: crossAxisAlignment,
-              children: [
-                const Text(
-                  '오늘의 운세',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.purple,
-                  ),
-                ),
-                SizedBox(height: 10),
-                child,
-                // Markdown(
-                //     shrinkWrap: true,
-                //     data: 'hi'
-                // )
-              ],
-            ),
-          )
-      ),
+    return DestinationCard(
+      crossAxisAlignment: crossAxisAlignment,
+      child: child,
+      title: '오늘의 운세'
     );
   }
 
