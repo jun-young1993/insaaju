@@ -61,9 +61,12 @@ class _PeopleDetailState extends State<PeopleDetail> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const Stack(
+          Stack(
             children: [
-              InfoProfile(size: 100)
+              InfoProfile(
+                  size: 100,
+                  info: widget.info,
+              )
             ],
           ),
           const SizedBox(height: 50,),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -213,6 +214,17 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget _buildPage(ChatRoomMessage chatRoomMessage, FourPillarsOfDestinyType type){
     return DestinationCard(
         title: type.getTitle(),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.copy),  // 복사 아이콘
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: chatRoomMessage.content));  // 텍스트 복사
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('복사되었습니다!')),
+              );  // 복사 완료 메시지 표시
+            },
+          )
+        ],
         child: Markdown(
             physics: const AlwaysScrollableScrollPhysics(),
             data: chatRoomMessage.content
@@ -223,7 +235,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget _buildAppBarTitle() {
     return Row(
       children: [
-        const InfoProfile(size: 15), // 상대방 프로필
+        InfoProfile(
+            size: 15,
+            info: widget.info
+        ), // 상대방 프로필
         const SizedBox(width: 10),
         Text(
           widget.info.name,

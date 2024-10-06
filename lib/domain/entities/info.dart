@@ -1,6 +1,7 @@
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_state.dart';
+import 'package:insaaju/utills/zodiac.dart';
 
 class Info {
   final String name;
@@ -22,6 +23,14 @@ class Info {
 
   String getTypeKey(FourPillarsOfDestinyType type){
     return toString()+type.getValue();
+  }
+
+
+
+  List<dynamic> getZodiac(){
+    final int year = int.parse(date.split('-').first.split(' ').last);
+
+    return getZodiacWithDescription(year);
   }
 
   @override

@@ -45,6 +45,7 @@ dependencies:
   collection: ^1.18.0
   google_mobile_ads: ^5.1.0
   flutter_launcher_icons: ^0.14.1
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,18 @@ flutter:
       - assets/images/background.webp
       - assets/.env
       - assets/images/favicon-1024x1024.png
+      - assets/images/zodiacs/dog.png
+      - assets/images/zodiacs/dragon.png
+      - assets/images/zodiacs/horse.png
+      - assets/images/zodiacs/monkey.png
+      - assets/images/zodiacs/ox.png
+      - assets/images/zodiacs/pig.png
+      - assets/images/zodiacs/rabbit.png
+      - assets/images/zodiacs/rat.png
+      - assets/images/zodiacs/rooster.png
+      - assets/images/zodiacs/sheep.png
+      - assets/images/zodiacs/snake.png
+      - assets/images/zodiacs/tiger.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

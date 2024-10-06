@@ -48,6 +48,9 @@ class _InfoRowState extends State<InfoRow> {
   Widget _buildProfile({
     double size = 30
   }){
-    return InfoProfile(size: size);
+    return InfoProfile(
+        size: size,
+        info: widget.info,
+    );
   }
 }

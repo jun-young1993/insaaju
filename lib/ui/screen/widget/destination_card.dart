@@ -5,12 +5,13 @@ class DestinationCard extends StatefulWidget {
   final CrossAxisAlignment crossAxisAlignment;
   final Widget child;
   final String? title;
+  final List<Widget>? actions;
 
   const DestinationCard({
     super.key,
     this.crossAxisAlignment  = CrossAxisAlignment.start,
     required this.child,
-    this.title
+    this.title, this.actions
   });
 
   @override
@@ -32,13 +33,16 @@ class _DestinationCardSate extends State<DestinationCard> {
             child: Column(
               crossAxisAlignment: widget.crossAxisAlignment,
               children: [
-                Text(
-                  widget.title ?? '',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.purple,
-                  ),
+                (widget.actions == null)
+                ? _buildTitle()
+                : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildTitle(),
+                    Row(
+                      children: widget.actions!,
+                    )
+                  ],
                 ),
                 SizedBox(height: 10),
                 Expanded(
@@ -48,6 +52,17 @@ class _DestinationCardSate extends State<DestinationCard> {
               ],
             ),
           )
+      ),
+    );
+  }
+
+  Widget _buildTitle(){
+    return Text(
+      widget.title ?? '',
+      style: const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.purple,
       ),
     );
   }

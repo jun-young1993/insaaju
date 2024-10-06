@@ -10,12 +10,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/dog.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/horse.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/img_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/monkey.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/ox.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/pig.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/rat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/rooster.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/zodiacs/sheep.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/utills/zodiac.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/domain/entities/info.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/domain/entities/info.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/destination_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/destination_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info/info_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info/info_profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_row.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/info_list/info_row.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,23 +62,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/junyoungkim/Desktop/junyoung/app/source/insaaju/lib/exceptions&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "/Users/junyoungkim/Desktop/junyoung/app/source/insaaju/lib/exceptions",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "show.migrate.to.gradle.popup": "false",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/exceptions" />
@@ -72,6 +89,7 @@
       <recent name="$PROJECT_DIR$/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info" />
       <recent name="$PROJECT_DIR$/lib/ui/screen/widget/info_list" />
       <recent name="$PROJECT_DIR$/lib/states/list/selections" />
@@ -103,7 +121,7 @@
       <workItem from="1727919218795" duration="50000" />
       <workItem from="1727919280794" duration="14524000" />
       <workItem from="1728093262631" duration="16609000" />
-      <workItem from="1728188269000" duration="4266000" />
+      <workItem from="1728188269000" duration="9908000" />
     </task>
     <servers />
   </component>
