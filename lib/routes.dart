@@ -5,7 +5,6 @@ import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
 import 'package:insaaju/ui/screen/setting/setting_screen.dart';
-import 'package:insaaju/ui/screen/widget/app_bottom_navigation_bar.dart';
 
 class FadeRoute extends PageRouteBuilder {
 

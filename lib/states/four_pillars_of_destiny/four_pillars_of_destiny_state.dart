@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
@@ -27,6 +28,23 @@ extension FourPillarsOfDestinyTypeExtension on FourPillarsOfDestinyType {
       return true;
     }
     return false;
+  }
+
+  IconData getIcon(){
+    switch(this){
+      case FourPillarsOfDestinyType.fourPillarsOfDestiny:
+        return Icons.dashboard;
+      case FourPillarsOfDestinyType.yongsin:
+        return Icons.start;
+      case FourPillarsOfDestinyType.gishin:
+        return Icons.warning;
+      case FourPillarsOfDestinyType.sipsinAnalysis:
+        return Icons.insights;
+      case FourPillarsOfDestinyType.daewoon:
+        return Icons.timeline;
+      default:
+        throw UnknownException<FourPillarsOfDestinyType>(this);
+    }
   }
 
   String getTitle(){

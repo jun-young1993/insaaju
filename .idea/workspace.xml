@@ -11,8 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fc37ddbd-911e-4e85-863b-c911ba14495b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/home/sections/people_detail.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/chat_room/chat_room_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/destination_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/destination_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +103,7 @@
       <workItem from="1727919218795" duration="50000" />
       <workItem from="1727919280794" duration="14524000" />
       <workItem from="1728093262631" duration="16609000" />
-      <workItem from="1728188269000" duration="2299000" />
+      <workItem from="1728188269000" duration="4266000" />
     </task>
     <servers />
   </component>

@@ -126,7 +126,6 @@ class _PeopleDetailState extends State<PeopleDetail> {
               }else{
                 sectionBloc.add(const ShowChildSectionEvent(childSection: ChildSectionType.unselected));
               }
-
             }
         );
       })

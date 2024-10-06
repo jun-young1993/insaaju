@@ -120,6 +120,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget build(BuildContext context) {
     return AppBackground(
       appBar: _buildAppBar(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
       child: SectionChatCompletionSelector((status) {
         switch(status){
           case SectionLoadStatus.complete:
@@ -219,83 +220,6 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  // 시스템에서 제공하는 버튼을 채팅 스타일로 제공
-  Widget _buildSystemButton(ChatRoomMessage chatRoomMessage) {
-    final FourPillarsOfDestinyType fourPillarsOfDestinyType = FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)!;
- 
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(12),
-            bottomLeft: Radius.circular(12),
-            bottomRight: Radius.circular(12),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Wrap(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context){
-                          return AlertDialog(
-                              title: const Text('리워드 광고'),
-                              content: Text("광고 시청후 ${fourPillarsOfDestinyType.getTitle()} 하기"),
-                              actions: [
-                                TextButton(
-                                  child: const Text('취소'),
-                                  onPressed: (){
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                TextButton(
-                                  child: const Text('확인'),
-                                  onPressed: (){
-                                    Navigator.pop(context);
-                                    _rewardedAd?.show(
-                                      onUserEarnedReward: (_, reward) {
-                                        chatCompletionBloc.add(
-                                          SendFourPillarsOfDestinyTypeChatCompletionEvent(
-                                            info: widget.info,
-                                            type: fourPillarsOfDestinyType
-                                          )
-                                        );
-                                      }
-                                    );
-                                  },
-                                )
-                              ],
-                          );
-                        }
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Colors.teal, // 버튼 텍스트 색상
-                    ),
-                    icon: Icon(Icons.play_circle_filled),
-                    label: Text(
-                      chatRoomMessage.content,
-                      softWrap: true
-                    ),
-                  ),
-                ],
-              ),
-            )
-            
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildAppBarTitle() {
     return Row(
       children: [
@@ -324,105 +248,28 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     );
   }
 
-  Widget _buildMessageList(){
-    return SectionMessageChatCompletionSelector((messages){
-      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-      return ListView.builder(
-        controller: _scrollController,
-        padding: const EdgeInsets.all(10),
-        itemCount: messages.length,
-        reverse: false, // 가장 최근 메시지가 아래에 오도록 설정
-        itemBuilder: (context, index) {
-          switch(messages[index].role){
-            case ChatRoomRole.system:
-            case ChatRoomRole.assistant:
-              return _buildMessageBubble(messages[index], false);
-            case ChatRoomRole.user:
-              return _buildMessageBubble(messages[index], true);
-            case ChatRoomRole.button:
-              return _buildSystemButton(messages[index]);
-            default: 
-              return _buildMessageBubble(messages[index], false);
-          }
-          
-        },
+  Widget _buildBottomNavigationBar(){
+    return BottomNavigationBar(
+      selectedItemColor: Colors.blue,
+      unselectedItemColor: Colors.black54,
+      currentIndex: _currentPage,
+      showUnselectedLabels: false,
+      onTap: (int index){
+        _onIconPressed(index);
+      },
+      type: BottomNavigationBarType.shifting,
+      items: _bottomNavigationBarItem(),
+    );
+  }
+
+  List<BottomNavigationBarItem> _bottomNavigationBarItem(){
+
+    return FourPillarsOfDestinyType.values.map((type) {
+      return BottomNavigationBarItem(
+          label: type.getTitle(),
+          icon: Icon(type.getIcon()),
+          tooltip: type.getTitle(),
       );
-    });
-  }
-
-  Widget _buildMessageListBox() {
-
-    return SectionChatCompletionSelector((status){
-      print(status);
-      switch(status){
-        case SectionLoadStatus.complete:
-          return _buildMessageList();
-        case SectionLoadStatus.fail:
-          return SectionErrorChatCompletionSelector((error){
-            return ErrorText(text: error.toString());
-          });
-        default:
-          return const LoadingBox(
-            loadingText: '대화내용을 불러오는 중...',
-          );
-      }
-    });
-
-  }
-
-  Widget _buildMessageBubble(ChatRoomMessage chatRoomMessage, bool isUserMessage) {
-    return Align(
-      alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
-        decoration: BoxDecoration(
-          color: isUserMessage ? Colors.blue : Colors.grey[300],
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(isUserMessage ? 12 : 0),
-            topRight: const Radius.circular(12),
-            bottomLeft: const Radius.circular(12),
-            bottomRight: Radius.circular(isUserMessage ? 0 : 12),
-          ),
-        ),
-        child: isUserMessage 
-        ? Text(
-          chatRoomMessage.content,
-          style: TextStyle(
-            color: Colors.white
-          ),
-        )
-        : Markdown(
-          shrinkWrap: true,
-          data: chatRoomMessage.content,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMessageInput() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      color: Colors.grey[200],
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              decoration: const InputDecoration(
-                hintText: "메시지를 입력하세요...",
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.send, color: Colors.teal),
-            onPressed: () {
-              // 메시지 보내기 로직 추가
-            },
-          ),
-        ],
-      ),
-    );
+    }).toList();
   }
 }

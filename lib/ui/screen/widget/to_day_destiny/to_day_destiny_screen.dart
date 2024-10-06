@@ -12,7 +12,6 @@ import 'package:insaaju/states/chat_completion/chat_completion_state.dart';
 import 'package:insaaju/ui/screen/widget/app_background.dart';
 import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/destination_card.dart';
-import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 import 'package:insaaju/utills/ad_mob_const.dart';
@@ -123,8 +122,8 @@ class _ToDayDestinyState extends State<ToDayDestinyScreen> {
   }){
     return DestinationCard(
       crossAxisAlignment: crossAxisAlignment,
-      child: child,
-      title: '오늘의 운세'
+      title: '오늘의 운세',
+      child: child
     );
   }
 
@@ -154,7 +153,7 @@ class _ToDayDestinyState extends State<ToDayDestinyScreen> {
               child: _buildReward()
           );
         default:
-          return LoadingBox(
+          return const LoadingBox(
             loadingText: '불러오는중입니다...',
           );
       }
@@ -175,7 +174,7 @@ class _ToDayDestinyState extends State<ToDayDestinyScreen> {
         color: Colors.white,
       ),
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
         backgroundColor: Colors.purple, // 버튼 배경색
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20), // 둥근 모서리
