@@ -106,7 +106,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
   List<BottomNavigationBarItem> _bottomNavigationBarItem(){
     return [
       const BottomNavigationBarItem(
-          label: '사주 채팅',
+          label: '사주 구성',
           icon: Icon(Icons.chat)
       ),
       const BottomNavigationBarItem(

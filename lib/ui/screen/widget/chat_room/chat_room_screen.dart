@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -119,13 +120,20 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
   Widget build(BuildContext context) {
     return AppBackground(
       appBar: _buildAppBar(),
-      child:_buildPageView()
-      // Column(
-      //   children: [
-      //     Expanded(child: _buildMessageListBox()), // 메시지 리스트
-      //     // _buildMessageInput(), // 메시지 입력창
-      //   ],
-      // ),
+      child: SectionChatCompletionSelector((status) {
+        switch(status){
+          case SectionLoadStatus.complete:
+            return _buildPageView();
+          case SectionLoadStatus.fail:
+            return SectionErrorChatCompletionSelector((error){
+              return ErrorText(text: error.toString());
+            });
+          default:
+            return const LoadingBox(
+              loadingText: '불러오는 중 입니다...',
+            );
+        }
+      })
     );
   }
 
@@ -141,23 +149,71 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       itemBuilder: (context, index){
         return SectionMessageChatCompletionSelector((messages) {
           print(messages.length);
-          if(messages.length > index){
-            return _buildPage(messages[index]);
+          final FourPillarsOfDestinyType selectedType = FourPillarsOfDestinyType.values[index];
+          final message = messages.firstWhereOrNull(
+              (message) => selectedType.hasSameValue(message.userPromptCodeItem.key)
+          );
+          if(message == null) {
+            return _buildPageNotFound(selectedType);
           }else{
-            return Text('hi');
+            return _buildPage(message, selectedType);
           }
         });
       }
     );
   }
 
+  Widget _buildReward(FourPillarsOfDestinyType type){
 
-  Widget _buildPage(ChatRoomMessage chatRoomMessage){
-    print(chatRoomMessage.userPromptCodeItem.key);
+    return ElevatedButton.icon(
+      onPressed: () {
+        _rewardedAd?.show(
+            onUserEarnedReward: (_, reward) {
+              chatCompletionBloc.add(
+                  SendFourPillarsOfDestinyTypeChatCompletionEvent(
+                      info: widget.info,
+                      type: type
+                  )
+              );
+            }
+        );
+      },
+      icon: const Icon(
+        Icons.play_circle_outline, // 광고 재생을 나타내는 아이콘
+        color: Colors.white,
+      ),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+        backgroundColor: Colors.purple, // 버튼 배경색
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20), // 둥근 모서리
+        ),
+        elevation: 5, // 그림자 효과
+      ),
+      label: Text(
+        '광고 시청 후 ${type.getTitle()} 보기',
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: Colors.white, // 텍스트 색상
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPageNotFound(FourPillarsOfDestinyType type){
     return DestinationCard(
-        title: FourPillarsOfDestinyTypeExtension.fromValue(chatRoomMessage.userPromptCodeItem.key)?.getTitle(),
+      crossAxisAlignment: CrossAxisAlignment.center,
+      title: type.getTitle(),
+      child:_buildReward(type)
+    );
+  }
+
+  Widget _buildPage(ChatRoomMessage chatRoomMessage, FourPillarsOfDestinyType type){
+    return DestinationCard(
+        title: type.getTitle(),
         child: Markdown(
-            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
             data: chatRoomMessage.content
         )
     );

@@ -42,14 +42,9 @@ class _DestinationCardSate extends State<DestinationCard> {
                 ),
                 SizedBox(height: 10),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: widget.child,  // 스크롤 가능하도록 감싸기
-                  ),
+                    child: widget.child
                 ),
-                // Markdown(
-                //     shrinkWrap: true,
-                //     data: 'hi'
-                // )
+
               ],
             ),
           )
