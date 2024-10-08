@@ -4,6 +4,7 @@ import 'package:insaaju/configs/code_constants.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/code_item.dart';
 import 'package:insaaju/exceptions/four_of_destiny_required_exception.dart';
+import 'package:insaaju/exceptions/not_found_exception.dart';
 import 'package:insaaju/exceptions/required_exception.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
@@ -40,50 +41,16 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
       }
-      
+      DateTime now = DateTime.now();
+      DateTime startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
+      DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
+
       final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(
           mySessionId,
           query: {
             'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_system_code,
           }
       );
-
-      // final List<ChatRoomMessage> chatRoomMessages = messages.expand((message) {
-      //   final FourPillarsOfDestinyType? userType = FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key);
-      //   if (userType != null) {
-      //     return [
-      //       ChatRoomMessage(
-      //         role: ChatRoomRole.button,
-      //         content: userType.getTitle(),
-      //         systemPromptCodeItem: CodeItem.copyWith(key: userType.getValue()),
-      //         userPromptCodeItem: CodeItem.copyWith(key: userType.getValue()),
-      //       ),
-      //       message
-      //     ];
-      //   }
-      //   return [message];
-      // }).toList();
-      //
-      // // `userType`이 null인 경우를 추적
-      // final Set<FourPillarsOfDestinyType> existingTypes = messages
-      //     .map((message) => FourPillarsOfDestinyTypeExtension.fromValue(message.userPromptCodeItem.key))
-      //     .where((userType) => userType != null)
-      //     .cast<FourPillarsOfDestinyType>()
-      //     .toSet();
-      //
-      // // `FourPillarsOfDestinyType`에서 빠진 요소들 추가
-      // final List<ChatRoomMessage> missingMessages = FourPillarsOfDestinyType.values
-      //     .where((type) => !existingTypes.contains(type))
-      //     .map((type) => ChatRoomMessage(
-      //           role: ChatRoomRole.button,
-      //           content: type.getTitle(),
-      //           systemPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
-      //           userPromptCodeItem: CodeItem.copyWith(key: type.getValue()),
-      //         ))
-      //     .toList();
-
-      // 빠진 요소들을 `chatRoomMessages`의 맨 뒤에 추가
-      // chatRoomMessages.addAll(missingMessages);
       emit(state.asSectionLoadStatusComplete(messages));
     } on Exception catch( error ) {
       emit(state.copyWith(
@@ -93,7 +60,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
     }
   }
 
-   Future<void> _onSendFourPillarsOfDestinyTypeChatCompletion(
+  Future<void> _onSendFourPillarsOfDestinyTypeChatCompletion(
       SendFourPillarsOfDestinyTypeChatCompletionEvent event,
       Emitter<ChatCompletionState> emit
   ) async {
@@ -164,10 +131,18 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
       }
+      DateTime now = DateTime.now();
+      DateTime startOfDay = DateTime(now.year, now.month, now.day, 0, 0, 0);
+      DateTime endOfDay = DateTime(now.year, now.month, now.day, 23, 59, 59);
       final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(
           mySessionId,
-          query: {'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_to_day_system_code}
+          query: {
+            'system_prompt_code_item_key': CodeConstants.four_pillars_of_destiny_to_day_system_code,
+            'start_date' : startOfDay,
+            'end_date': endOfDay
+          }
       );
+      
       if(messages.isEmpty){
         emit(state.copyWith(
             toDayStatus: ToDayStatus.isEmpty
@@ -178,7 +153,12 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
             messages: messages
         ));
       }
+    } on NotFoundException catch ( error ) {
+      emit(state.copyWith(
+        toDayStatus: ToDayStatus.isEmpty
+      ));
     } on Exception catch( error ) {
+      print(error);
       emit(state.copyWith(
           toDayStatus: ToDayStatus.fail,
           error: error
@@ -214,6 +194,8 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       }else{
         sendMessages.add(ChatBaseRoomMessage(content: fourPillarsOfDestinyMessage!.content, role: ChatRoomRole.assistant));
       }
+
+      sendMessages.add(ChatBaseRoomMessage(role: ChatRoomRole.user, content: "Today's date is ${DateTime.now()}"));
       await _openaiRepository.sendMessage(
           CodeConstants.four_pillars_of_destiny_to_day_system_code,
           CodeConstants.four_pillars_of_destiny_to_day_user_code,

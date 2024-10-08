@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
@@ -8,6 +9,7 @@ import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/common_exception.dart';
+import 'package:insaaju/exceptions/not_found_exception.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/utills/aes_crypto.dart';
 import 'package:http/http.dart' as http;
@@ -58,12 +60,13 @@ class OpenaiDefaultRepository extends OpenaiRepository {
 
   @override
   Future<List<ChatRoomMessage>> findChatCompletion(String sessionId, {Map<String, dynamic>? query}) async {
-    print('$baseUrl/openai/chat-completion/session/$sessionId');
+    
     final url = Uri.parse('$baseUrl/openai/chat-completion/session/$sessionId').replace(
       queryParameters: query != null && query.isNotEmpty
           ? query.map((key, value) => MapEntry(key, value.toString())) // query 값 변환
           : null,
     );
+    
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
     // 현재 시간을 가져오기
@@ -82,7 +85,7 @@ class OpenaiDefaultRepository extends OpenaiRepository {
         url,
         headers: headers,
     );
-    
+
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       final completions = data['completions'];
@@ -109,7 +112,9 @@ class OpenaiDefaultRepository extends OpenaiRepository {
       throw Exception('openai repository findChatCompletion');
       
       
-    } else {
+    } else if(response.statusCode == HttpStatus.notFound){
+      throw NotFoundException<String>('');
+    }else {
       throw CommonException.fromResponse(response);
     }
 
