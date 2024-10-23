@@ -23,6 +23,7 @@ import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_time_field.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
 import 'package:insaaju/ui/screen/widget/info/name_field.dart';
+import 'package:insaaju/ui/screen/widget/info/solar_and_lunar_field.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 import 'package:insaaju/utills/ad_mob_const.dart';
@@ -160,18 +161,20 @@ class _PlusPeopleState extends State<PlusPeople> {
       return InfoFailSelector((error){
         return Column(
           children: [
-            _buildNameField(),
-            _buildColumnSizedBox(),
+            if(info.date != null)
+              ...[
+                _buildBirthTimeField(),
+                _buildColumnSizedBox(),
+                _buildSolarAndLunar(),
+                _buildColumnSizedBox(),
+              ],
             if(info.name != null)
               ...[
                 _buildBirthDateField(),
                 _buildColumnSizedBox(),
               ],
-            if(info.date != null)
-              ...[
-                _buildBirthTimeField(),
-                _buildColumnSizedBox(),
-              ],
+            _buildNameField(),
+            _buildColumnSizedBox(),
             if(error != null)
               ...[
                 ErrorText(
@@ -188,7 +191,6 @@ class _PlusPeopleState extends State<PlusPeople> {
 
   Widget _buildSaveButton(InfoState info){
       return InfoStatusSelector((status){
-        print(status);
         if(status == InfoStatus.saving){
           return LoadingBox(
             direction: LoadingBoxDirection.row,
@@ -224,6 +226,10 @@ class _PlusPeopleState extends State<PlusPeople> {
         );
 
       });
+  }
+
+  Widget _buildSolarAndLunar(){
+    return SolarAndLunarField();
   }
 
   Widget _buildColumnSizedBox(){

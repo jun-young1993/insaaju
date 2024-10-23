@@ -35,38 +35,6 @@ class _BirthDateFieldState extends State<BirthDateField> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // DropdownButton의 크기를 TextField와 맞추기 위해 isExpanded와 Container를 사용
-        Expanded(
-            flex: 1,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 2.0), // 내부 여백을 추가
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), // TextField와 유사한 테두리 추가
-                borderRadius: BorderRadius.circular(5.0), // 둥근 모서리 적용
-              ),
-              child: Center(
-                child: DropdownButton<String>(
-                  value: solarAndLunarValue,
-                  onChanged: (String? value) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      setState(() {
-                        solarAndLunarValue = value!;
-                      });
-                    });
-                  },
-                  // isExpanded: true, // DropdownButton의 크기를 확장
-                  underline: SizedBox(), // 밑줄 제거
-                  items: solarAndLunar.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-        ),
-        SizedBox(width: 20,),
         Expanded(
           flex: 3,
           child: TextField(
