@@ -1,26 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/states/info/info_state.dart';
 import 'package:insaaju/ui/screen/widget/drop_box.dart';
 
 class SolarAndLunarField extends StatefulWidget {
-  const SolarAndLunarField({super.key});
+   final ValueChanged<SolarAndLunarType?>? onChanged;
+  const SolarAndLunarField({super.key, this.onChanged});
 
   @override
   _SolarAndLunarFieldState createState() => _SolarAndLunarFieldState();
 }
 
 class _SolarAndLunarFieldState extends State<SolarAndLunarField> {
-  final List<Map<String, String>> items = [{
-        'value': '1',
-        'name': 'hi'
+  SolarAndLunarType? selectedValue = SolarAndLunarType.solar;
+  final List<Map<String, dynamic>> items = [{
+        'value': SolarAndLunarType.solar,
+        'name': '양력'
+  },{
+        'value': SolarAndLunarType.lunar,
+        'name': '음력'
   }];
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return DropBoxField(
+    return DropBoxField<SolarAndLunarType>(
       items: items, 
-      selectedValue: '1',
-      onChanged: (String? value){
-
+      selectedValue: selectedValue,
+      onChanged: (SolarAndLunarType? value){
+        setState((){
+          selectedValue = value;
+        });
+         widget.onChanged!(value);
       }
     );
   }

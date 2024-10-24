@@ -7,7 +7,8 @@ class PeopleList extends StatelessWidget {
   const PeopleList({
     super.key, 
     required this.handleTapList,
-    required this.handleRemove, required this.handleMeCreate
+    required this.handleRemove, 
+    required this.handleMeCreate
   });
 
   @override

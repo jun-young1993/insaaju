@@ -31,11 +31,14 @@ class CheckScreen extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          if(state.name != null && state.date != null && state.time != null){
+                          if(!state.hasMissingFields()){
                             final info = Info(
-                                state.name!,
-                                state.date!,
-                                state.time!
+                                name: state.name!,
+                                date: state.date!,
+                                time: state.time!,
+                                solarAndLunar: state.solarAndLunar!,
+                                sessionId: state.sessionId!
+
                             );
                             onSave!(info);
                           }

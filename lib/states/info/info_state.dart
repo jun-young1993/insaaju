@@ -12,7 +12,15 @@ enum InfoStatus {
   saving,
   saved
 }
-
+enum SolarAndLunarType {
+  solar,
+  lunar
+}
+extension SolarAndLunarTypeExtension on SolarAndLunarType {
+  bool isLunar(){
+    return this == SolarAndLunarType.lunar;
+  }
+}
 extension InfoStatusExtension on InfoStatus {
   String getTitle(){
     switch(this){
@@ -34,28 +42,32 @@ enum InfoRemoveStatus {
 }
 class InfoState {
   final String? name;
-  final List<String>? hanja;
   final Exception? error;
   final InfoMenu menu;
   final String? date;
   final String? time;
+  final String? sessionId;
+  final SolarAndLunarType? solarAndLunar;
   final InfoStatus status;
   final InfoRemoveStatus removeStatus;
-  final List<List<Map<String, dynamic>>>? hanjaList;
   
   InfoState._({
-    this.hanjaList,
-    this.hanja,
     this.date, 
     this.time,
     this.name,
     this.error,
+    this.solarAndLunar,
+    this.sessionId,
     this.status = InfoStatus.inProgress,
     this.menu = InfoMenu.name,
     this.removeStatus = InfoRemoveStatus.queue
   });
 
   InfoState.initialize() : this._();
+
+  bool hasMissingFields(){
+    return (date == null) || (time == null) || (name == null) || (solarAndLunar == null) || (sessionId == null);
+  }
 
   InfoState asSetName(String name){
 
@@ -69,22 +81,6 @@ class InfoState {
     return InfoState._();
   }
 
-  InfoState asSetHanjaList(List<List<Map<String, dynamic>>> hanjaList){
-    List<String> defaultHanjaArray = List.generate(name!.length, (index){
-      return hanjaList[index].isNotEmpty ? hanjaList[index][0]['hanja'] as String : '';
-    });
-    return copyWith(
-        hanjaList: hanjaList,
-        hanja: defaultHanjaArray
-    );
-  }
-
-  InfoState asSetHanja(List<String>? hanja){
-    return copyWith(
-      hanja: hanja,
-      menu: InfoMenu.hanja
-    );
-  }
 
   InfoState asSetMenu(InfoMenu menu){
     return copyWith(
@@ -115,9 +111,7 @@ class InfoState {
   }
 
   InfoState copyWith({
-    List<List<Map<String, dynamic>>>? hanjaList,
     String? name,
-    List<String>? hanja,
     String? date,
     String? time,
     Exception? error,
@@ -126,9 +120,7 @@ class InfoState {
     InfoRemoveStatus? removeStatus
   }){
     return InfoState._(
-      hanjaList: hanjaList ?? this.hanjaList,
       status: status ?? this.status,
-      hanja: hanja ?? this.hanja,
       date: date ?? this.date,
       time: time ?? this.time,
       name: name ?? this.name,

@@ -36,7 +36,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
   ) async {
     try{
       emit(state.asSectionLoadStatusProcessing());
-      late String? mySessionId = event.info.mySessionId;
+      late String? mySessionId = event.info.sessionId;
 
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
@@ -66,12 +66,12 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
   ) async {
       try{
 
-        if(event.info.mySessionId == null){
+        if(event.info.sessionId == null){
           throw RequiredException<String>('my session id');
         }
 
         emit(state.asSectionLoadStatusProcessingType());
-        final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(event.info.mySessionId!);
+        final List<ChatRoomMessage> messages = await _openaiRepository.findChatCompletion(event.info.sessionId!);
         final ChatRoomMessage? isMessage = messages.firstWhereOrNull(
           (message) => event.type.hasSameValue(message.userPromptCodeItem.key)
         );
@@ -105,7 +105,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
           CodeConstants.four_pillars_of_destiny_system_code,
           event.type.getValue(),
           CodeConstants.gpt_base_model,
-          event.info.mySessionId!,
+          event.info.sessionId!,
           sendMessages
         );
         emit(state.asSectionLoadStatusCompleteType());
@@ -127,7 +127,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       emit(state.copyWith(
         toDayStatus: ToDayStatus.processing
       ));
-      late String? mySessionId = event.info.mySessionId;
+      late String? mySessionId = event.info.sessionId;
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
       }
@@ -174,7 +174,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
       emit(state.copyWith(
           toDayStatus: ToDayStatus.processing
       ));
-      late String? mySessionId = event.info.mySessionId;
+      late String? mySessionId = event.info.sessionId;
       if(mySessionId == null){
         throw RequiredException<String>('my session id');
       }
@@ -200,7 +200,7 @@ class ChatCompletionBloc extends Bloc<ChatCompletionEvent, ChatCompletionState> 
           CodeConstants.four_pillars_of_destiny_to_day_system_code,
           CodeConstants.four_pillars_of_destiny_to_day_user_code,
           CodeConstants.gpt_base_model,
-          event.info.mySessionId!,
+          event.info.sessionId!,
           sendMessages
       );
       emit(state.copyWith(

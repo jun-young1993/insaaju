@@ -207,7 +207,7 @@ class _PlusPeopleState extends State<PlusPeople> {
           );
         }
         return AppButton(
-          onPressed: (info.name != null && info.date != null && info.time != null && status != InfoStatus.saving)
+          onPressed: (!info.hasMissingFields() && status != InfoStatus.saving)
               ? () {
                 if(widget.sectionType == SectionType.addPeople){
                   _rewardedAd?.show(
@@ -229,7 +229,13 @@ class _PlusPeopleState extends State<PlusPeople> {
   }
 
   Widget _buildSolarAndLunar(){
-    return SolarAndLunarField();
+    return SolarAndLunarField(
+      onChanged: (value){
+        if(value != null){
+          infoBloc.add(InputSolarAndLunarEvent(solarAndLunarType: value));
+        }
+      },
+    );
   }
 
   Widget _buildColumnSizedBox(){

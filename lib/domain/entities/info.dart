@@ -7,18 +7,18 @@ class Info {
   final String name;
   final String date;
   final String time;
-  late  String? mySessionId;
-  Info(
-      this.name,
-      this.date,
-      this.time,
-      {
-        this.mySessionId
-      }
-  );
+  final SolarAndLunarType solarAndLunar;
+  late  String sessionId;
+  Info( {
+      required this.name,
+      required this.date,
+      required this.time,
+      required this.solarAndLunar,
+      required this.sessionId
+  });
   
   void setMySession(ChatSession session){
-    mySessionId = session.id;
+    sessionId = session.id;
   }
 
   String getTypeKey(FourPillarsOfDestinyType type){
@@ -56,20 +56,18 @@ class Info {
       'name': name,
       'date': date,
       'time': time,
-      'mySessionId': mySessionId
+      'mySessionId': sessionId
     };
   }
 
   static Info fromState(InfoState state){
-    if(
-      state.name != null
-      && state.date != null
-      && state.time != null
-    ){
+    if(!state.hasMissingFields()){
       return Info(
-        state.name!,
-        state.date!,
-        state.time!
+        name: state.name!,
+        date: state.date!,
+        time: state.time!,
+        solarAndLunar: state.solarAndLunar!,
+        sessionId: state.sessionId!
       );
     }
 
@@ -78,21 +76,24 @@ class Info {
 
   factory Info.toEmpty(){
     return Info(
-      '',
-      '',
-      ''
+      name: '',
+      date: '',
+      time: '',
+      sessionId: '', 
+      solarAndLunar: SolarAndLunarType.solar
     );
   }
 
 }class ExtendedInfo extends Info {
 
-  ExtendedInfo(
-  {String? name}
-  ) : super(
-    name ?? '탭 해서 프로필 생성하기',
-    '',
-    '',
+  ExtendedInfo({String? name}) : super(
+    name: "탭 해서 프로필 생성하기",
+    date: '',
+    time: '',
+    sessionId: '',
+    solarAndLunar: SolarAndLunarType.solar
   );
+
 
   @override
   String toString() {

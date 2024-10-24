@@ -109,7 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     _settingRow(
                         icon: Icons.key,
                         keyText: 'ID',
-                        valueText: info.mySessionId ?? '',
+                        valueText: info.sessionId ?? '',
                         isCopy: true,
                         widgetContext: context
                     )

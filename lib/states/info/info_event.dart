@@ -1,6 +1,5 @@
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/info/info_state.dart';
-import 'package:insaaju/states/list/list_bloc.dart';
 
 abstract class InfoEvent {
   const InfoEvent();
@@ -73,6 +72,14 @@ class InfoInitializeEvent extends InfoEvent {
 class ChangeInfoStatusEvent extends InfoEvent {
   final InfoStatus infoStatus;
   const ChangeInfoStatusEvent(this.infoStatus);
+}
+
+class InputSolarAndLunarEvent extends InfoEvent {
+  final SolarAndLunarType solarAndLunarType;
+
+  const InputSolarAndLunarEvent({
+      required this.solarAndLunarType
+    });
 }
 
 

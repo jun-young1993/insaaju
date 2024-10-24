@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:insaaju/configs/info_constants.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/duplicate_exception.dart';
+import 'package:insaaju/states/info/info_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class InfoRepository {
@@ -64,10 +65,11 @@ class InfoDefaultRepository extends InfoRepository{
     List<Info> savedInfos = savedInfoList.map((jsonString) {
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       return Info(
-        infoMap['name'],
-        infoMap['date'],
-        infoMap['time'],
-        mySessionId: infoMap['mySessionId']
+        name: infoMap['name'],
+        date: infoMap['date'],
+        time: infoMap['time'],
+        sessionId: infoMap['sessionId'],
+        solarAndLunar: SolarAndLunarType.solar
       );
     }).toList();
 
@@ -100,14 +102,15 @@ class InfoDefaultRepository extends InfoRepository{
   Future<Info?> findMe() async {
     final prefs = await SharedPreferences.getInstance();
     final String? jsonString = prefs.getString(InfoConstants.info_me);
-    print(jsonString);
+    
     if(jsonString != null){
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       return Info(
-          infoMap['name'],
-          infoMap['date'],
-          infoMap['time'],
-          mySessionId: infoMap['mySessionId']
+        name: infoMap['name'],
+        date: infoMap['date'],
+        time: infoMap['time'],
+        sessionId: infoMap['sessionId'],
+        solarAndLunar: SolarAndLunarType.solar
       );
     }
     return null;
@@ -158,10 +161,11 @@ class InfoDefaultRepository extends InfoRepository{
     List<Info> infoList = savedInfoList.map((jsonString) {
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       return Info(
-        infoMap['name'],
-        infoMap['date'],
-        infoMap['time'],
-          mySessionId: infoMap['mySessionId']
+        name: infoMap['name'],
+        date: infoMap['date'],
+        time: infoMap['time'],
+        sessionId: infoMap['sessionId'],
+        solarAndLunar: SolarAndLunarType.solar
       );
     }).toList();
 

@@ -24,7 +24,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onInputName);
     on(_onInputDate);
     on(_onInputTime);
-    on(_onInputHanja);
     on(_onChangeMenu);
     on(_onSave);
     on(_onCheck);
@@ -38,13 +37,13 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     Emitter<InfoState> emit
   ) async {
     try{
-      List<String> characters = event.name.split('');
-      List<List<Map<String, dynamic>>> hanjaListByCharacters = await _infoRepository.getHanjaByCharacters(characters);
+
       emit(state.asSetName(event.name));
-      emit(state.asSetHanjaList(hanjaListByCharacters));
 
     } on Exception catch(error){
+
       emit(state.asFailer(error));
+      
     }
   }
 
@@ -70,18 +69,6 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
           Info.fromState(state)
         );
       }
-    } on Exception catch(error){
-      emit(state.asFailer(error));
-    }
-  }
-
-  void _onInputHanja(
-      InputHanjaEvent event,
-      Emitter<InfoState> emit
-      ){
-    try{
-
-      emit(state.asSetHanja(event.hanja));
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
