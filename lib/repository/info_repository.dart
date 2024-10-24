@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:insaaju/configs/info_constants.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/exceptions/duplicate_exception.dart';
 import 'package:insaaju/states/info/info_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';

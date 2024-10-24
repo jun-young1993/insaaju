@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
 abstract class InfoEvent {

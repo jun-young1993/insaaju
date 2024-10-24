@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:insaaju/domain/entities/chat_complation.dart';
+import 'package:insaaju/domain/entities/four_pillars_of_destiny.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,13 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class FourPillarsOfDestinyRepository {
   Future<Map<FourPillarsOfDestinyType,ChatCompletion?>> getFourPillarsOfDestinyList(Info info);
   Future<bool> saveFourPillarsOfDestiny(FourPillarsOfDestinyType type, ChatCompletion chatComplation, Info info);
+  Future<FourPillarsOfDestiny> getFourPillarsOfDestiny();
 }
 
 class FourPillarsOfDestinyDefaultRepository extends FourPillarsOfDestinyRepository {
   FourPillarsOfDestinyDefaultRepository();
 
   @override
-  Future getFourPillarsOfDestiny(){
+  Future<FourPillarsOfDestiny> getFourPillarsOfDestiny(){
     
   }
 
