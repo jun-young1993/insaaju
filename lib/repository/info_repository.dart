@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:insaaju/configs/info_constants.dart';
 import 'package:insaaju/domain/entities/info.dart';
@@ -105,12 +106,13 @@ class InfoDefaultRepository extends InfoRepository{
     
     if(jsonString != null){
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
+      
       return Info(
         name: infoMap['name'],
-        date: infoMap['date'],
-        time: infoMap['time'],
+        date: DateTime.parse(infoMap['date']),
+        time: TimeOfDay(hour: infoMap['time']['hour'], minute: infoMap['time']['minute']),
         sessionId: infoMap['sessionId'],
-        solarAndLunar: SolarAndLunarType.solar
+        solarAndLunar: SolarAndLunarTypeExtension.fromValue(infoMap['solarAndLunar'])
       );
     }
     return null;
@@ -118,7 +120,7 @@ class InfoDefaultRepository extends InfoRepository{
 
   Future<bool> saveOrUpdateMe(Info info) async {
     final prefs = await SharedPreferences.getInstance();
-
+    
     return await prefs.setString(InfoConstants.info_me, jsonEncode(info.toJson()));
 
   }

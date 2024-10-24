@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/states/info/info_state.dart';
 import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 
 class InfoRow extends StatefulWidget {
   final Info info;
   final double? profileSize;
-  InfoRow({
+  const InfoRow({
+    super.key, 
     required this.info, this.profileSize
   });
 
@@ -38,7 +40,20 @@ class _InfoRowState extends State<InfoRow> {
                 fontWeight: FontWeight.bold
               ),
             ),
-            Text(widget.info.toStringDateTime())
+            const SizedBox(height: 5,),
+            Row(
+              children: [
+                Icon(
+                  (widget.info.solarAndLunar != SolarAndLunarType.solar)
+                  ? Icons.sunny
+                  : Icons.mode_night,
+                  color: (widget.info.solarAndLunar != SolarAndLunarType.solar) ? const Color.fromARGB(255, 243, 132, 124) : const Color.fromARGB(255, 150, 141, 140)
+                ),
+                const SizedBox(width: 10,),
+                Text(widget.info.toStringDateTime())
+              ],
+            ),
+            
           ],
         )
       ],

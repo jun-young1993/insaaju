@@ -9,7 +9,6 @@ import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_s
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
-import 'package:insaaju/states/list/list_event.dart';
 import 'package:insaaju/states/me/me_event.dart';
 import 'package:insaaju/states/me/me_state.dart';
 
@@ -33,18 +32,25 @@ class MeBloc extends Bloc<MeEvent, MeState> {
     try {
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saving));
       final ChatSession session = await _openaiRepository.createSession();
-
-      event.info.setMySession(session);
-      await _infoRepository.saveOrUpdateMe(event.info);
-      await _openaiRepository.sendMessage(
-          CodeConstants.four_pillars_of_destiny_system_code,
-          FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
-          CodeConstants.gpt_base_model,
-          session.id,
-          [
-            ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user)
-          ]
+      final sessionId = session.id;
+      
+      final info = Info.fromState(
+        event.infoState.asSetSessionId(sessionId)
       );
+      print('info');
+      print(info);
+      print(info.toString());
+      
+      await _infoRepository.saveOrUpdateMe(info);
+      // await _openaiRepository.sendMessage(
+      //     CodeConstants.four_pillars_of_destiny_system_code,
+      //     FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
+      //     CodeConstants.gpt_base_model,
+      //     session.id,
+      //     [
+      //       ChatBaseRoomMessage(content: info.toString(), role: ChatRoomRole.user)
+      //     ]
+      // );
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saved));
       add(const FindMeEvent());
     } on Exception catch( error ) {

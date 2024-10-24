@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/info.dart';
-import 'package:insaaju/routes.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
 import 'package:insaaju/states/list/list_event.dart';
 import 'package:insaaju/states/list/list_selector.dart';
-import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/info_card.dart';
-import 'package:insaaju/ui/screen/widget/show_alert_dialog.dart';
 
 class InfoCardListSection extends StatefulWidget {
   final Function(Info, int)? onSelected;
@@ -85,8 +82,8 @@ class _InfoCardListSectionState extends State<InfoCardListSection> {
                     ? Colors.green.shade100 
                     : Colors.white,
                   name: list[index].name,
-                  date: list[index].date,
-                  time: list[index].time,
+                  date: list[index].date.toString(),
+                  time: list[index].time.toString(),
                 )
             );
           }

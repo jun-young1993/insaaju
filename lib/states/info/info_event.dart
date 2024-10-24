@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
@@ -13,14 +14,14 @@ class InputNameEvent extends InfoEvent {
 }
 
 class InputDateEvent extends InfoEvent {
-  final String date;
+  final DateTime date;
   const InputDateEvent({
     required this.date
   });
 }
 
 class InputTimeEvent extends InfoEvent {
-  final String time;
+  final TimeOfDay time;
   final bool? check;
   const InputTimeEvent({
     required this.time,
@@ -75,10 +76,10 @@ class ChangeInfoStatusEvent extends InfoEvent {
 }
 
 class InputSolarAndLunarEvent extends InfoEvent {
-  final SolarAndLunarType solarAndLunarType;
+  final SolarAndLunarType solarAndLunar;
 
   const InputSolarAndLunarEvent({
-      required this.solarAndLunarType
+      required this.solarAndLunar
     });
 }
 

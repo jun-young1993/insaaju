@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart';
-import 'package:insaaju/configs/four_pillars_of_destiny_constants.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
 import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';

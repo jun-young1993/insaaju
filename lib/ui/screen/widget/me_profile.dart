@@ -29,7 +29,7 @@ class MeProfile extends StatelessWidget {
                 onTap: () {
                   handleMeCreate();
                 },
-                child: InfoRow(info: ExtendedInfo()),
+                child: InfoRow(info: EmptyInfo()),
               );
             case MeLoadStatus.loadComplete:
               return MeFindSelector((info) {

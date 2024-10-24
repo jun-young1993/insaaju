@@ -189,52 +189,61 @@ class _PlusPeopleState extends State<PlusPeople> {
     });
   }
 
-  Widget _buildSaveButton(InfoState info){
-      return InfoStatusSelector((status){
-        if(status == InfoStatus.saving){
-          return LoadingBox(
-            direction: LoadingBoxDirection.row,
-            loadingText: InfoStatus.saving.getTitle(),
-          );
-        }
-        if(status == InfoStatus.saved){
+  void _handleSaveInfo(SectionType type, InfoState infoState){
+    if(type == SectionType.addPeople){
+      _rewardedAd?.show(
+          onUserEarnedReward: (_, reward) {
+            infoBloc.add(SaveEvent(info: Info.fromState(infoState)));
+          }
+      );
+    }else if(type == SectionType.addMe){
+      print('send event');
+      meBloc.add(SaveMeInfoEvent(infoState: infoState));
+    }else{
+      throw UnknownException<SectionType>(widget.sectionType);
+    }
+  }
 
-          sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
-          listBloc.add(const AllListEvent());
-          return LoadingBox(
-            direction: LoadingBoxDirection.row,
-            loadingText: InfoStatus.saved.getTitle(),
-          );
+  Widget _buildSaveButton(InfoState infoState){
+      return InfoStatusSelector((status){
+        switch(status){
+          case InfoStatus.saving:
+            return LoadingBox(
+              direction: LoadingBoxDirection.row,
+              loadingText: status.getTitle(),
+            );
+          case InfoStatus.saved:
+            sectionBloc.add(const ShowSectionEvent(section: SectionType.unselected));
+            infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.queue));
+            listBloc.add(const AllListEvent());
+            return LoadingBox(
+              direction: LoadingBoxDirection.row,
+              loadingText: status.getTitle(),
+            );
+          case InfoStatus.queue:
+            return AppButton(
+              onPressed: (){
+                  _handleSaveInfo(widget.sectionType, infoState);
+              },
+              child: Text(widget.sectionType.getTitle()),
+            );
+          default:
+            return ErrorText(text: 'unkwon error'+ status.toString(),);
         }
-        return AppButton(
-          onPressed: (!info.hasMissingFields() && status != InfoStatus.saving)
-              ? () {
-                if(widget.sectionType == SectionType.addPeople){
-                  _rewardedAd?.show(
-                      onUserEarnedReward: (_, reward) {
-                        infoBloc.add(SaveEvent(info: Info.fromState(info)));
-                      }
-                  );
-                }else if(widget.sectionType == SectionType.addMe){
-                  meBloc.add(SaveMeInfoEvent(info: Info.fromState(info)));
-                }else{
-                  throw UnknownException<SectionType>(widget.sectionType);
-                }
-              }
-              : null,
-          child: Text(widget.sectionType.getTitle()),
-        );
+       
 
       });
   }
 
   Widget _buildSolarAndLunar(){
+    void handleSolarAndLunarChange(SolarAndLunarType? value) {
+      if (value != null) {
+        infoBloc.add(InputSolarAndLunarEvent(solarAndLunar: value));
+      }
+    }
     return SolarAndLunarField(
-      onChanged: (value){
-        if(value != null){
-          infoBloc.add(InputSolarAndLunarEvent(solarAndLunarType: value));
-        }
-      },
+      onMounted: handleSolarAndLunarChange,
+      onChanged:handleSolarAndLunarChange
     );
   }
 

@@ -22,8 +22,8 @@ class CheckScreen extends StatelessWidget {
               children: [
                 InfoCard(
                   name: state.name!,
-                  date: state.date!,
-                  time: state.time!
+                  date: state.date!.toString(),
+                  time: state.time!.toString()
                 ),
                 Spacer(),
                 Center(

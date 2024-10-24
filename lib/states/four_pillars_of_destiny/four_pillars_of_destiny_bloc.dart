@@ -73,8 +73,8 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
         final message = formatString(
             messageCodeItem.value,
             [
-              event.info[0].name,event.info[0].date, event.info[0].time,
-              event.info[1].name,event.info[1].date, event.info[1].time
+              event.info[0].name,event.info[0].date.toString(), event.info[0].time.toString(),
+              event.info[1].name,event.info[1].date.toString(), event.info[1].time.toString()
             ]
         );
         print(message);
@@ -97,8 +97,8 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
             messageCodeItem.value,
             [
               event.info.name,
-              event.info.date, 
-              event.info.time,
+              event.info.date.toString(),
+              event.info.time.toString(),
             ]
         );
         

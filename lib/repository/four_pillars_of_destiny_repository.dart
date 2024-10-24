@@ -13,6 +13,11 @@ class FourPillarsOfDestinyDefaultRepository extends FourPillarsOfDestinyReposito
   FourPillarsOfDestinyDefaultRepository();
 
   @override
+  Future getFourPillarsOfDestiny(){
+    
+  }
+
+  @override
   Future<Map<FourPillarsOfDestinyType,ChatCompletion?>> getFourPillarsOfDestinyList(Info info) async {
     final prefs = await SharedPreferences.getInstance();
     final Map<FourPillarsOfDestinyType,ChatCompletion?> results = {};

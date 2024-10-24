@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class BirthTimeScreen extends StatelessWidget {
-  final Function(String)? onTap;
+  final Function(TimeOfDay)? onTap;
   final TextEditingController _timeController = TextEditingController();
 
  BirthTimeScreen({
@@ -18,8 +18,8 @@ class BirthTimeScreen extends StatelessWidget {
     );
 
     if (selectedTime != null) {
-        final now = DateTime.now();
-        final DateTime selectedDateTime = DateTime(now.year, now.month, now.day, selectedTime.hour, selectedTime.minute);
+        final now = TimeOfDay.now();
+        final TimeOfDay selectedDateTime = TimeOfDay(hour: selectedTime.hour,minute: selectedTime.minute);
         _timeController.text = "${selectedTime.format(context)}";
     }
   }
@@ -50,7 +50,7 @@ class BirthTimeScreen extends StatelessWidget {
                 onPressed: () {
                   final String time = _timeController.text;
                   if (time.isNotEmpty) {
-                    onTap!(time);
+                    // onTap!(selectedDateTime);
                   } else {
                     // 생년월일 또는 출생시간이 입력되지 않았을 때의 경고 메시지
                     showDialog(

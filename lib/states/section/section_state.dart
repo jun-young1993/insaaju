@@ -21,7 +21,8 @@ extension SectionTypeExtension on SectionType {
 enum ChildSectionType {
   unselected,
   chatRoom,
-  toDayDestiny
+  toDayDestiny,
+  fourPillarsOfDestiny
 }
 class SectionState {
   final SectionType section;

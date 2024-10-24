@@ -1,12 +1,12 @@
-import 'package:insaaju/domain/entities/chat_session.dart';
+import 'package:flutter/material.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_state.dart';
 import 'package:insaaju/utills/zodiac.dart';
 
 class Info {
   final String name;
-  final String date;
-  final String time;
+  final DateTime date;
+  final TimeOfDay time;
   final SolarAndLunarType solarAndLunar;
   late  String sessionId;
   Info( {
@@ -17,30 +17,24 @@ class Info {
       required this.sessionId
   });
   
-  void setMySession(ChatSession session){
-    sessionId = session.id;
-  }
-
   String getTypeKey(FourPillarsOfDestinyType type){
     return toString()+type.getValue();
   }
 
-
-
   List<dynamic> getZodiac(){
-    final int year = int.parse(date.split('-').first.split(' ').last);
+    final int year = int.parse(date.toString().split('-').first.split(' ').last);
 
     return getZodiacWithDescription(year);
   }
 
   @override
   String toString(){
-    return '$name.$date.$time';
+    return '$name ${toStringDateTime()}';
   }
 
   @override
   String toStringDateTime(){
-    return '$date $time';
+    return '${date.year}-${date.month}-${date.day} ${time.hour.toString().padLeft(2,'0')}:${time.minute.toString().padLeft(2,'0')}';
   }
 
   bool compare(Info info){
@@ -54,9 +48,13 @@ class Info {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'date': date,
-      'time': time,
-      'mySessionId': sessionId
+      'date': date.toString(),
+      'time': {
+        'hour': time.hour,
+        'minute': time.minute
+      },
+      'solarAndLunar': solarAndLunar.getValue(),
+      'sessionId': sessionId
     };
   }
 
@@ -77,19 +75,19 @@ class Info {
   factory Info.toEmpty(){
     return Info(
       name: '',
-      date: '',
-      time: '',
+      date: DateTime.now(),
+      time: TimeOfDay.now(),
       sessionId: '', 
       solarAndLunar: SolarAndLunarType.solar
     );
   }
 
-}class ExtendedInfo extends Info {
+}class EmptyInfo extends Info {
 
-  ExtendedInfo({String? name}) : super(
+  EmptyInfo({String? name}) : super(
     name: "탭 해서 프로필 생성하기",
-    date: '',
-    time: '',
+    date: DateTime.now(),
+    time: TimeOfDay.now(),
     sessionId: '',
     solarAndLunar: SolarAndLunarType.solar
   );

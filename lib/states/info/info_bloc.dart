@@ -30,6 +30,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onInitialize);
     on(_onRemove);
     on(_onChangeStatus);
+    on(_onInputSolarAndLunar);
   }
 
   Future<void> _onInputName(
@@ -53,6 +54,17 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ){
     try{
       emit(state.asSetDate(event.date));
+    } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
+  void _onInputSolarAndLunar(
+    InputSolarAndLunarEvent event,
+    Emitter<InfoState> emit
+  ){
+    try{
+      emit(state.asSetSolarAndLunar(event.solarAndLunar));
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
@@ -122,7 +134,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
           error: null
       ));
       final ChatSession session = await _openaiRepository.createSession();
-      event.info.setMySession(session);
+      // event.info.setMySession(session);
       await _infoRepository.save(event.info);
 
       await _openaiRepository.sendMessage(

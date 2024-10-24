@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
 
 class BirthdateScreen extends StatelessWidget {
-  final Function(String)? onTap;
+  final Function(DateTime)? onTap;
   final TextEditingController _dateController = TextEditingController();
 
   BirthdateScreen({Key? key, this.onTap}) : super(key: key);
@@ -14,9 +14,9 @@ class BirthdateScreen extends StatelessWidget {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-
+    
     if (selectedDate != null) {
-      _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
+      _dateController.text = selectedDate.toString();
     }
   }
 
@@ -44,7 +44,7 @@ class BirthdateScreen extends StatelessWidget {
                 if (date.isNotEmpty) {
                   // 선택된 날짜를 외부에서 전달된 onTap 함수로 넘김
                   if (onTap != null) {
-                    onTap!(date);
+                    onTap!(DateTime.parse(date));
                   }
                 } else {
                   // 생년월일이 입력되지 않았을 때의 경고 메시지

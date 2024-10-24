@@ -30,6 +30,8 @@ class _PeopleDetailState extends State<PeopleDetail> {
           return _buildChatRoom();
         case ChildSectionType.toDayDestiny:
           return _buildToDayDestiny();
+        case ChildSectionType.fourPillarsOfDestiny:
+          return _buildFourPillarsOfDestiny();
         default:
           return _buildDefaultDetail();
       }
@@ -43,6 +45,10 @@ class _PeopleDetailState extends State<PeopleDetail> {
         sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.unselected, info: widget.info));
       },
     );
+  }
+
+  Widget _buildFourPillarsOfDestiny(){
+    return Text('hi');
   }
 
   Widget _buildChatRoom(){
@@ -92,13 +98,16 @@ class _PeopleDetailState extends State<PeopleDetail> {
     return BottomNavigationBar(
         selectedItemColor: Colors.black54,
         unselectedItemColor: Colors.black54,
-        onTap: (int index){
-          // 사주 채팅
+        onTap: (int index){          
           if(index == 0){
+            sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.fourPillarsOfDestiny, info: widget.info));
+          }
+          // 사주 채팅
+          if(index == 1){
             sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.chatRoom, info: widget.info));
           }
           // 오늘의 운세
-          if(index == 1){
+          if(index == 2){
             sectionBloc.add(ShowChildSectionEvent(childSection: ChildSectionType.toDayDestiny, info: widget.info));
           }
         },
@@ -110,6 +119,10 @@ class _PeopleDetailState extends State<PeopleDetail> {
     return [
       const BottomNavigationBarItem(
           label: '사주 구성',
+          icon: Icon(Icons.timeline)
+      ),
+      const BottomNavigationBarItem(
+          label: 'AI',
           icon: Icon(Icons.chat)
       ),
       const BottomNavigationBarItem(

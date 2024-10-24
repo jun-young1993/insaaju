@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 class BirthTimeField extends StatefulWidget {
-  final Function(String value) onSubmitted;
+  final Function(TimeOfDay value) onSubmitted;
   BirthTimeField({
     super.key,
     required this.onSubmitted
@@ -20,7 +20,7 @@ class _BirthTimeFieldState extends State<BirthTimeField> {
 
     if (selectedTime != null) {
       _timeController.text = "${selectedTime.format(context)}";
-      widget.onSubmitted(_timeController.text);
+      widget.onSubmitted(selectedTime);
     }
   }
 

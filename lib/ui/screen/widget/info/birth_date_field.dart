@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BirthDateField extends StatefulWidget {
-  final Function(String value) onSubmitted;
+  final Function(DateTime value) onSubmitted;
 
   const BirthDateField({super.key, required this.onSubmitted});
   @override
@@ -10,8 +10,6 @@ class BirthDateField extends StatefulWidget {
 
 }
 class _BirthDateFieldState extends State<BirthDateField> {
-  final List<String> solarAndLunar = ['양력','음력'];
-  late String solarAndLunarValue = solarAndLunar.first;
   final TextEditingController _dateController = TextEditingController();
   
 
@@ -25,8 +23,8 @@ class _BirthDateFieldState extends State<BirthDateField> {
     );
 
     if (selectedDate != null) {
-      _dateController.text = "${selectedDate.toLocal()}".split(' ')[0];
-      widget.onSubmitted("${solarAndLunarValue} ${_dateController.text}");
+      _dateController.text = "${selectedDate.year}";
+      widget.onSubmitted(selectedDate);
     }
   }
 
