@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/states/info/info_state.dart';
 import 'package:insaaju/ui/screen/widget/drop_box.dart';
 

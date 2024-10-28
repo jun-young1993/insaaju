@@ -43,6 +43,15 @@ class SendMessageFourPillarsOfDestinyCompatibilityEvent extends FourPillarsOfDes
 
 }
 
+class ShowFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
+  final Info info;
+  ShowFourPillarsOfDestinyEvent({
+    required this.info
+  });
+}
+
 class UnSelectedInfoFourPillarsOfDestinyEvent extends FourPillarsOfDestinyEvent {
   UnSelectedInfoFourPillarsOfDestinyEvent();
 }
+
+

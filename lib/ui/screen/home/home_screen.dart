@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insaaju/domain/entities/four_pillars_of_destiny.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart';
+import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/list/list_bloc.dart';
@@ -29,6 +33,7 @@ import 'package:insaaju/ui/screen/widget/to_day_destiny/to_day_destiny_screen.da
 
 part 'sections/people_list.dart';
 part 'sections/people_detail.dart';
+part 'sections/four_pillars_of_destiny_structure.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

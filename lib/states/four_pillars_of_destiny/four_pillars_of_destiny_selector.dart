@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
+import 'package:insaaju/domain/entities/four_pillars_of_destiny.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
@@ -36,6 +37,14 @@ class LoadingFourPillarsOfDestinySelector extends FourPillarsOfDestinySelector<b
         :super(
           selector: (state) => state.loading,
           builder: builder
+    );
+}
+
+class FourPillarsOfDestinyStructureSelector extends FourPillarsOfDestinySelector<FourPillarsOfDestiny?> {
+  FourPillarsOfDestinyStructureSelector(Widget Function(FourPillarsOfDestiny?) builder)
+    :super(
+      selector: (state) => state.fourPillarsOfDestinyStructure,
+      builder: builder
     );
 }
 

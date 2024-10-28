@@ -48,7 +48,7 @@ class _PeopleDetailState extends State<PeopleDetail> {
   }
 
   Widget _buildFourPillarsOfDestiny(){
-    return Text('hi');
+    return FourPillarsOfDestinyStructure(info: widget.info,);
   }
 
   Widget _buildChatRoom(){

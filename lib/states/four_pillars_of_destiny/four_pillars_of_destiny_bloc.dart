@@ -24,6 +24,7 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       on(_initialize);
       on(_onUnSelected);
       on(_onSendCompatibilityMessage);
+      on(_onShowFourPillarsOfDestiny);
     }
 
     Future<void> _initialize(
@@ -83,6 +84,25 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
       }
     }
 
+    Future<void> _onShowFourPillarsOfDestiny(
+      ShowFourPillarsOfDestinyEvent event,
+      Emitter<FourPillarsOfDestinyState> emit
+    ) async {
+      try {
+        emit(state.asLoading(true));
+        final fourPillarsOfDestinyStructure = await _fourPillarsOfDestinyRepository.getFourPillarsOfDestiny(event.info);
+        print('fourPillarsOfDestinyStructure');
+        print(fourPillarsOfDestinyStructure);
+        emit(state.asFourPillarsOfDestinyStrcture(fourPillarsOfDestinyStructure));
+        emit(state.asLoading(false));
+      } on Exception catch ( error ){
+        print(error);
+        emit(state.asLoading(false));
+        emit(state.asFailer(error));
+        
+      }
+    }
+
     Future<void> _onSendMessage(
       SendMessageFourPillarsOfDestinyEvent event,
       Emitter<FourPillarsOfDestinyState> emit
@@ -123,4 +143,5 @@ class FourPillarsOfDestinyBloc extends Bloc<FourPillarsOfDestinyEvent, FourPilla
         emit(state.asFailer(error));
       }
     }
+
 }

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/chat_complation.dart';
+import 'package:insaaju/domain/entities/four_pillars_of_destiny.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 
@@ -139,12 +140,14 @@ class FourPillarsOfDestinyState {
   final Exception? error;
   final FourPillarsOfDestinyType? type;
   final Map<FourPillarsOfDestinyType,ChatCompletion?>? fourPillarsOfDestinyData;
+  final FourPillarsOfDestiny? fourPillarsOfDestinyStructure;
   final bool loading;
 
   FourPillarsOfDestinyState._({
     this.info,
     this.error,
     this.type,
+    this.fourPillarsOfDestinyStructure,
     this.fourPillarsOfDestinyData,
     this.loading = false
   });
@@ -167,14 +170,20 @@ class FourPillarsOfDestinyState {
     return copyWith(loading: isLoading);
   }
 
+  FourPillarsOfDestinyState asFourPillarsOfDestinyStrcture(FourPillarsOfDestiny fourPillarsOfDestinyStructure){
+    return copyWith(fourPillarsOfDestinyStructure: fourPillarsOfDestinyStructure);
+  }
+
   FourPillarsOfDestinyState copyWith({
     Info? info,
     Exception? error,
     FourPillarsOfDestinyType? type,
+    FourPillarsOfDestiny? fourPillarsOfDestinyStructure,
     Map<FourPillarsOfDestinyType,ChatCompletion?>? fourPillarsOfDestinyData,
     bool? loading
   }){
     return FourPillarsOfDestinyState._(
+        fourPillarsOfDestinyStructure: fourPillarsOfDestinyStructure ?? this.fourPillarsOfDestinyStructure,
         info: info ?? this.info,
         error: error ?? this.error,
         type: type ?? this.type,

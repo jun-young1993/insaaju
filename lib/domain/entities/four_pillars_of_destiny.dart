@@ -1,15 +1,32 @@
-class HeavenlyAndEarthly {
+
+class HeavenlyAndEarthlyNames {
   final String ko;
   final String hanja;
-  const HeavenlyAndEarthly({
+  const HeavenlyAndEarthlyNames({
     required this.ko,
     required this.hanja
   });
 
+  factory HeavenlyAndEarthlyNames.fromJson(Map<String, dynamic> json){
+    
+    return HeavenlyAndEarthlyNames(
+      ko: json['ko'],
+      hanja: json['hanja']
+    );
+  }
+}
+class HeavenlyAndEarthly {
+  final HeavenlyAndEarthlyNames heavenly;
+  final HeavenlyAndEarthlyNames earthly;
+  const HeavenlyAndEarthly({
+    required this.heavenly,
+    required this.earthly
+  });
+
   factory HeavenlyAndEarthly.fromJson(Map<String, dynamic> json){
     return HeavenlyAndEarthly(
-      ko: json['ko'],
-      hanja: json['hanjs']
+      heavenly: HeavenlyAndEarthlyNames.fromJson(json['heavenly']),
+      earthly: HeavenlyAndEarthlyNames.fromJson(json['earthly'])
     );
   }
 }

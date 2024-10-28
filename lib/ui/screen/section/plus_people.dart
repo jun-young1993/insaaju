@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
