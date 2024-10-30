@@ -1,0 +1,4 @@
+enum YinYang {
+  yin,
+  yang
+}
