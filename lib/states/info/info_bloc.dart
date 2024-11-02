@@ -6,7 +6,6 @@ import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/code_item_repository.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
-import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
@@ -31,6 +30,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     on(_onRemove);
     on(_onChangeStatus);
     on(_onInputSolarAndLunar);
+    on(_onInputGender);
   }
 
   Future<void> _onInputName(
@@ -66,6 +66,17 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     try{
       emit(state.asSetSolarAndLunar(event.solarAndLunar));
     } on Exception catch(error){
+      emit(state.asFailer(error));
+    }
+  }
+
+  void _onInputGender(
+    InputGenderEvent event,
+    Emitter<InfoState> emit
+  ){
+    try {
+      emit(state.asGender(event.gender));
+    } on Exception catch( error ){
       emit(state.asFailer(error));
     }
   }
@@ -137,15 +148,15 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
       // event.info.setMySession(session);
       await _infoRepository.save(event.info);
 
-      await _openaiRepository.sendMessage(
-        CodeConstants.four_pillars_of_destiny_system_code, 
-        FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
-        CodeConstants.gpt_base_model,
-        session.id,
-        [
-          ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user)
-        ]
-      );
+      // await _openaiRepository.sendMessage(
+      //   CodeConstants.four_pillars_of_destiny_system_code,
+      //   FourPillarsOfDestinyType.fourPillarsOfDestiny.getValue(),
+      //   CodeConstants.gpt_base_model,
+      //   session.id,
+      //   [
+      //     ChatBaseRoomMessage(content: event.info.toString(), role: ChatRoomRole.user)
+      //   ]
+      // );
       emit(state.asChangeStatus(InfoStatus.saved));
     } on Exception catch(error){
       emit(state.asFailer(error));

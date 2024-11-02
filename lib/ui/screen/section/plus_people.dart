@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/domain/types/gender.dart';
 import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
@@ -23,6 +24,7 @@ import 'package:insaaju/ui/screen/widget/app_bar_close_leading_button.dart';
 import 'package:insaaju/ui/screen/widget/button.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_time_field.dart';
 import 'package:insaaju/ui/screen/widget/info/birth_date_field.dart';
+import 'package:insaaju/ui/screen/widget/info/gender_field.dart';
 import 'package:insaaju/ui/screen/widget/info/name_field.dart';
 import 'package:insaaju/ui/screen/widget/info/solar_and_lunar_field.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
@@ -162,6 +164,11 @@ class _PlusPeopleState extends State<PlusPeople> {
       return InfoFailSelector((error){
         return Column(
           children: [
+            if(info.time != null && info.solarAndLunar != null)
+              ...[
+                _buildGender(),
+                _buildColumnSizedBox(),
+              ],
             if(info.date != null)
               ...[
                 _buildBirthTimeField(),
@@ -198,7 +205,7 @@ class _PlusPeopleState extends State<PlusPeople> {
           }
       );
     }else if(type == SectionType.addMe){
-      print('send event');
+
       meBloc.add(SaveMeInfoEvent(infoState: infoState));
     }else{
       throw UnknownException<SectionType>(widget.sectionType);
@@ -234,6 +241,18 @@ class _PlusPeopleState extends State<PlusPeople> {
        
 
       });
+  }
+
+  Widget _buildGender(){
+    void handleSolarAndLunarChange(Gender? value) {
+      if (value != null) {
+        infoBloc.add(InputGenderEvent(gender: value));
+      }
+    }
+    return GenderField(
+        onMounted: handleSolarAndLunarChange,
+        onChanged:handleSolarAndLunarChange
+    );
   }
 
   Widget _buildSolarAndLunar(){

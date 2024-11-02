@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/domain/types/gender.dart';
 import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/exceptions/unknown_exception.dart';
 
@@ -42,6 +43,7 @@ class InfoState {
   final DateTime? date;
   final TimeOfDay? time;
   final String? sessionId;
+  final Gender? gender;
   final SolarAndLunarType? solarAndLunar;
   final InfoStatus status;
   final InfoRemoveStatus removeStatus;
@@ -53,6 +55,7 @@ class InfoState {
     this.error,
     this.solarAndLunar,
     this.sessionId,
+    this.gender,
     this.status = InfoStatus.queue,
     this.menu = InfoMenu.name,
     this.removeStatus = InfoRemoveStatus.queue
@@ -86,6 +89,12 @@ class InfoState {
   InfoState asSetSolarAndLunar(SolarAndLunarType solarAndLunar){
     return copyWith(
       solarAndLunar: solarAndLunar
+    );
+  }
+
+  InfoState asGender(Gender gender){
+    return copyWith(
+      gender: gender
     );
   }
 
@@ -126,6 +135,7 @@ class InfoState {
     SolarAndLunarType? solarAndLunar,
     InfoMenu? menu,
     InfoStatus? status,
+    Gender? gender,
     InfoRemoveStatus? removeStatus
   }){
     return InfoState._(
@@ -135,6 +145,7 @@ class InfoState {
       date: date ?? this.date,
       time: time ?? this.time,
       name: name ?? this.name,
+      gender: gender ?? this.gender,
       error: error ?? this.error,
       menu: menu ?? this.menu,
       removeStatus: removeStatus ?? this.removeStatus

@@ -63,16 +63,16 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
         _buildHeavenlyAndEarthlyTitle(),
         const SizedBox(height: 8.0,),
         _buildPillarsRowCard(
-          fourPillarsOfDestinyStructure.year.heavenly,
-          fourPillarsOfDestinyStructure.month.heavenly,
-          fourPillarsOfDestinyStructure.day.heavenly,
           fourPillarsOfDestinyStructure.time.heavenly,
+          fourPillarsOfDestinyStructure.day.heavenly,
+          fourPillarsOfDestinyStructure.month.heavenly,
+          fourPillarsOfDestinyStructure.year.heavenly,
         ),
         _buildPillarsRowCard(
-          fourPillarsOfDestinyStructure.year.earthly,
-          fourPillarsOfDestinyStructure.month.earthly,
-          fourPillarsOfDestinyStructure.day.earthly,
           fourPillarsOfDestinyStructure.time.earthly,
+          fourPillarsOfDestinyStructure.day.earthly,
+          fourPillarsOfDestinyStructure.month.earthly,
+          fourPillarsOfDestinyStructure.year.earthly,
         )
       ],
     );
@@ -165,7 +165,7 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
   Widget _buildHeavenlyAndEarthlyTitle(){
     return  Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: ['년주', '월주', '일주', '시주'].map((label) => Expanded(
+          children: ['시주', '일주', '월주','년주'].map((label) => Expanded(
                 child: Center(
                   child: Text(
                     label,

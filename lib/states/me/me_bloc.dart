@@ -1,11 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insaaju/configs/code_constants.dart';
-import 'package:insaaju/domain/entities/chat_room_message.dart';
 import 'package:insaaju/domain/entities/chat_session.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/repository/info_repository.dart';
 import 'package:insaaju/repository/openai_repository.dart';
-import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_bloc.dart';
 import 'package:insaaju/states/info/info_event.dart';
 import 'package:insaaju/states/info/info_state.dart';
@@ -33,14 +30,11 @@ class MeBloc extends Bloc<MeEvent, MeState> {
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saving));
       final ChatSession session = await _openaiRepository.createSession();
       final sessionId = session.id;
-      
+
       final info = Info.fromState(
         event.infoState.asSetSessionId(sessionId)
       );
-      print('info');
-      print(info);
-      print(info.toString());
-      
+
       await _infoRepository.saveOrUpdateMe(info);
       // await _openaiRepository.sendMessage(
       //     CodeConstants.four_pillars_of_destiny_system_code,
@@ -70,6 +64,7 @@ class MeBloc extends Bloc<MeEvent, MeState> {
         loadStatus: MeLoadStatus.loadProcessing
       ));
       final Info? info = await _infoRepository.findMe();
+
       if(info == null){
         emit(state.copyWith(loadStatus: MeLoadStatus.loadIsEmpty));
       }else{

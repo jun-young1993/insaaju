@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/domain/types/gender.dart';
 import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/states/info/info_state.dart';
 
@@ -82,6 +83,13 @@ class InputSolarAndLunarEvent extends InfoEvent {
   const InputSolarAndLunarEvent({
       required this.solarAndLunar
     });
+}
+
+class InputGenderEvent extends InfoEvent {
+  final Gender gender;
+  const InputGenderEvent({
+    required this.gender
+  });
 }
 
 

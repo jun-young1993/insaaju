@@ -30,7 +30,7 @@ class _BirthTimeFieldState extends State<BirthTimeField> {
       controller: _timeController,
       decoration: const InputDecoration(
         // border: OutlineInputBorder(),
-        labelText: 'Enter your birthdate time',
+        labelText: '출생시간',
       ),
       readOnly: true,
       onTap: () => _selectTime(context),

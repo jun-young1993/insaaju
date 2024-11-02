@@ -23,7 +23,7 @@ class _BirthDateFieldState extends State<BirthDateField> {
     );
 
     if (selectedDate != null) {
-      _dateController.text = "${selectedDate.year}";
+      _dateController.text = "${selectedDate.year}-${selectedDate.month}-${selectedDate.day}";
       widget.onSubmitted(selectedDate);
     }
   }

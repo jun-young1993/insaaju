@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insaaju/domain/types/gender.dart';
 import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_state.dart';
 import 'package:insaaju/states/info/info_state.dart';
@@ -9,12 +10,14 @@ class Info {
   final DateTime date;
   final TimeOfDay time;
   final SolarAndLunarType solarAndLunar;
+  final Gender gender;
   late  String sessionId;
   Info( {
       required this.name,
       required this.date,
       required this.time,
       required this.solarAndLunar,
+      required this.gender,
       required this.sessionId
   });
   
@@ -42,6 +45,7 @@ class Info {
     return name == info.name
         && date == info.date
         && time == info.time
+        && gender == info.gender
     ;
   }
 
@@ -55,8 +59,20 @@ class Info {
         'minute': time.minute
       },
       'solarAndLunar': solarAndLunar.getValue(),
-      'sessionId': sessionId
+      'sessionId': sessionId,
+      'gender': gender.getValue()
     };
+  }
+
+  factory Info.fromJson(Map<String, dynamic> json) {
+    return Info(
+        name: json['name'],
+        date: DateTime.parse(json['date']),
+        time: TimeOfDay(hour: json['time']['hour'], minute: json['time']['minute']),
+        sessionId: json['sessionId'],
+        gender: GenderExtension.fromValue(json['gender']),
+        solarAndLunar: SolarAndLunarTypeExtension.fromValue(json['solarAndLunar'])
+    );
   }
 
   static Info fromState(InfoState state){
@@ -66,31 +82,36 @@ class Info {
         date: state.date!,
         time: state.time!,
         solarAndLunar: state.solarAndLunar!,
-        sessionId: state.sessionId!
+        sessionId: state.sessionId!,
+        gender: state.gender!
       );
     }
 
     throw Exception('InfoState is missing required fields: name, date, or time');
   }
 
-  factory Info.toEmpty(){
+  factory Info.toEmpty(String? name){
     return Info(
-      name: '',
+      name: name ?? '',
       date: DateTime.now(),
       time: TimeOfDay.now(),
-      sessionId: '', 
+      sessionId: '',
+      gender: Gender.male,
       solarAndLunar: SolarAndLunarType.solar
     );
   }
 
-}class EmptyInfo extends Info {
+}
+
+class EmptyInfo extends Info {
 
   EmptyInfo({String? name}) : super(
     name: "탭 해서 프로필 생성하기",
     date: DateTime.now(),
     time: TimeOfDay.now(),
     sessionId: '',
-    solarAndLunar: SolarAndLunarType.solar
+    solarAndLunar: SolarAndLunarType.solar,
+    gender: Gender.male
   );
 
 

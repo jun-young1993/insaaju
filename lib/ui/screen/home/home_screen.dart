@@ -30,6 +30,7 @@ import 'package:insaaju/ui/screen/widget/search_icon.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
 import 'package:insaaju/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 part 'sections/people_list.dart';
 part 'sections/people_detail.dart';

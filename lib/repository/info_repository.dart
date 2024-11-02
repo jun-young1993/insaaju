@@ -6,7 +6,6 @@ import 'package:insaaju/configs/info_constants.dart';
 import 'package:insaaju/domain/entities/info.dart';
 import 'package:insaaju/domain/types/solar_and_lunar.dart';
 import 'package:insaaju/exceptions/duplicate_exception.dart';
-import 'package:insaaju/states/info/info_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class InfoRepository {
@@ -71,6 +70,7 @@ class InfoDefaultRepository extends InfoRepository{
         date: infoMap['date'],
         time: infoMap['time'],
         sessionId: infoMap['sessionId'],
+        gender: infoMap['gender'],
         solarAndLunar: SolarAndLunarType.solar
       );
     }).toList();
@@ -103,18 +103,13 @@ class InfoDefaultRepository extends InfoRepository{
 
   Future<Info?> findMe() async {
     final prefs = await SharedPreferences.getInstance();
+
     final String? jsonString = prefs.getString(InfoConstants.info_me);
-    
+
     if(jsonString != null){
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
       
-      return Info(
-        name: infoMap['name'],
-        date: DateTime.parse(infoMap['date']),
-        time: TimeOfDay(hour: infoMap['time']['hour'], minute: infoMap['time']['minute']),
-        sessionId: infoMap['sessionId'],
-        solarAndLunar: SolarAndLunarTypeExtension.fromValue(infoMap['solarAndLunar'])
-      );
+      return Info.fromJson(infoMap);
     }
     return null;
   }
@@ -127,6 +122,7 @@ class InfoDefaultRepository extends InfoRepository{
   }
 
   Future<bool> remove(Info target) async {
+
     final prefs = await SharedPreferences.getInstance();
     final list = await getAll();
 
@@ -163,13 +159,21 @@ class InfoDefaultRepository extends InfoRepository{
     // JSON 문자열 리스트를 Info 객체 리스트로 변환
     List<Info> infoList = savedInfoList.map((jsonString) {
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
-      return Info(
-        name: infoMap['name'],
-        date: infoMap['date'],
-        time: infoMap['time'],
-        sessionId: infoMap['sessionId'],
-        solarAndLunar: SolarAndLunarType.solar
-      );
+      try{
+        print(infoMap);
+        return Info(
+            name: infoMap['name'],
+            date: infoMap['date'],
+            time: infoMap['time'],
+            sessionId: infoMap['sessionId'],
+            gender: infoMap['gender'],
+            solarAndLunar: SolarAndLunarType.solar
+        );
+      } catch(error) {
+
+        return Info.toEmpty(error.toString());
+      }
+
     }).toList();
 
     return infoList;

@@ -37,8 +37,8 @@ class CheckScreen extends StatelessWidget {
                                 date: state.date!,
                                 time: state.time!,
                                 solarAndLunar: state.solarAndLunar!,
-                                sessionId: state.sessionId!
-
+                                sessionId: state.sessionId!,
+                                gender: state.gender!
                             );
                             onSave!(info);
                           }
