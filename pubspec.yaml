@@ -75,6 +75,7 @@ flutter:
       - assets/hanja/hanja.json
       - assets/images/background.webp
       - assets/.env
+      - assets/images/
       - assets/images/favicon-1024x1024.png
       - assets/images/zodiacs/dog.png
       - assets/images/zodiacs/dragon.png

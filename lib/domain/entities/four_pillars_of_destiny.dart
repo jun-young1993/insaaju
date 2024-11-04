@@ -97,14 +97,53 @@ class FourPillarsOfDestinyInfoDate {
 class FourPillarsOfDestinyInfo {
   final FourPillarsOfDestinyInfoDate date;
   final String animal;
+  final FourPillarsOfDestinyWuXing wuxing;
   const FourPillarsOfDestinyInfo({
     required this.date,
-    required this.animal
+    required this.animal,
+    required this.wuxing
   });
   factory FourPillarsOfDestinyInfo.fromJson(Map<String, dynamic> json){
+
     return FourPillarsOfDestinyInfo(
       date: FourPillarsOfDestinyInfoDate.fromJson(json['date']),
       animal: json['animal'],
+      wuxing:FourPillarsOfDestinyWuXing.fromJson(json['wuxing'])
+    );
+  }
+}
+
+class WuXingCount {
+  final int wood;
+  final int fire;
+  final int earth;
+  final int metal;
+  final int water;
+  const WuXingCount({
+    required this.wood,
+    required this.fire,
+    required this.earth,
+    required this.metal,
+    required this.water
+  });
+}
+
+class FourPillarsOfDestinyWuXing {
+  final WuXingCount count;
+  const FourPillarsOfDestinyWuXing({
+    required this.count
+  });
+
+  factory FourPillarsOfDestinyWuXing.fromJson(Map<String, dynamic> json){
+
+    return FourPillarsOfDestinyWuXing(
+      count: WuXingCount(
+          wood: json['count']['木'],
+          fire: json['count']['火'],
+          earth: json['count']['土'],
+          metal: json['count']['金'],
+          water: json['count']['水']
+      )
     );
   }
 }
@@ -125,12 +164,13 @@ class FourPillarsOfDestiny {
   });
 
   factory FourPillarsOfDestiny.fromJson(Map<String, dynamic> json){
+
     return FourPillarsOfDestiny(
       year: HeavenlyAndEarthly.fromJson(json['year']),
       month: HeavenlyAndEarthly.fromJson(json['month']),
       day: HeavenlyAndEarthly.fromJson(json['day']),
       time: HeavenlyAndEarthly.fromJson(json['time']),
-      info: FourPillarsOfDestinyInfo.fromJson(json['info'])
+      info: FourPillarsOfDestinyInfo.fromJson(json['info']),
     );
   }
 }

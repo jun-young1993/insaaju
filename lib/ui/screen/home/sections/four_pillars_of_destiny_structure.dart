@@ -13,6 +13,14 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
   FourPillarsOfDestinyBloc get fourPillarsOfDestinyBloc => context.read<FourPillarsOfDestinyBloc>();
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   bool _isExpanded = false;
+  final Map<WuXing, int> wuXingCounts = {
+    WuXing.wood: 3,
+    WuXing.fire: 5,
+    WuXing.earth: 2,
+    WuXing.metal: 4,
+    WuXing.water: 1,
+  };
+
   @override
   void initState()  {
     super.initState();
@@ -22,17 +30,23 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return _buildStructure();
+    return _buildStructure(context);
   }
 
-  Widget _buildStructure(){
+  Widget _buildStructure(BuildContext context){
     return AppBackground(
       appBar: _buildAppBar(),
       child: LoadingFourPillarsOfDestinySelector((isLoading) {
         if(isLoading){
           return _loadingBox();
-        }else{
-          return _buildPillars();
+        }else {
+          return SingleChildScrollView(
+           child: Container(
+             height: MediaQuery.of(context).size.height,
+              child: _buildPillars(),
+           ),
+          );
+
         }
       })
     );
@@ -43,14 +57,21 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
       if(fourPillarsOfDestinyStructure == null){
         return _emptyPillars();
       }
-
+      print(fourPillarsOfDestinyStructure);
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             _buildInfo(widget.info, fourPillarsOfDestinyStructure),
             const SizedBox(height: 8.0,),
-            _buildHeavenlyAndEarthly(fourPillarsOfDestinyStructure)
+            _buildHeavenlyAndEarthly(fourPillarsOfDestinyStructure),
+            const SizedBox(height: 8.0,),
+            RowMenu(
+              title: '',
+              description: 'dsafsd',
+              image: AssetImage('assets/images/elements.png')
+            )
+            // _buildWuXingChart()
           ],
         )
       );
@@ -160,7 +181,6 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
     final day = splitDate[2];
     return  '$year년 $month월 $day일';
   }
-  
 
   Widget _buildHeavenlyAndEarthlyTitle(){
     return  Row(
@@ -253,5 +273,64 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
       })
     );
   }
-  
+
+  Widget _buildWuXingChart(){
+      return Expanded(child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: BarChart(
+          BarChartData(
+            alignment: BarChartAlignment.spaceAround,
+            maxY: 6,
+            barTouchData: BarTouchData(enabled: false),
+            titlesData: FlTitlesData(
+              leftTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: true, interval: 1),
+              ),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  // getTextStyles: (context, value) => const TextStyle(
+                  //   color: Colors.black,
+                  //   fontWeight: FontWeight.bold,
+                  //   fontSize: 14,
+                  // ),
+                  getTitlesWidget: (double value, TitleMeta meta) {
+                    switch (value.toInt()) {
+                      case 0:
+                        return Text(WuXing.wood.getTitle());
+                      case 1:
+                        return Text(WuXing.fire.getTitle());
+                      case 2:
+                        return Text(WuXing.earth.getTitle());
+                      case 3:
+                        return Text(WuXing.metal.getTitle());
+                      case 4:
+                        return Text(WuXing.water.getTitle());
+                      default:
+                        return const Text('');
+                    }
+                  },
+                ),
+              ),
+            ),
+            borderData: FlBorderData(
+              show: false,
+            ),
+            barGroups: wuXingCounts.entries.map((entry) {
+              return BarChartGroupData(
+                x: WuXing.values.indexOf(entry.key),
+                barRods: [
+                  BarChartRodData(
+                    toY: entry.value.toDouble(),
+                    color: entry.key.getColor(),
+                    width: 20,
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+      ),);
+  }
+
 }

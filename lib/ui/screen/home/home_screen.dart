@@ -26,11 +26,14 @@ import 'package:insaaju/ui/screen/widget/info/info_profile.dart';
 import 'package:insaaju/ui/screen/widget/info_list/info_row.dart';
 import 'package:insaaju/ui/screen/widget/loading_box.dart';
 import 'package:insaaju/ui/screen/widget/me_profile.dart';
+import 'package:insaaju/ui/screen/widget/row_menu.dart';
 import 'package:insaaju/ui/screen/widget/search_icon.dart';
 import 'package:insaaju/ui/screen/widget/text.dart';
 import 'package:insaaju/states/section/section_bloc.dart';
 import 'package:insaaju/ui/screen/widget/to_day_destiny/to_day_destiny_screen.dart';
 import 'package:fl_chart/fl_chart.dart';
+
+import '../../../domain/types/wu_xing.dart';
 
 part 'sections/people_list.dart';
 part 'sections/people_detail.dart';
@@ -48,6 +51,30 @@ class _HomeScreenState extends State<HomeScreen> {
   MeBloc get meBloc => context.read<MeBloc>();
   SectionBloc get sectionBloc => context.read<SectionBloc>();
   InfoBloc get infoBloc => context.read<InfoBloc>();
+
+  final Map<WuXing, int> wuXingCounts = {
+    WuXing.wood: 3,
+    WuXing.fire: 5,
+    WuXing.earth: 2,
+    WuXing.metal: 4,
+    WuXing.water: 1,
+  };
+
+  final Map<WuXing, Color> wuXingColors = {
+    WuXing.wood: Color(0xFF228B22), // 초록색
+    WuXing.fire: Color(0xFFFF4500), // 빨간색
+    WuXing.earth: Color(0xFFD2691E), // 갈색
+    WuXing.metal: Color(0xFFC0C0C0), // 은색
+    WuXing.water: Color(0xFF1E90FF), // 파란색
+  };
+
+  final Map<WuXing, String> wuXingNames = {
+    WuXing.wood: '목',
+    WuXing.fire: '화',
+    WuXing.earth: '토',
+    WuXing.metal: '금',
+    WuXing.water: '수',
+  };
 
   @override
   void initState(){
@@ -143,4 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
       icon: const Icon(Icons.person_add),
     );
   }
+
+
 }
