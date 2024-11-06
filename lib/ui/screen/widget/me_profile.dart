@@ -10,12 +10,14 @@ import 'package:insaaju/ui/screen/widget/text.dart';
 
 class MeProfile extends StatelessWidget {
   final VoidCallback handleMeCreate;
+  final VoidCallback handleMeUpdate;
   final Function(Info) handleTapList;
 
   const MeProfile({
     Key? key,
     required this.handleMeCreate,
     required this.handleTapList,
+    required this.handleMeUpdate
   }) : super(key: key);
 
   @override
@@ -54,8 +56,11 @@ class MeProfile extends StatelessWidget {
 
   Widget _buildMeError() {
     return MeErrorSelector((error) {
-      return ErrorText(
-        text: error.toString(),
+      return GestureDetector(
+        onTap: (){
+          handleMeUpdate();
+        },
+        child: InfoRow(info: EditInfo()),
       );
     });
   }

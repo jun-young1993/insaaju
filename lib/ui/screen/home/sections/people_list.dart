@@ -4,11 +4,13 @@ class PeopleList extends StatelessWidget {
   final Function(Info) handleTapList;
   final Function(Info) handleRemove;
   final VoidCallback handleMeCreate;
+  final VoidCallback handleMeUpdate;
   const PeopleList({
     super.key, 
     required this.handleTapList,
     required this.handleRemove, 
-    required this.handleMeCreate
+    required this.handleMeCreate,
+    required this.handleMeUpdate
   });
 
   @override
@@ -24,6 +26,7 @@ class PeopleList extends StatelessWidget {
                 MeProfile(
                   handleMeCreate: handleMeCreate,
                   handleTapList: handleTapList,
+                  handleMeUpdate: handleMeUpdate,
                 ),
                 const SizedBox(height: 10),
                 const Divider(),

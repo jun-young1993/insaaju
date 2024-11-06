@@ -33,8 +33,12 @@ import 'package:insaaju/utills/ad_mob_const.dart';
 
 class PlusPeople extends StatefulWidget {
   final SectionType sectionType;
-
-  const PlusPeople({super.key, required this.sectionType});
+  final Info? info;
+  const PlusPeople({
+    super.key, 
+    required this.sectionType,
+    this.info
+  });
   @override
   _PlusPeopleState createState() => _PlusPeopleState();
 }

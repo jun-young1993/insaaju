@@ -125,3 +125,25 @@ class EmptyInfo extends Info {
     return '프로필을 생성해주세요';
   }
 }
+
+class EditInfo extends Info {
+  EditInfo({String? name, String? error}) : super(
+    name: "탭 해서 프로필 수정하기",
+    date: DateTime.now(),
+    time: TimeOfDay.now(),
+    sessionId: '',
+    solarAndLunar: SolarAndLunarType.solar,
+    gender: Gender.male
+  );
+
+
+  @override
+  String toString() {
+    return '프로필을 수정해주세요';
+  }
+
+  @override
+  String toStringDateTime(){
+    return '프로필을 수정해주세요';
+  }
+}

@@ -48,9 +48,12 @@ class MeBloc extends Bloc<MeEvent, MeState> {
       _infoBloc.add(const ChangeInfoStatusEvent(InfoStatus.saved));
       add(const FindMeEvent());
     } on Exception catch( error ) {
-      print(error);
       emit(state.copyWith(
           error: error
+      ));
+    } catch ( error ) {
+      emit(state.copyWith(
+          error: Exception(error.toString())
       ));
     }
   }
@@ -77,6 +80,11 @@ class MeBloc extends Bloc<MeEvent, MeState> {
     } on Exception catch(error){
       emit(state.copyWith(
         error: error,
+        loadStatus: MeLoadStatus.loadError
+      ));
+    } catch ( error ){
+      emit(state.copyWith(
+        error: Exception(error.toString()),
         loadStatus: MeLoadStatus.loadError
       ));
     }

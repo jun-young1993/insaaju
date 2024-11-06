@@ -134,6 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           );
         },
+        handleMeUpdate: () {
+          sectionBloc.add(const ShowSectionEvent(section: SectionType.addMe));
+        },
       ),
     );
   }
