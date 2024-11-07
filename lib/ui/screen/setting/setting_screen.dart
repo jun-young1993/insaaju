@@ -103,6 +103,9 @@ class _SettingScreenState extends State<SettingScreen> {
                       handleTapList: (info){
 
                       },
+                      handleMeUpdate: (){
+                        
+                      },
                     ),
                     const SizedBox(height: 10),
                     const Divider(),

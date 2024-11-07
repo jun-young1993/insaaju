@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insaaju/domain/entities/four_pillars_of_destiny.dart';
 import 'package:insaaju/domain/entities/info.dart';
+import 'package:insaaju/routes.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_bloc.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_event.dart';
 import 'package:insaaju/states/four_pillars_of_destiny/four_pillars_of_destiny_selector.dart';

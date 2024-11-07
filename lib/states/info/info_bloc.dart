@@ -38,9 +38,9 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
     Emitter<InfoState> emit
   ) async {
     try{
-
+      
       emit(state.asSetName(event.name));
-
+      emit(state.asHasMissingFieldStatus());
     } on Exception catch(error){
 
       emit(state.asFailer(error));
@@ -54,6 +54,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ){
     try{
       emit(state.asSetDate(event.date));
+      emit(state.asHasMissingFieldStatus());
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
@@ -65,6 +66,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ){
     try{
       emit(state.asSetSolarAndLunar(event.solarAndLunar));
+      emit(state.asHasMissingFieldStatus());
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
@@ -76,6 +78,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ){
     try {
       emit(state.asGender(event.gender));
+      emit(state.asHasMissingFieldStatus());
     } on Exception catch( error ){
       emit(state.asFailer(error));
     }
@@ -87,6 +90,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ) async {
     try{
       emit(state.asSetTime(event.time));
+      emit(state.asHasMissingFieldStatus());
       if(event.check == true){
         await _infoRepository.check(
           Info.fromState(state)

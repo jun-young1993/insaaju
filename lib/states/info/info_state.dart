@@ -12,6 +12,7 @@ enum InfoMenu {
 }
 enum InfoStatus {
   queue,
+  assigning,
   saving,
   saved
 }
@@ -64,7 +65,17 @@ class InfoState {
   InfoState.initialize() : this._();
 
   bool hasMissingFields(){
-    return (date == null) || (time == null) || (name == null) || (solarAndLunar == null) || (sessionId == null);
+    return (date == null) || (time == null) || (name == null) || (solarAndLunar == null) || (gender == null);
+  }
+
+  InfoState asHasMissingFieldStatus(){
+    if(hasMissingFields()){
+      return copyWith();
+    }else{
+      return copyWith(
+        status: InfoStatus.assigning
+      );
+    }
   }
 
   InfoState asSetName(String name){

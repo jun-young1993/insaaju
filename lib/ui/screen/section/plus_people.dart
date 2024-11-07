@@ -232,10 +232,11 @@ class _PlusPeopleState extends State<PlusPeople> {
               direction: LoadingBoxDirection.row,
               loadingText: status.getTitle(),
             );
-          case InfoStatus.queue:
+          case InfoStatus.queue || InfoStatus.assigning:
             return AppButton(
+              isDisabled: InfoStatus.assigning != status,
               onPressed: (){
-                  _handleSaveInfo(widget.sectionType, infoState);
+                _handleSaveInfo(widget.sectionType, infoState);
               },
               child: Text(widget.sectionType.getTitle()),
             );

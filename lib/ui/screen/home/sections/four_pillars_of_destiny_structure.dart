@@ -69,7 +69,10 @@ class _FourPillarsOfDestinyStructureState extends State<FourPillarsOfDestinyStru
             RowMenu(
               title: '',
               description: 'dsafsd',
-              image: AssetImage('assets/images/elements.png')
+              image: AssetImage('assets/images/elements.png'),
+              onTap: () {
+               AppNavigator.push(Routes.wuxing); 
+              }
             )
             // _buildWuXingChart()
           ],

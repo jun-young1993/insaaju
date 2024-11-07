@@ -5,6 +5,7 @@ import 'package:insaaju/ui/screen/home/home_screen.dart';
 import 'package:insaaju/ui/screen/info/info_screen.dart';
 import 'package:insaaju/ui/screen/list/list_screen.dart';
 import 'package:insaaju/ui/screen/setting/setting_screen.dart';
+import 'package:insaaju/ui/screen/wuxing/wuxing_screen.dart';
 
 class FadeRoute extends PageRouteBuilder {
 
@@ -27,7 +28,8 @@ enum Routes {
   list,
   four_pillars_of_destiny,
   compatibility,
-  setting
+  setting,
+  wuxing,
 }
 
 extension RoutesExtention on Routes {
@@ -43,6 +45,7 @@ class _Paths {
   static const String four_pillars_of_destiny = 'four_pillars_of_destiny';
   static const String compatibility = 'compatibility';
   static const String setting = 'setting';
+  static const String wuxing = 'wuxing';
 
   static const Map<Routes, String> _pathMap = {
     Routes.home: _Paths.home,
@@ -50,7 +53,8 @@ class _Paths {
     Routes.list: _Paths.list,
     Routes.four_pillars_of_destiny: _Paths.four_pillars_of_destiny,
     Routes.compatibility: _Paths.compatibility,
-    Routes.setting: _Paths.setting
+    Routes.setting: _Paths.setting,
+    Routes.wuxing: _Paths.wuxing
   };
 
   static String of(Routes route) => _pathMap[route] ?? home;
@@ -75,6 +79,8 @@ class AppNavigator {
               return FadeRoute(page: const CompatibilityScreen());
             case _Paths.setting:
               return FadeRoute(page: const SettingScreen());
+            case _Paths.wuxing:
+              return FadeRoute(page: const WuxingScreen());
             default:
               return FadeRoute(page: const HomeScreen());
           }

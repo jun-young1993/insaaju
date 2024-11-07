@@ -4,12 +4,14 @@ class RowMenu extends StatelessWidget {
   final String title;
   final String description;
   final ImageProvider? image;
+  final VoidCallback? onTap;
 
   const RowMenu({
     Key? key,
     required this.title,
     required this.description,
     this.image,
+    this.onTap
   }) : super(key: key);
 
   @override
@@ -49,9 +51,7 @@ class RowMenu extends StatelessWidget {
             color: Colors.grey,
             size: 16.0,
           ),
-          onTap: () {
-            // Handle row menu tap
-          },
+          onTap: onTap
         ),
       ),
     );

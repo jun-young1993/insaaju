@@ -52,6 +52,7 @@ class MeBloc extends Bloc<MeEvent, MeState> {
           error: error
       ));
     } catch ( error ) {
+      print(error);
       emit(state.copyWith(
           error: Exception(error.toString())
       ));
