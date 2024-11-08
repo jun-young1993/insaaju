@@ -128,10 +128,29 @@ class WuXingCount {
   });
 }
 
+class WuXingColor {
+  final String wood;
+  final String fire;
+  final String earth;
+  final String metal;
+  final String water;
+  const WuXingColor({
+    required this.wood,
+    required this.fire,
+    required this.earth,
+    required this.metal,
+    required this.water
+  });
+}
+
+
+
 class FourPillarsOfDestinyWuXing {
   final WuXingCount count;
+  final WuXingColor colors;
   const FourPillarsOfDestinyWuXing({
-    required this.count
+    required this.count,
+    required this.colors
   });
 
   factory FourPillarsOfDestinyWuXing.fromJson(Map<String, dynamic> json){
@@ -143,6 +162,13 @@ class FourPillarsOfDestinyWuXing {
           earth: json['count']['土'],
           metal: json['count']['金'],
           water: json['count']['水']
+      ),
+      colors: WuXingColor(
+          wood: json['colors']['木'],
+          fire: json['colors']['火'],
+          earth: json['colors']['土'],
+          metal: json['colors']['金'],
+          water: json['colors']['水']
       )
     );
   }
