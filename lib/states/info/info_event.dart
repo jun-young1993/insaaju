@@ -46,9 +46,9 @@ class InputMenuEvent extends InfoEvent {
 }
 
 class SaveEvent extends InfoEvent {
-  final Info info;
+  final InfoState infoState;
   const SaveEvent({
-    required this.info
+    required this.infoState
   });
 }
 

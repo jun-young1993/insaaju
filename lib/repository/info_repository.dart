@@ -158,19 +158,13 @@ class InfoDefaultRepository extends InfoRepository{
 
     // JSON 문자열 리스트를 Info 객체 리스트로 변환
     List<Info> infoList = savedInfoList.map((jsonString) {
+      
       Map<String, dynamic> infoMap = jsonDecode(jsonString);
+      
       try{
-        print(infoMap);
-        return Info(
-            name: infoMap['name'],
-            date: infoMap['date'],
-            time: infoMap['time'],
-            sessionId: infoMap['sessionId'],
-            gender: infoMap['gender'],
-            solarAndLunar: SolarAndLunarType.solar
-        );
+        return Info.fromJson(infoMap);
       } catch(error) {
-
+        print(error);
         return Info.toEmpty(error.toString());
       }
 

@@ -30,7 +30,7 @@ class ListBloc extends Bloc<ListEvent, ListState> {
       ));
       final String? searchText = event.searchText;
       final List<Info> list = await _infoRepository.getAll();
-
+      
       final List<Info> filteredList = (searchText != null && searchText.isNotEmpty)
           ? list.where((info) => _containsSearchText(info, searchText)).toList()
           : list;

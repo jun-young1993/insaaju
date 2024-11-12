@@ -29,7 +29,7 @@ class FourPillarsOfDestinyDefaultRepository extends FourPillarsOfDestinyReposito
     final minute = info.time.minute;
     final isLunar = info.solarAndLunar == SolarAndLunarType.lunar;
     final url = Uri.parse('$baseUrl/four-pillars?year=${year}&month=${month}&day=${day}&hour=${hour}&minute=${minute}&isLunar=${isLunar}');
-
+    print(url);
     final String secretKey = dotenv.env['SECRET_KEY']!;
 
     // 현재 시간을 가져오기
@@ -48,8 +48,10 @@ class FourPillarsOfDestinyDefaultRepository extends FourPillarsOfDestinyReposito
         url,
         headers: headers,
     );
+    
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
+      print(data);
       return FourPillarsOfDestiny.fromJson(data);
     }else{
       throw CommonException.fromResponse(response);

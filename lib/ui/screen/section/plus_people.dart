@@ -203,11 +203,9 @@ class _PlusPeopleState extends State<PlusPeople> {
 
   void _handleSaveInfo(SectionType type, InfoState infoState){
     if(type == SectionType.addPeople){
-      _rewardedAd?.show(
-          onUserEarnedReward: (_, reward) {
-            infoBloc.add(SaveEvent(info: Info.fromState(infoState)));
-          }
-      );
+      
+
+      infoBloc.add(SaveEvent(infoState: infoState));
     }else if(type == SectionType.addMe){
 
       meBloc.add(SaveMeInfoEvent(infoState: infoState));

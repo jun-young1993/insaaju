@@ -13,8 +13,6 @@ class InfoProfile extends StatelessWidget {
 
   String? profileImagePath(){
     try{
-      print('check');
-      print(info?.getZodiac());
       // final imagePath = info == null ? null : info?.getZodiac()[5];
       // return imagePath;
       if(info != null){

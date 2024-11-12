@@ -120,7 +120,7 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
   ) async {
     try{
       await _infoRepository.check(event.info);
-      add(SaveEvent(info: event.info));
+      // add(SaveEvent(info: event.info));
     } on Exception catch(error){
       emit(state.asFailer(error));
     }
@@ -149,8 +149,14 @@ class InfoBloc extends Bloc<InfoEvent, InfoState>{
           error: null
       ));
       final ChatSession session = await _openaiRepository.createSession();
+      final sessionId = session.id;
+      
+      final info = Info.fromState(
+        event.infoState.asSetSessionId(sessionId)
+      );
+      
       // event.info.setMySession(session);
-      await _infoRepository.save(event.info);
+      await _infoRepository.save(info);
 
       // await _openaiRepository.sendMessage(
       //   CodeConstants.four_pillars_of_destiny_system_code,

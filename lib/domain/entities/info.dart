@@ -76,7 +76,7 @@ class Info {
   }
 
   static Info fromState(InfoState state){
-    if(!state.hasMissingFields()){
+    if(!state.hasMissingFields() && state.sessionId != null){
       return Info(
         name: state.name!,
         date: state.date!,
